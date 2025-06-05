@@ -1,0 +1,137 @@
+{
+  "AllegroFlare/GameConfigurations/Complete": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Levels/Base": [
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Level"
+  ],
+  "AllegroFlare/DialogTree/NodeBank": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/NodeBankFactory": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/Nodes/Wait": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/Nodes/ExitProgram": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/Nodes/MultipageWithOptions": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/NodeOptions/GoToNode": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/NodeOptions/ExitDialog": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "TINS2025/Gameplay/Level": [
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Achievement": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Elements/StoryboardPages/Base": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameSession": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameProgressAndStateInfos/Base": [
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/GameProgressAndStateInfo"
+  ],
+  "AllegroFlare/LoadASavedGame/SaveSlots/Base": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/LoadASavedGame/SaveSlots/Empty": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "TINS2025/Gameplay/Screen": [
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "TINS2025/GameProgressAndStateInfo": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/Gameplay": [
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Runners/Complete": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/AudioController": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/EventNames": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameEventDatas/AchievementUnlocked": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameEvent": [
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Screens/Subscreen/Screen": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/TitledMenuScreen": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/TitledMenuScreenFactory": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/Base": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/SavingAndLoading/SavingAndLoading/LoadStyle": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/SavingAndLoading/SavingAndLoading/SaveStyle": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/SavingAndLoading/SavingAndLoading/StartStyle": [
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "TINS2025/JSONLoaders/TINS2025/GameProgressAndStateInfo": [
+    "TINS2025/GameProgressAndStateInfo"
+  ],
+  "ALLEGRO_FONT": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "ALLEGRO_EVENT": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/BitmapBin": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/EventEmitter": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/FontBin": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/ModelBin": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "al_is_primitives_addon_initialized": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Player": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/VirtualControllers/Base": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/VirtualControllers/GenericController": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/AssetStudio/Database": [
+    "TINS2025/Gameplay/Screen"
+  ]
+}
