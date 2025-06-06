@@ -54,12 +54,55 @@ table td
 <body>
 <h1>Table of Contents</h1>
 <ul>
+  <li><a href="#quintessence/TINS2025/Entity.q.yml">quintessence/TINS2025/Entity.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Game/Configurations/Main.q.yml">quintessence/TINS2025/Game/Configurations/Main.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/GameProgressAndStateInfo.q.yml">quintessence/TINS2025/GameProgressAndStateInfo.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Gameplay/Level.q.yml">quintessence/TINS2025/Gameplay/Level.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Gameplay/Screen.q.yml">quintessence/TINS2025/Gameplay/Screen.q.yml</a></li>
 </ul>
 <h1>Components</h1>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/TINS2025/Entity.q.yml">quintessence/TINS2025/Entity.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">sprite</td>
+  <td class="property">ALLEGRO_BITMAP*</td>
+</tr>
+<tr>
+  <td class="property">aabb2d</td>
+  <td class="property">AllegroFlare::Physics::AABB2D</td>
+</tr>
+<tr>
+  <td class="property">flags</td>
+  <td class="property">uint32_t</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw</b>()</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_BITMAP&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Physics::AABB2D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Physics/AABB2D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_draw_rectangle&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
 <br><br><br>
 <br><br><br>
 <ul>
@@ -450,6 +493,18 @@ table td
   <td class="property">TINS2025::Gameplay::Level*</td>
 </tr>
 <tr>
+  <td class="property">collision_observer</td>
+  <td class="property">AllegroFlare::CollisionObservers::Simple</td>
+</tr>
+<tr>
+  <td class="property">entities</td>
+  <td class="property">std::vector&lt;TINS2025::Entity&gt;</td>
+</tr>
+<tr>
+  <td class="property">player_entity</td>
+  <td class="property">TINS2025::Entity*</td>
+</tr>
+<tr>
   <td class="property">initialized</td>
   <td class="property">bool</td>
 </tr>
@@ -467,6 +522,10 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>initialize</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_up_world</b>()</td>
 </tr>
 <tr>
   <td class="method">bool</td>
@@ -564,12 +623,27 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::AssetStudio::Database&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/AssetStudio/Database.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::CollisionObservers::Simple&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/CollisionObservers/Simple.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;TINS2025::Entity&quot;, &quot;headers&quot;=&gt;[&quot;TINS2025/Entity.hpp&quot;]}</td>
+</tr>
     </table>
 </div>  </div>
 </ul>
 <h1>Dependents</h1>
 <pre>
 {
+  "ALLEGRO_BITMAP": [
+    "TINS2025/Entity"
+  ],
+  "AllegroFlare/Physics/AABB2D": [
+    "TINS2025/Entity"
+  ],
+  "al_draw_rectangle": [
+    "TINS2025/Entity"
+  ],
   "AllegroFlare/GameConfigurations/Complete": [
     "TINS2025/Game/Configurations/Main"
   ],
@@ -703,6 +777,12 @@ table td
     "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/AssetStudio/Database": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/CollisionObservers/Simple": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "TINS2025/Entity": [
     "TINS2025/Gameplay/Screen"
   ]
 }

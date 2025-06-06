@@ -1,0 +1,58 @@
+properties:
+
+
+  - name: sprite
+    type: ALLEGRO_BITMAP*
+    init_with: nullptr
+
+  - name: aabb2d
+    type: AllegroFlare::Physics::AABB2D
+    init_with: '{}'
+    getter_ref: true
+
+  - name: flags
+    type: uint32_t
+    init_with: 0
+    exposed: true
+
+
+enums:
+
+
+  - name: Flags
+    bitwise: true
+    scope: public
+    enumerators:
+      - FLAG_NONE
+      - FLAG_HIDDEN
+      - FLAG_COLLIDES_WITH_PLAYER
+
+
+methods:
+
+
+  - name: draw
+    body: |
+      al_draw_rectangle(
+         aabb2d.get_x(),
+         aabb2d.get_y(),
+         aabb2d.get_x()+aabb2d.get_w(),
+         aabb2d.get_y()+aabb2d.get_h(),
+         ALLEGRO_COLOR{1, 1, 1, 1},
+         1.0
+      );
+    body_dependency_symbols:
+      - al_draw_rectangle
+
+
+dependencies:
+
+
+  - symbol: ALLEGRO_BITMAP
+    headers: [ allegro5/allegro.h ]
+  - symbol: AllegroFlare::Physics::AABB2D
+    headers: [ AllegroFlare/Physics/AABB2D.hpp ]
+  - symbol: al_draw_rectangle
+    headers: [ allegro5/allegro_primitives.h ]
+
+

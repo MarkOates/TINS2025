@@ -1,4 +1,13 @@
 {
+  "ALLEGRO_BITMAP": [
+    "TINS2025/Entity"
+  ],
+  "AllegroFlare/Physics/AABB2D": [
+    "TINS2025/Entity"
+  ],
+  "al_draw_rectangle": [
+    "TINS2025/Entity"
+  ],
   "AllegroFlare/GameConfigurations/Complete": [
     "TINS2025/Game/Configurations/Main"
   ],
@@ -132,6 +141,12 @@
     "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/AssetStudio/Database": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/CollisionObservers/Simple": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "TINS2025/Entity": [
     "TINS2025/Gameplay/Screen"
   ]
 }

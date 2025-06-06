@@ -3,6 +3,7 @@
 
 #include <AllegroFlare/AssetStudio/Database.hpp>
 #include <AllegroFlare/BitmapBin.hpp>
+#include <AllegroFlare/CollisionObservers/Simple.hpp>
 #include <AllegroFlare/EventEmitter.hpp>
 #include <AllegroFlare/FontBin.hpp>
 #include <AllegroFlare/GameEvent.hpp>
@@ -10,9 +11,11 @@
 #include <AllegroFlare/Player.hpp>
 #include <AllegroFlare/Screens/Gameplay.hpp>
 #include <AllegroFlare/VirtualControllers/Base.hpp>
+#include <TINS2025/Entity.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <allegro5/allegro.h>
 #include <string>
+#include <vector>
 
 
 namespace TINS2025
@@ -34,6 +37,9 @@ namespace TINS2025
          AllegroFlare::ModelBin* model_bin;
          std::string current_level_identifier;
          TINS2025::Gameplay::Level* current_level;
+         AllegroFlare::CollisionObservers::Simple collision_observer;
+         std::vector<TINS2025::Entity> entities;
+         TINS2025::Entity* player_entity;
          bool initialized;
 
       protected:
@@ -54,6 +60,7 @@ namespace TINS2025
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();
+         void load_up_world();
          virtual bool load_level_by_identifier(std::string level_identifier="[unset-level_identifier]") override;
          virtual void on_activate() override;
          virtual void on_deactivate() override;

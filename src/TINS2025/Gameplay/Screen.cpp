@@ -26,6 +26,9 @@ Screen::Screen()
    , model_bin(nullptr)
    , current_level_identifier("[unset-current_level]")
    , current_level(nullptr)
+   , collision_observer({})
+   , entities({})
+   , player_entity(nullptr)
    , initialized(false)
 {
 }
@@ -161,7 +164,38 @@ void Screen::initialize()
       throw std::runtime_error("[TINS2025::Gameplay::Screen::initialize]: error: guard \"model_bin\" not met");
    }
    set_update_strategy(AllegroFlare::Screens::Base::UpdateStrategy::SEPARATE_UPDATE_AND_RENDER_FUNCS);
+   load_up_world();
    initialized = true;
+   return;
+}
+
+void Screen::load_up_world()
+{
+   collision_observer.clear();
+
+   entities.reserve(256);
+
+   Entity e;
+   e.get_aabb2d_ref().set_x(1920/2);
+   e.get_aabb2d_ref().set_y(1080/2);
+   e.get_aabb2d_ref().set_w(40);
+   e.get_aabb2d_ref().set_h(20);
+   entities.push_back(e);
+
+   player_entity = &entities.back();
+
+
+   {
+      Entity e;
+      e.get_aabb2d_ref().set_x(1920/2 + 200);
+      e.get_aabb2d_ref().set_y(1080/2);
+      e.get_aabb2d_ref().set_w(20);
+      e.get_aabb2d_ref().set_h(10);
+      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      entities.push_back(e);
+   }
+
+
    return;
 }
 
@@ -199,11 +233,39 @@ void Screen::on_deactivate()
 
 void Screen::update()
 {
+   collision_observer.set_subject(player_entity);
+   std::set<void*> collidables;
+   for (auto &entity : entities)
+   {
+      if (entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER) collidables.insert((void*)&entity);
+   }
+   collision_observer.set_collidables(collidables);
+   collision_observer.set_on_test_collide([](void* subject_v, void* collidable_v) -> bool {
+      TINS2025::Entity &subject = *static_cast<TINS2025::Entity*>(subject_v);
+      TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(collidable_v);
+
+      return (subject.get_aabb2d_ref().collides(&collidable.get_aabb2d_ref()));
+   });
+
+   collision_observer.process();
+
+   for (auto &entered : collision_observer.get_entered())
+   {
+      TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(entered);
+      collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
+   }
+
+
    return;
 }
 
 void Screen::render()
 {
+   for (auto &entity : entities)
+   {
+      if ((entity.flags & TINS2025::Entity::FLAG_HIDDEN) == 0) entity.draw();
+   }
+
    ALLEGRO_FONT *font = obtain_font();
    al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
    return;
@@ -231,6 +293,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
       throw std::runtime_error("[TINS2025::Gameplay::Screen::primary_update_func]: error: guard \"initialized\" not met");
    }
    // Update stuff here (take into account delta_time)
+   player_entity->get_aabb2d_ref().set_x(player_entity->get_aabb2d_ref().get_x() + 1.0);
    update();
    return;
 }
