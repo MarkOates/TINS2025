@@ -2,7 +2,7 @@
 
 #include <Timeline/Parameter.hpp>
 
-#include <cmath>
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>

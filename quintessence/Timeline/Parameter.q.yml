@@ -248,6 +248,6 @@ dependencies:
   - symbol: Timeline::Parameter
     headers: [ Timeline/Parameter.hpp ]
   - symbol: std::sort
-    headers: [ cmath ]
+    headers: [ algorithm ]
 
 
