@@ -113,6 +113,8 @@ methods:
       });
 
       return;
+    body_dependency_symbols:
+      - std::sort
 
 
   - name: remove_keyframe_at_index
@@ -245,5 +247,7 @@ dependencies:
     headers: [ Timeline/Keyframe.hpp ]
   - symbol: Timeline::Parameter
     headers: [ Timeline/Parameter.hpp ]
+  - symbol: std::sort
+    headers: [ cmath ]
 
 

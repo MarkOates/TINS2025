@@ -257,6 +257,9 @@ table td
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sin&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
 </tr>
 <tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sqrt&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
+<tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;fmodf&quot;, &quot;headers&quot;=&gt;[&quot;math.h&quot;]}</td>
 </tr>
     </table>
@@ -1729,6 +1732,12 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::Nodes::ExitDialog&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/Nodes/ExitDialog.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::cos&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sin&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
     </table>
 </div>  </div>
 </ul>
@@ -2047,6 +2056,9 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Parameter.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sort&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
     </table>
 </div>  </div>
 </ul>
@@ -2309,9 +2321,14 @@ table td
     "DialControl/CameraInfoOverlay"
   ],
   "std/cos": [
-    "DialControl/CameraInfoOverlay"
+    "DialControl/CameraInfoOverlay",
+    "TINS2025/Gameplay/Screen"
   ],
   "std/sin": [
+    "DialControl/CameraInfoOverlay",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "std/sqrt": [
     "DialControl/CameraInfoOverlay"
   ],
   "fmodf": [
@@ -2599,6 +2616,9 @@ table td
   ],
   "Timeline/JSONLoaders/Timeline/Parameter": [
     "Timeline/MotionStudio"
+  ],
+  "std/sort": [
+    "Timeline/Parameter"
   ],
   ":AllegroFlare/Camera3D": [
     "Timeline/ParameterMappings/AllegroFlare/Camera3D"

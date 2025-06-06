@@ -481,8 +481,11 @@ methods:
                           base2_x, base2_y,
                           c );
       //}
-
-
+    body_dependency_symbols:
+       - std::sqrt
+       - std::cos
+       - std::sin
+       - std::atan
 
 
   - name: obtain_font
@@ -525,6 +528,8 @@ dependencies:
   - symbol: std::cos
     headers: [ cmath ]
   - symbol: std::sin
+    headers: [ cmath ]
+  - symbol: std::sqrt
     headers: [ cmath ]
   - symbol: fmodf
     headers: [ math.h ]

@@ -13,6 +13,7 @@
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <allegro5/allegro_primitives.h>
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>

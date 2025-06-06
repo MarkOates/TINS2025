@@ -56,9 +56,14 @@
     "DialControl/CameraInfoOverlay"
   ],
   "std/cos": [
-    "DialControl/CameraInfoOverlay"
+    "DialControl/CameraInfoOverlay",
+    "TINS2025/Gameplay/Screen"
   ],
   "std/sin": [
+    "DialControl/CameraInfoOverlay",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "std/sqrt": [
     "DialControl/CameraInfoOverlay"
   ],
   "fmodf": [
@@ -346,6 +351,9 @@
   ],
   "Timeline/JSONLoaders/Timeline/Parameter": [
     "Timeline/MotionStudio"
+  ],
+  "std/sort": [
+    "Timeline/Parameter"
   ],
   ":AllegroFlare/Camera3D": [
     "Timeline/ParameterMappings/AllegroFlare/Camera3D"

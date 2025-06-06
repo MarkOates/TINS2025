@@ -290,6 +290,8 @@ methods:
     body_dependency_symbols:
       - AllegroFlare::php
       - AllegroFlare::PlayerInputControllers::Generic
+      - std::cos
+      - std::sin
 
 
   - name: load_level_by_identifier
@@ -768,5 +770,9 @@ dependencies:
     headers: [ AllegroFlare/PlayerInputControllers/Generic.hpp ]
   - symbol: AllegroFlare::DialogTree::Nodes::ExitDialog
     headers: [ AllegroFlare/DialogTree/Nodes/ExitDialog.hpp ]
+  - symbol: std::cos
+    headers: [ cmath ]
+  - symbol: std::sin
+    headers: [ cmath ]
 
 
