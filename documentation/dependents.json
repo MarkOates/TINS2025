@@ -277,7 +277,8 @@
     "DialControl/ViewMotionStudio"
   ],
   "AllegroFlare/php": [
-    "DialControl/ViewMotionStudio"
+    "DialControl/ViewMotionStudio",
+    "TINS2025/Gameplay/Screen"
   ],
   "ALLEGRO_BITMAP": [
     "TINS2025/Entity"
@@ -315,6 +316,9 @@
     "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogSystem/DialogSystem": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "DialControl/ViewMotionStudio": [
     "TINS2025/Gameplay/Screen"
   ],
   "Timeline/Keyframe": [

@@ -48,6 +48,10 @@ properties:
     getter: true
     setter: before_initialized
 
+  - name: view_motion_studio
+    type: DialControl::ViewMotionStudio
+    init_with: '{}'
+
   - name: current_level_identifier
     type: std::string
     init_with: '"[unset-current_level]"'
@@ -184,7 +188,21 @@ methods:
       dialog_system->set_standard_dialog_box_y(1080/5*4+60);
 
 
+      // Setup view_motion_studio
+      view_motion_studio.set_font_bin(font_bin);
+      view_motion_studio.initialize();
+      //view_motion_studio.load_json(cameras_json_string); // Load some test data
+      // TODO: Fix these paths
+      std::string filename_load = "tests/fixtures/animations/camera_move_1-0n.txt";
+      //std::string filename_save = "tests/fixtures/animations/camera_move_1-0n_output.txt";
+      //std::cout << "loading json" << std::endl;
+      std::string file_content = AllegroFlare::php::file_get_contents(filename_load);
+      view_motion_studio.load_json(file_content);
+
+
       return;
+    body_dependency_symbols:
+      - AllegroFlare::php
 
 
   - name: load_level_by_identifier
@@ -263,6 +281,15 @@ methods:
             //event_emitter->emit_activate_dialog_node_by_name_event("alfred_questioning");
          }
       }
+
+      // Update the view motion
+      view_motion_studio.update();
+
+      // TODO
+      //view_motion_studio.setup_camera_projection_on_live_camera();
+
+      // Render the view motion hud
+      view_motion_studio.render_hud();
 
       return;
     body_dependency_symbols:
@@ -530,5 +557,9 @@ dependencies:
     headers: [ AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp ]
   - symbol: AllegroFlare::DialogTree::NodeBank
     headers: [ AllegroFlare/DialogTree/NodeBank.hpp ]
+  - symbol: DialControl::ViewMotionStudio
+    headers: [ DialControl/ViewMotionStudio.hpp ]
+  - symbol: AllegroFlare::php
+    headers: [ AllegroFlare/UsefulPHP.hpp ]
 
 

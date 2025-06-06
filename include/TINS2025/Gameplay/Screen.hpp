@@ -14,6 +14,7 @@
 #include <AllegroFlare/Screens/Gameplay.hpp>
 #include <AllegroFlare/TileMaps/TileMap.hpp>
 #include <AllegroFlare/VirtualControllers/Base.hpp>
+#include <DialControl/ViewMotionStudio.hpp>
 #include <TINS2025/Entity.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <allegro5/allegro.h>
@@ -39,6 +40,7 @@ namespace TINS2025
          AllegroFlare::FontBin* font_bin;
          AllegroFlare::ModelBin* model_bin;
          AllegroFlare::DialogSystem::DialogSystem* dialog_system;
+         DialControl::ViewMotionStudio view_motion_studio;
          std::string current_level_identifier;
          TINS2025::Gameplay::Level* current_level;
          AllegroFlare::CollisionObservers::Simple collision_observer;

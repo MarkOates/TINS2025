@@ -6,6 +6,7 @@
 #include <AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp>
 #include <AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp>
 #include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
+#include <AllegroFlare/UsefulPHP.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <allegro5/allegro_primitives.h>
@@ -29,6 +30,7 @@ Screen::Screen()
    , font_bin(nullptr)
    , model_bin(nullptr)
    , dialog_system(nullptr)
+   , view_motion_studio({})
    , current_level_identifier("[unset-current_level]")
    , current_level(nullptr)
    , collision_observer({})
@@ -262,6 +264,18 @@ void Screen::load_up_world()
    dialog_system->set_standard_dialog_box_y(1080/5*4+60);
 
 
+   // Setup view_motion_studio
+   view_motion_studio.set_font_bin(font_bin);
+   view_motion_studio.initialize();
+   //view_motion_studio.load_json(cameras_json_string); // Load some test data
+   // TODO: Fix these paths
+   std::string filename_load = "tests/fixtures/animations/camera_move_1-0n.txt";
+   //std::string filename_save = "tests/fixtures/animations/camera_move_1-0n_output.txt";
+   //std::cout << "loading json" << std::endl;
+   std::string file_content = AllegroFlare::php::file_get_contents(filename_load);
+   view_motion_studio.load_json(file_content);
+
+
    return;
 }
 
@@ -340,6 +354,15 @@ void Screen::update()
          //event_emitter->emit_activate_dialog_node_by_name_event("alfred_questioning");
       }
    }
+
+   // Update the view motion
+   view_motion_studio.update();
+
+   // TODO
+   //view_motion_studio.setup_camera_projection_on_live_camera();
+
+   // Render the view motion hud
+   view_motion_studio.render_hud();
 
    return;
 }

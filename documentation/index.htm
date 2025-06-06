@@ -1487,6 +1487,10 @@ table td
   <td class="property">AllegroFlare::DialogSystem::DialogSystem*</td>
 </tr>
 <tr>
+  <td class="property">view_motion_studio</td>
+  <td class="property">DialControl::ViewMotionStudio</td>
+</tr>
+<tr>
   <td class="property">current_level_identifier</td>
   <td class="property">std::string</td>
 </tr>
@@ -1671,6 +1675,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeBank&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeBank.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::ViewMotionStudio&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/ViewMotionStudio.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::php&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/UsefulPHP.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -2473,7 +2483,8 @@ table td
     "DialControl/ViewMotionStudio"
   ],
   "AllegroFlare/php": [
-    "DialControl/ViewMotionStudio"
+    "DialControl/ViewMotionStudio",
+    "TINS2025/Gameplay/Screen"
   ],
   "ALLEGRO_BITMAP": [
     "TINS2025/Entity"
@@ -2511,6 +2522,9 @@ table td
     "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogSystem/DialogSystem": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "DialControl/ViewMotionStudio": [
     "TINS2025/Gameplay/Screen"
   ],
   "Timeline/Keyframe": [
