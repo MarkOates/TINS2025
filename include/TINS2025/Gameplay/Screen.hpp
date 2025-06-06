@@ -75,6 +75,7 @@ namespace TINS2025
          virtual void virtual_control_button_down_func(AllegroFlare::Player* player=nullptr, AllegroFlare::VirtualControllers::Base* virtual_controller=nullptr, int virtual_controller_button_num=0, bool is_repeat=false) override;
          virtual void virtual_control_axis_change_func(ALLEGRO_EVENT* ev=nullptr) override;
          ALLEGRO_FONT* obtain_font();
+         void DEVELOPMENT__render_tile_map();
       };
    }
 }

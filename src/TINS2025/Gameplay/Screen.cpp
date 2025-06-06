@@ -178,6 +178,7 @@ void Screen::load_up_world()
    // Setup the tile map
    collision_tile_map.resize(100, 100);
    collision_tile_map.initialize();
+   collision_tile_map.set_tile(69, 34, 1);
 
 
    entities.reserve(256);
@@ -193,7 +194,6 @@ void Screen::load_up_world()
 
    player_entity = &entities.back();
 
-
    {
       Entity e;
       e.aabb2d.set_x(1920/2 + 200);
@@ -203,7 +203,6 @@ void Screen::load_up_world()
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
       entities.push_back(e);
    }
-
 
    return;
 }
@@ -284,10 +283,14 @@ void Screen::update()
 
 void Screen::render()
 {
+   DEVELOPMENT__render_tile_map();
+
    for (auto &entity : entities)
    {
       if ((entity.flags & TINS2025::Entity::FLAG_HIDDEN) == 0) entity.draw();
    }
+
+   //DEVELOPMENT__render_tile_map();
 
    //ALLEGRO_FONT *font = obtain_font();
    //al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
@@ -317,7 +320,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
    }
    // Update stuff here (take into account delta_time)
    //player_entity->aabb2d.set_velocity_x(player_entity->aabb2d.get_x() + 1.0);
-   player_entity->aabb2d.set_velocity_x(1.0);
+   player_entity->aabb2d.set_velocity_x(2.0);
 
    update();
    return;
@@ -410,6 +413,39 @@ ALLEGRO_FONT* Screen::obtain_font()
       throw std::runtime_error("[TINS2025::Gameplay::Screen::obtain_font]: error: guard \"font_bin\" not met");
    }
    return font_bin->auto_get("Inter-Regular.ttf -32");
+}
+
+void Screen::DEVELOPMENT__render_tile_map()
+{
+   AllegroFlare::TileMaps::TileMap<int> &tile_map = collision_tile_map;
+   float tile_width=16.0f;
+   float tile_height=16.0f;
+
+   for (int y=0; y<tile_map.get_num_rows(); y++)
+   {
+      for (int x=0; x<tile_map.get_num_columns(); x++)
+      {
+         int tile_type = tile_map.get_tile(x, y);
+         switch(tile_type)
+         {
+            case 0:
+              //al_draw_rectangle(x * tile_width, y * tile_height, (x+1) * tile_width, (y+1) * tile_height, 
+                 //ALLEGRO_COLOR{0.2, 0.2, 0.21, 0.21}, 1.0);
+            break;
+
+            case 1:
+              al_draw_filled_rectangle(x * tile_width, y * tile_height, (x+1) * tile_width, (y+1) * tile_height, 
+                 ALLEGRO_COLOR{0.65, 0.62, 0.6, 1.0});
+            break;
+
+            default:
+              //al_draw_filled_rectangle(x * tile_width, y * tile_height, (x+1) * tile_width, (y+1) * tile_height, 
+                 //ALLEGRO_COLOR{0.8, 0.32, 0.4, 1.0});
+            break;
+         }
+      }
+   }
+   return;
 }
 
 
