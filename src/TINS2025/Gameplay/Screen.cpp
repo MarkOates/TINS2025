@@ -7,6 +7,7 @@
 #include <AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp>
 #include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
 #include <AllegroFlare/Placement3D.hpp>
+#include <AllegroFlare/PlayerInputControllers/Generic.hpp>
 #include <AllegroFlare/UsefulPHP.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
@@ -306,6 +307,38 @@ void Screen::load_up_world()
    hide_view_motion_studio_hud = true;
 
 
+
+   // Setup the player_input_controller
+   auto generic_player_input_controller = new AllegroFlare::PlayerInputControllers::Generic();
+   generic_player_input_controller->set_on_time_step_update(
+      [this](AllegroFlare::Vec2D value, double time_now, double time_step) {
+         //throw std::runtime_error("asdfasf");
+
+         //player_entity->
+         //auto player_box = frustum_viewer.find_first_box("player_box");
+         //AllegroFlare::Camera3D &camera = frustum_viewer.get_camera_ref();
+
+         // Simple:
+         //player_box->position.x += value.x * 0.02;
+         //player_box->position.z += value.y * 0.02;
+         //player_entity->aabb2d.set_velocity_x(value.x * 0.02);
+         //player_entity->aabb2d.set_velocity_y(value.y * 0.02);
+         player_entity->aabb2d.set_velocity_x(value.x * 0.01625);
+         player_entity->aabb2d.set_velocity_y(value.y * 0.01625);
+         //player_entity->position.z += value.y * 0.02;
+
+         // Relative to camera:
+         //float angle = camera.spin;
+         //float x_prime = value.x * std::cos(angle) - value.y * std::sin(angle);
+         //float y_prime = value.x * std::sin(angle) + value.y * std::cos(angle);
+
+         //player_entity->velocity.x = x_prime * 0.05;
+         //player_box->velocity.z = y_prime * 0.05;
+      }
+   );
+   set_player_input_controller(generic_player_input_controller);
+
+
    return;
 }
 
@@ -448,9 +481,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[TINS2025::Gameplay::Screen::primary_update_func]: error: guard \"initialized\" not met");
    }
-   // Update stuff here (take into account delta_time)
-   //player_entity->aabb2d.set_velocity_x(player_entity->aabb2d.get_x() + 1.0);
-   //player_entity->aabb2d.set_velocity_x(0.02);
+   AllegroFlare::Screens::Gameplay::primary_update_func(time_now, delta_time);
 
    update();
    return;
