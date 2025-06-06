@@ -2,6 +2,7 @@
 
 #include <TINS2025/Gameplay/Screen.hpp>
 
+#include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <allegro5/allegro_primitives.h>
@@ -27,6 +28,7 @@ Screen::Screen()
    , current_level_identifier("[unset-current_level]")
    , current_level(nullptr)
    , collision_observer({})
+   , collision_tile_map({})
    , entities({})
    , player_entity(nullptr)
    , initialized(false)
@@ -173,6 +175,11 @@ void Screen::load_up_world()
 {
    collision_observer.clear();
 
+   // Setup the tile map
+   collision_tile_map.resize(100, 100);
+   collision_tile_map.initialize();
+
+
    entities.reserve(256);
 
    Entity e;
@@ -181,6 +188,7 @@ void Screen::load_up_world()
    e.aabb2d.set_w(40);
    e.aabb2d.set_h(20);
    e.sprite = bitmap_bin->auto_get("character-012.png");
+   e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
    entities.push_back(e);
 
    player_entity = &entities.back();
@@ -234,6 +242,21 @@ void Screen::on_deactivate()
 
 void Screen::update()
 {
+   // Observe aabb2d <-> tile steps
+   AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
+      &collision_tile_map,
+      nullptr,
+      16.0f,
+      16.0f
+   );
+   for (auto &entity : entities)
+   {
+      if ((entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP) == 0) continue;
+      tile_map_collision_stepper.set_aabb2d(&entity.aabb2d);
+      tile_map_collision_stepper.step();
+   }
+
+   // Observe changes in bounding box collisions
    collision_observer.set_subject(player_entity);
    std::set<void*> collidables;
    for (auto &entity : entities)
@@ -256,7 +279,6 @@ void Screen::update()
       collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
    }
 
-
    return;
 }
 
@@ -267,8 +289,8 @@ void Screen::render()
       if ((entity.flags & TINS2025::Entity::FLAG_HIDDEN) == 0) entity.draw();
    }
 
-   ALLEGRO_FONT *font = obtain_font();
-   al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
+   //ALLEGRO_FONT *font = obtain_font();
+   //al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
    return;
 }
 
@@ -294,7 +316,9 @@ void Screen::primary_update_func(double time_now, double delta_time)
       throw std::runtime_error("[TINS2025::Gameplay::Screen::primary_update_func]: error: guard \"initialized\" not met");
    }
    // Update stuff here (take into account delta_time)
-   player_entity->aabb2d.set_x(player_entity->aabb2d.get_x() + 1.0);
+   //player_entity->aabb2d.set_velocity_x(player_entity->aabb2d.get_x() + 1.0);
+   player_entity->aabb2d.set_velocity_x(1.0);
+
    update();
    return;
 }

@@ -148,5 +148,11 @@
   ],
   "TINS2025/Entity": [
     "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/TileMaps/TileMap": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Physics/TileMapCollisionStepper": [
+    "TINS2025/Gameplay/Screen"
   ]
 }

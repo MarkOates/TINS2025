@@ -17,6 +17,7 @@ namespace TINS2025
          FLAG_NONE = 0x0000,
          FLAG_HIDDEN = 0x0001,
          FLAG_COLLIDES_WITH_PLAYER = 0x0002,
+         FLAG_COLLIDES_WITH_TILEMAP = 0x0004,
       };
    private:
 

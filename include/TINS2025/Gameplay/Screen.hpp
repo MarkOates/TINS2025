@@ -10,6 +10,7 @@
 #include <AllegroFlare/ModelBin.hpp>
 #include <AllegroFlare/Player.hpp>
 #include <AllegroFlare/Screens/Gameplay.hpp>
+#include <AllegroFlare/TileMaps/TileMap.hpp>
 #include <AllegroFlare/VirtualControllers/Base.hpp>
 #include <TINS2025/Entity.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
@@ -38,6 +39,7 @@ namespace TINS2025
          std::string current_level_identifier;
          TINS2025::Gameplay::Level* current_level;
          AllegroFlare::CollisionObservers::Simple collision_observer;
+         AllegroFlare::TileMaps::TileMap<int> collision_tile_map;
          std::vector<TINS2025::Entity> entities;
          TINS2025::Entity* player_entity;
          bool initialized;

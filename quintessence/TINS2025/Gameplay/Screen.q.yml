@@ -54,6 +54,10 @@ properties:
     type: AllegroFlare::CollisionObservers::Simple
     init_with: '{}'
 
+  - name: collision_tile_map
+    type: AllegroFlare::TileMaps::TileMap<int>
+    init_with: '{}'
+
   - name: entities
     type: std::vector<TINS2025::Entity>
     init_with: '{}'
@@ -106,6 +110,11 @@ methods:
     body: |
       collision_observer.clear();
 
+      // Setup the tile map
+      collision_tile_map.resize(100, 100);
+      collision_tile_map.initialize();
+
+
       entities.reserve(256);
 
       Entity e;
@@ -114,6 +123,7 @@ methods:
       e.aabb2d.set_w(40);
       e.aabb2d.set_h(20);
       e.sprite = bitmap_bin->auto_get("character-012.png");
+      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
       entities.push_back(e);
 
       player_entity = &entities.back();
@@ -168,6 +178,21 @@ methods:
 
   - name: update
     body: |
+      // Observe aabb2d <-> tile steps
+      AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
+         &collision_tile_map,
+         nullptr,
+         16.0f,
+         16.0f
+      );
+      for (auto &entity : entities)
+      {
+         if ((entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP) == 0) continue;
+         tile_map_collision_stepper.set_aabb2d(&entity.aabb2d);
+         tile_map_collision_stepper.step();
+      }
+
+      // Observe changes in bounding box collisions
       collision_observer.set_subject(player_entity);
       std::set<void*> collidables;
       for (auto &entity : entities)
@@ -190,8 +215,9 @@ methods:
          collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
       }
 
-
       return;
+    body_dependency_symbols:
+      - AllegroFlare::Physics::TileMapCollisionStepper
 
 
   - name: render
@@ -201,8 +227,8 @@ methods:
          if ((entity.flags & TINS2025::Entity::FLAG_HIDDEN) == 0) entity.draw();
       }
       
-      ALLEGRO_FONT *font = obtain_font();
-      al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
+      //ALLEGRO_FONT *font = obtain_font();
+      //al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
       return;
 
 
@@ -231,7 +257,9 @@ methods:
     guards: [ initialized ]
     body: |
       // Update stuff here (take into account delta_time)
-      player_entity->aabb2d.set_x(player_entity->aabb2d.get_x() + 1.0);
+      //player_entity->aabb2d.set_velocity_x(player_entity->aabb2d.get_x() + 1.0);
+      player_entity->aabb2d.set_velocity_x(1.0);
+
       update();
       return;
 
@@ -374,5 +402,9 @@ dependencies:
     headers: [ AllegroFlare/CollisionObservers/Simple.hpp ]
   - symbol: TINS2025::Entity
     headers: [ TINS2025/Entity.hpp ]
+  - symbol: AllegroFlare::TileMaps::TileMap
+    headers: [ AllegroFlare/TileMaps/TileMap.hpp ]
+  - symbol: AllegroFlare::Physics::TileMapCollisionStepper
+    headers: [ AllegroFlare/Physics/TileMapCollisionStepper.hpp ]
 
 

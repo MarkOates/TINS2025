@@ -27,6 +27,7 @@ enums:
       - FLAG_NONE
       - FLAG_HIDDEN
       - FLAG_COLLIDES_WITH_PLAYER
+      - FLAG_COLLIDES_WITH_TILEMAP
 
 
 methods:

@@ -497,6 +497,10 @@ table td
   <td class="property">AllegroFlare::CollisionObservers::Simple</td>
 </tr>
 <tr>
+  <td class="property">collision_tile_map</td>
+  <td class="property">AllegroFlare::TileMaps::TileMap&lt;int&gt;</td>
+</tr>
+<tr>
   <td class="property">entities</td>
   <td class="property">std::vector&lt;TINS2025::Entity&gt;</td>
 </tr>
@@ -628,6 +632,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;TINS2025::Entity&quot;, &quot;headers&quot;=&gt;[&quot;TINS2025/Entity.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::TileMaps::TileMap&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/TileMaps/TileMap.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Physics::TileMapCollisionStepper&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Physics/TileMapCollisionStepper.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -783,6 +793,12 @@ table td
     "TINS2025/Gameplay/Screen"
   ],
   "TINS2025/Entity": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/TileMaps/TileMap": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Physics/TileMapCollisionStepper": [
     "TINS2025/Gameplay/Screen"
   ]
 }
