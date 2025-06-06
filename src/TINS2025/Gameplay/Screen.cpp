@@ -4,6 +4,7 @@
 
 #include <AllegroFlare/DialogTree/NodeOptions/ExitDialog.hpp>
 #include <AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp>
+#include <AllegroFlare/DialogTree/Nodes/ExitDialog.hpp>
 #include <AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp>
 #include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
 #include <AllegroFlare/Placement3D.hpp>
@@ -244,10 +245,6 @@ void Screen::load_up_world()
    entities.reserve(256);
 
    Entity e;
-   //e.aabb2d.set_x(1920/2);
-   //e.aabb2d.set_y(1080/2);
-   //e.aabb2d.set_w(40);
-   //e.aabb2d.set_h(20);
    e.aabb2d.set_x(0);
    e.aabb2d.set_y(3.0);
    e.aabb2d.set_w(0.25);
@@ -255,23 +252,32 @@ void Screen::load_up_world()
    e.sprite = bitmap_bin->auto_get("character-012.png");
    e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
    e.model = model_bin->auto_get("character_model-01.obj");
-   //centered_unit_cube-02.obj");
    e.model->texture = bitmap_bin->auto_get("character-012.png");
    entities.push_back(e);
 
    player_entity = &entities.back();
 
-   {
+   { // Add an "apple"
       Entity e;
-      //e.aabb2d.set_x(1920/2 + 200);
-      //e.aabb2d.set_y(1080/2);
-      //e.aabb2d.set_w(20);
-      //e.aabb2d.set_h(10);
       e.aabb2d.set_x(0 + 2);
       e.aabb2d.set_y(3.0);
       e.aabb2d.set_w(0.25);
       e.aabb2d.set_h(0.25);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      e.type |= TINS2025::Entity::ENTITY_TYPE_APPLE;
+      e.model = model_bin->auto_get("centered_unit_cube-02.obj");
+      e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+      entities.push_back(e);
+   }
+
+   { // Add a "building entry"
+      Entity e;
+      e.aabb2d.set_x(0);
+      e.aabb2d.set_y(4.0);
+      e.aabb2d.set_w(1.0);
+      e.aabb2d.set_h(1.0);
+      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      e.type |= TINS2025::Entity::ENTITY_TYPE_BUILDING_ENTRY;
       e.model = model_bin->auto_get("centered_unit_cube-02.obj");
       e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
       entities.push_back(e);
@@ -411,10 +417,21 @@ void Screen::update()
 
       for (auto &entered : collision_observer.get_entered())
       {
-         TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(entered);
-         collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
-         event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
-         //event_emitter->emit_activate_dialog_node_by_name_event("alfred_questioning");
+         TINS2025::Entity &entity = *static_cast<TINS2025::Entity*>(entered);
+         if (entity.flags & TINS2025::Entity::FLAG_INACTIVE) continue;
+
+         switch (entity.type)
+         {
+            case TINS2025::Entity::ENTITY_TYPE_APPLE:
+               entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
+               entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
+               event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_BUILDING_ENTRY:
+               event_emitter->emit_activate_dialog_node_by_name_event("enter_home");
+            break;
+         }
       }
    }
 
@@ -439,12 +456,13 @@ void Screen::render()
 
    for (auto &entity : entities)
    {
+      if (entity.flags & TINS2025::Entity::FLAG_INACTIVE) continue;
       if (entity.flags & TINS2025::Entity::FLAG_HIDDEN) continue;
 
       //entity.draw();
       placement.position.x = entity.aabb2d.get_x();
       placement.position.z = entity.aabb2d.get_y();
-      placement.position.y = 1;
+      placement.position.y = 0;
 
       placement.start_transform();
       entity.model->set_texture(entity.model->texture);
@@ -473,6 +491,23 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[TINS2025::Gameplay::Screen::game_event_func]: error: guard \"game_event\" not met");
    }
+   //if (scripting) scripting->game_event_func(game_event);
+
+   //if (game_event->is_type("trigger_central_core_cinematic"))
+   //{
+      //start_cinematic_camera("central_core_cinematic");
+   //}
+   if (game_event->is_type("win_game"))
+   {
+      call_on_finished_callback_func(); // Consider technique to exit
+      // HERE
+      
+      //game_is_won();
+      //toggle_player_input_controller_between_robot_and_player_if_available();
+   }
+
+   // game_configuration->handle_game_event(game_event);
+   return;
    return;
 }
 
@@ -679,6 +714,29 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
+      { "enter_home", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            LOTTIE,
+            {
+               "I did it! What a party!"
+            },
+            {
+               //{ "Win game", new AllegroFlare::DialogTree::NodeOptions::EmitGameEvent("win_game", "exit_dialog"), 0 }
+               { "Win game", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 },
+            }
+         )
+      },
+     //AllegroFlare::DialogTree::NodeOptions::GoToNode
+      { "emit_win_game", new AllegroFlare::DialogTree::Nodes::EmitGameEvent("win_game") },
+            //LOTTIE,
+            //{
+               //"I did it! What a party!"
+            //},
+            //{
+               //{ "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+               //{ "Win game", new AllegroFlare::DialogTree::Nodes::EmitGameEvent("win_game", "->mission_briefing") },
+            //}
+         //)
+      //},
    });
 
    return result;

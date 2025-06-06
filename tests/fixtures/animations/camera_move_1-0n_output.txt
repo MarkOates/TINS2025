@@ -6,13 +6,13 @@
       "position": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": -0.9439384341239929
       },
       "roll": 0.0,
       "roll_in_unit_values": true,
       "shift": {
         "x": 0.0,
-        "y": 0.0
+        "y": 0.11009164154529572
       },
       "spin": 0.0,
       "spin_in_unit_values": true,
@@ -21,9 +21,9 @@
         "y": 0.0,
         "z": 16.0
       },
-      "tilt": 0.10000001639127731,
+      "tilt": 0.06470585614442825,
       "tilt_in_unit_values": true,
-      "zoom": 2.499999761581421
+      "zoom": 0.0
     },
     {
       "far_plane": 100.0,
@@ -44,36 +44,36 @@
       "stepout": {
         "x": 1.5,
         "y": 0.75,
-        "z": 7.0
+        "z": 14.0
       },
-      "tilt": 0.21875,
+      "tilt": 0.0,
       "tilt_in_unit_values": false,
-      "zoom": 2.125
+      "zoom": 3.25
     },
     {
       "far_plane": 100.0,
       "near_plane": 0.10000000149011612,
       "position": {
-        "x": 0.0,
+        "x": -1.5,
         "y": 0.0,
-        "z": 1.5
+        "z": 0.5
       },
       "roll": 0.0,
       "roll_in_unit_values": false,
       "shift": {
-        "x": 5.0,
+        "x": 0.0,
         "y": 0.0
       },
       "spin": 0.0,
       "spin_in_unit_values": false,
       "stepout": {
-        "x": -21.5,
+        "x": 1.5,
         "y": 0.75,
-        "z": 87.0
+        "z": 92.0
       },
-      "tilt": 0.4375,
+      "tilt": 0.5,
       "tilt_in_unit_values": false,
-      "zoom": 20.375
+      "zoom": 22.75
     },
     {
       "far_plane": 100.0,
@@ -272,9 +272,14 @@
       "initial_value": 1.0,
       "keyframes": [
         {
-          "focused": true,
+          "focused": false,
           "time": 0.0,
-          "value": 2.499999761581421
+          "value": 4.099998474121094
+        },
+        {
+          "focused": true,
+          "time": 1.5,
+          "value": 0.0
         },
         {
           "focused": false,

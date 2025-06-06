@@ -35,6 +35,7 @@ enums:
     scope: public
     enumerators:
       - FLAG_NONE
+      - FLAG_INACTIVE
       - FLAG_HIDDEN
       - FLAG_COLLIDES_WITH_PLAYER
       - FLAG_COLLIDES_WITH_TILEMAP
@@ -45,6 +46,7 @@ enums:
     enumerators:
        - ENTITY_TYPE_UNDEF
        - ENTITY_TYPE_PLAYER
+       - ENTITY_TYPE_BUILDING_ENTRY
        - ENTITY_TYPE_APPLE
 
 

@@ -331,6 +331,9 @@
   "AllegroFlare/PlayerInputControllers/Generic": [
     "TINS2025/Gameplay/Screen"
   ],
+  "AllegroFlare/DialogTree/Nodes/ExitDialog": [
+    "TINS2025/Gameplay/Screen"
+  ],
   "Timeline/Keyframe": [
     "Timeline/Keyframe",
     "Timeline/Parameter"
