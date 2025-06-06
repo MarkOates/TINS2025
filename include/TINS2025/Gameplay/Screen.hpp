@@ -88,6 +88,8 @@ namespace TINS2025
          void update();
          void render();
          virtual void game_event_func(AllegroFlare::GameEvent* game_event=nullptr) override;
+         void refresh_environment();
+         virtual void display_switch_in_func() override;
          virtual void primary_update_func(double time_now=0.0f, double delta_time=1.0f) override;
          virtual void primary_render_func() override;
          virtual void key_down_func(ALLEGRO_EVENT* ev=nullptr) override;

@@ -9,6 +9,7 @@
 #include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
 #include <AllegroFlare/Placement3D.hpp>
 #include <AllegroFlare/PlayerInputControllers/Generic.hpp>
+#include <AllegroFlare/Tiled/TMJDataLoader.hpp>
 #include <AllegroFlare/UsefulPHP.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
@@ -239,13 +240,26 @@ void Screen::load_up_world()
 
 
    // Load up the world model
-   environment_model = model_bin->auto_get("simple_scene-03.obj");
-   environment_model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+   collision_tile_map.initialize();
+
+   refresh_environment();
+   //environment_model = model_bin->auto_get("simple_scene-03.obj");
+   //environment_model->texture = bitmap_bin->auto_get("simple_scene-03.png");
 
 
    // Setup the tile map
-   collision_tile_map.resize(1000, 1000);
-   collision_tile_map.initialize();
+   ////collision_tile_map.resize(1000, 1000);
+   //collision_tile_map.initialize();
+   //AllegroFlare::Tiled::TMJDataLoader tmj_data_loader;
+   //tmj_data_loader.set_filename(data_folder_path + "maps/hello_friend-world_map-0n.tmj");
+   //tmj_data_loader.load();
+
+   ////get_tilelayers_tile_data
+   //auto data = tmj_data_loader.get_tilelayer_data_by_name_as_2d_vector("collision");
+
+   //collision_tile_map.resize(tmj_data_loader.get_num_columns(), tmj_data_loader.get_num_rows());
+   //collision_tile_map.fill_with_data(data);
+
    //collision_tile_map.set_tile(69, 34, 1);
 
 
@@ -253,7 +267,7 @@ void Screen::load_up_world()
    entities.reserve(256);
 
    Entity e;
-   e.aabb2d.set_x(0);
+   e.aabb2d.set_x(3.0);
    e.aabb2d.set_y(3.0);
    e.aabb2d.set_w(0.25);
    e.aabb2d.set_h(0.25);
@@ -294,8 +308,8 @@ void Screen::load_up_world()
 
    // Setup the dialog
    dialog_system->set_dialog_node_bank(build_dialog_node_bank());
-   //dialog_system->set_standard_dialog_box_font_name("MavenPro-Medium.ttf");
-   //dialog_system->set_standard_dialog_box_font_size(-52);
+   dialog_system->set_standard_dialog_box_font_name("Quicksand-Regular.ttf");
+   dialog_system->set_standard_dialog_box_font_size(-52);
    //dialog_system->set_standard_dialog_box_font_line_height(-52); // TODO: Add this feature
    //dialog_system->set_standard_dialog_box_width(1920 * 0.6);
    //dialog_system->set_standard_dialog_box_height(248);
@@ -397,8 +411,8 @@ void Screen::update()
       AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
          &collision_tile_map,
          nullptr,
-         2.0f,
-         2.0f
+         1.0f,
+         1.0f
       );
       for (auto &entity : entities)
       {
@@ -517,6 +531,46 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
 
    // game_configuration->handle_game_event(game_event);
    return;
+   return;
+}
+
+void Screen::refresh_environment()
+{
+   // TODO: Reload the environment model
+   std::string model_filename = "hello_friend-environment-0n.obj";
+   std::string image_filename = "hello_friend-environment-0n.png";
+
+   model_bin->destroy(model_filename);
+   bitmap_bin->destroy(image_filename);
+   environment_model = model_bin->auto_get(model_filename);
+   environment_model->texture = bitmap_bin->auto_get(image_filename);
+
+
+   AllegroFlare::Tiled::TMJDataLoader tmj_data_loader;
+   tmj_data_loader.set_filename(data_folder_path + "maps/hello_friend-world_map-0n.tmj");
+   tmj_data_loader.load();
+
+   //get_tilelayers_tile_data
+   auto data = tmj_data_loader.get_tilelayer_data_by_name_as_2d_vector("collision");
+
+   collision_tile_map.resize(tmj_data_loader.get_num_columns(), tmj_data_loader.get_num_rows());
+   collision_tile_map.fill_with_data(data);
+   return;
+}
+
+void Screen::display_switch_in_func()
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[TINS2025::Gameplay::Screen::display_switch_in_func]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[TINS2025::Gameplay::Screen::display_switch_in_func]: error: guard \"initialized\" not met");
+   }
+   AllegroFlare::Screens::Gameplay::display_switch_in_func();
+
+   refresh_environment();
+
    return;
 }
 
@@ -676,8 +730,8 @@ ALLEGRO_FONT* Screen::obtain_font()
 void Screen::DEVELOPMENT__render_tile_map()
 {
    AllegroFlare::TileMaps::TileMap<int> &tile_map = collision_tile_map;
-   float tile_width=2.0f;
-   float tile_height=2.0f;
+   float tile_width=1.0f;
+   float tile_height=1.0f;
 
    for (int y=0; y<tile_map.get_num_rows(); y++)
    {

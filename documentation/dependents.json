@@ -339,6 +339,9 @@
   "AllegroFlare/DialogTree/Nodes/ExitDialog": [
     "TINS2025/Gameplay/Screen"
   ],
+  "AllegroFlare/Tiled/TMJDataLoader": [
+    "TINS2025/Gameplay/Screen"
+  ],
   "Timeline/Keyframe": [
     "Timeline/Keyframe",
     "Timeline/Parameter"
