@@ -28,6 +28,7 @@ namespace DialControl
       DialControl::CameraStudio camera_studio;
       Timeline::MotionStudio motion_studio;
       uint32_t control_state;
+      bool hud_visible;
       bool control_state_is_busy;
       float control_state_changed_at;
       bool initialized;

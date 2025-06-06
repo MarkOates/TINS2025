@@ -6,13 +6,13 @@
       "position": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": -5.799996852874756
       },
       "roll": 0.0,
       "roll_in_unit_values": true,
       "shift": {
         "x": 0.0,
-        "y": 0.0
+        "y": 0.3999999761581421
       },
       "spin": 0.0,
       "spin_in_unit_values": true,
@@ -21,9 +21,9 @@
         "y": 0.0,
         "z": 16.0
       },
-      "tilt": 0.10000001639127731,
+      "tilt": 0.0,
       "tilt_in_unit_values": true,
-      "zoom": 2.499999761581421
+      "zoom": 3.2999989986419678
     },
     {
       "far_plane": 100.0,
@@ -225,11 +225,11 @@
         {
           "focused": false,
           "time": 0.0,
-          "value": 0.0
+          "value": 0
         },
         {
           "focused": true,
-          "time": 0.0,
+          "time": 0,
           "value": 0.0
         }
       ],
@@ -243,12 +243,12 @@
       "initial_value": 0.0,
       "keyframes": [
         {
-          "focused": true,
-          "time": 0.0,
-          "value": 0.10000001639127731
+          "focused": false,
+          "time": 1.0166652202606201,
+          "value": 0.10000000149011612
         },
         {
-          "focused": false,
+          "focused": true,
           "time": 4.249995708465576,
           "value": 0.0
         }
@@ -272,12 +272,12 @@
       "initial_value": 1.0,
       "keyframes": [
         {
-          "focused": true,
+          "focused": false,
           "time": 0.0,
-          "value": 2.499999761581421
+          "value": 1.0
         },
         {
-          "focused": false,
+          "focused": true,
           "time": 4.283333778381348,
           "value": 3.2999989986419678
         }

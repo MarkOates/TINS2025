@@ -32,6 +32,7 @@ Screen::Screen()
    , model_bin(nullptr)
    , dialog_system(nullptr)
    , view_motion_studio({})
+   , hide_view_motion_studio_hud(false)
    , current_level_identifier("[unset-current_level]")
    , current_level(nullptr)
    , collision_observer({})
@@ -39,6 +40,7 @@ Screen::Screen()
    , entities({})
    , environment_model(nullptr)
    , player_entity(nullptr)
+   , input_mode(0)
    , initialized(false)
 {
 }
@@ -251,8 +253,9 @@ void Screen::load_up_world()
    e.aabb2d.set_h(0.25);
    e.sprite = bitmap_bin->auto_get("character-012.png");
    e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
-   e.model = model_bin->auto_get("centered_unit_cube-02.obj");
-   e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+   e.model = model_bin->auto_get("character_model-01.obj");
+   //centered_unit_cube-02.obj");
+   e.model->texture = bitmap_bin->auto_get("character-012.png");
    entities.push_back(e);
 
    player_entity = &entities.back();
@@ -294,6 +297,13 @@ void Screen::load_up_world()
    //std::cout << "loading json" << std::endl;
    std::string file_content = AllegroFlare::php::file_get_contents(filename_load);
    view_motion_studio.load_json(file_content);
+
+
+   input_mode = INPUT_MODE_PLAYING;
+
+
+   // Hide the view motion studio
+   hide_view_motion_studio_hud = true;
 
 
    return;
@@ -408,7 +418,7 @@ void Screen::render()
    //view_motion_studio.setup_camera_projection_on_live_camera();
 
    // Render the view motion hud
-   view_motion_studio.render_hud();
+   if (!hide_view_motion_studio_hud) view_motion_studio.render_hud();
    //DEVELOPMENT__render_tile_map();
    //for (auto &entity : entities)
    //{
@@ -440,7 +450,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
    }
    // Update stuff here (take into account delta_time)
    //player_entity->aabb2d.set_velocity_x(player_entity->aabb2d.get_x() + 1.0);
-   player_entity->aabb2d.set_velocity_x(0.02);
+   //player_entity->aabb2d.set_velocity_x(0.02);
 
    update();
    return;
@@ -457,6 +467,55 @@ void Screen::primary_render_func()
    }
    // Render stuff here
    render();
+   return;
+}
+
+void Screen::key_down_func(ALLEGRO_EVENT* ev)
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[TINS2025::Gameplay::Screen::key_down_func]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[TINS2025::Gameplay::Screen::key_down_func]: error: guard \"initialized\" not met");
+   }
+   if (!(ev))
+   {
+      std::stringstream error_message;
+      error_message << "[TINS2025::Gameplay::Screen::key_down_func]: error: guard \"ev\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[TINS2025::Gameplay::Screen::key_down_func]: error: guard \"ev\" not met");
+   }
+   // Process standard gameplay screen controls, which includes whatever active player_input_controller is
+   // assigned to the Screens/Gameplay
+   AllegroFlare::Screens::Gameplay::key_down_func(ev);
+
+   bool shift = ev->keyboard.modifiers & ALLEGRO_KEYMOD_SHIFT;
+   bool ctrl = ev->keyboard.modifiers & ALLEGRO_KEYMOD_COMMAND;
+
+   if (ev->keyboard.keycode == ALLEGRO_KEY_BACKQUOTE)
+   {
+      // Toggle playmode
+      if (input_mode == INPUT_MODE_PLAYING) input_mode = INPUT_MODE_EDITING;
+      else if (input_mode == INPUT_MODE_EDITING) input_mode = INPUT_MODE_PLAYING;
+   }
+   else if (ev->keyboard.keycode == ALLEGRO_KEY_H)
+   {
+      hide_view_motion_studio_hud = !hide_view_motion_studio_hud;
+   }
+   else
+   {
+      switch (input_mode)
+      {
+         case INPUT_MODE_PLAYING:
+         break;
+
+         case INPUT_MODE_EDITING:
+            view_motion_studio.on_key_down(ev);
+         break;
+      }
+   }
+
    return;
 }
 
@@ -572,11 +631,11 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
 {
    AllegroFlare::DialogTree::NodeBank result;
 
-   std::string LOLLIE = "Lollie";
+   std::string LOTTIE = "Lottie";
 
    result.set_nodes({
       { "pickup_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
-            LOLLIE,
+            LOTTIE,
             {
                "This is perfect! I just found an essential ingredient for our party!"
             },

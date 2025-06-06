@@ -34,6 +34,12 @@ namespace TINS2025
          static constexpr char* TYPE = (char*)"TINS2025/Gameplay/Screen";
 
       private:
+         enum InputMode : uint32_t
+         {
+            INPUT_MODE_NONE = 0,
+            INPUT_MODE_PLAYING,
+            INPUT_MODE_EDITING,
+         };
          std::string data_folder_path;
          AllegroFlare::AssetStudio::Database* asset_studio_database;
          AllegroFlare::EventEmitter* event_emitter;
@@ -42,6 +48,7 @@ namespace TINS2025
          AllegroFlare::ModelBin* model_bin;
          AllegroFlare::DialogSystem::DialogSystem* dialog_system;
          DialControl::ViewMotionStudio view_motion_studio;
+         bool hide_view_motion_studio_hud;
          std::string current_level_identifier;
          TINS2025::Gameplay::Level* current_level;
          AllegroFlare::CollisionObservers::Simple collision_observer;
@@ -49,6 +56,7 @@ namespace TINS2025
          std::vector<TINS2025::Entity> entities;
          AllegroFlare::Model3D* environment_model;
          TINS2025::Entity* player_entity;
+         int input_mode;
          bool initialized;
 
       protected:
@@ -82,6 +90,7 @@ namespace TINS2025
          virtual void game_event_func(AllegroFlare::GameEvent* game_event=nullptr) override;
          virtual void primary_update_func(double time_now=0.0f, double delta_time=1.0f) override;
          virtual void primary_render_func() override;
+         virtual void key_down_func(ALLEGRO_EVENT* ev=nullptr) override;
          virtual void virtual_control_button_up_func(AllegroFlare::Player* player=nullptr, AllegroFlare::VirtualControllers::Base* virtual_controller=nullptr, int virtual_controller_button_num=0, bool is_repeat=false) override;
          virtual void virtual_control_button_down_func(AllegroFlare::Player* player=nullptr, AllegroFlare::VirtualControllers::Base* virtual_controller=nullptr, int virtual_controller_button_num=0, bool is_repeat=false) override;
          virtual void virtual_control_axis_change_func(ALLEGRO_EVENT* ev=nullptr) override;

@@ -934,6 +934,10 @@ table td
   <td class="property">uint32_t</td>
 </tr>
 <tr>
+  <td class="property">hud_visible</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
   <td class="property">control_state_is_busy</td>
   <td class="property">bool</td>
 </tr>
@@ -1502,6 +1506,10 @@ table td
   <td class="property">DialControl::ViewMotionStudio</td>
 </tr>
 <tr>
+  <td class="property">hide_view_motion_studio_hud</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
   <td class="property">current_level_identifier</td>
   <td class="property">std::string</td>
 </tr>
@@ -1528,6 +1536,10 @@ table td
 <tr>
   <td class="property">player_entity</td>
   <td class="property">TINS2025::Entity*</td>
+</tr>
+<tr>
+  <td class="property">input_mode</td>
+  <td class="property">int</td>
 </tr>
 <tr>
   <td class="property">initialized</td>
@@ -1591,6 +1603,10 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>primary_render_func</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>key_down_func</b>(ALLEGRO_EVENT* ev=nullptr)</td>
 </tr>
 <tr>
   <td class="method">void</td>

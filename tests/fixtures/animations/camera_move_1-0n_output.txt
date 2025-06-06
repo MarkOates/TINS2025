@@ -44,36 +44,36 @@
       "stepout": {
         "x": 1.5,
         "y": 0.75,
-        "z": 14.0
+        "z": 7.0
       },
-      "tilt": 0.0,
+      "tilt": 0.21875,
       "tilt_in_unit_values": false,
-      "zoom": 3.25
+      "zoom": 2.125
     },
     {
       "far_plane": 100.0,
       "near_plane": 0.10000000149011612,
       "position": {
-        "x": -1.5,
+        "x": 0.0,
         "y": 0.0,
-        "z": 0.5
+        "z": 1.5
       },
       "roll": 0.0,
       "roll_in_unit_values": false,
       "shift": {
-        "x": 0.0,
+        "x": 5.0,
         "y": 0.0
       },
       "spin": 0.0,
       "spin_in_unit_values": false,
       "stepout": {
-        "x": 1.5,
+        "x": -21.5,
         "y": 0.75,
-        "z": 92.0
+        "z": 87.0
       },
-      "tilt": 0.5,
+      "tilt": 0.4375,
       "tilt_in_unit_values": false,
-      "zoom": 22.75
+      "zoom": 20.375
     },
     {
       "far_plane": 100.0,

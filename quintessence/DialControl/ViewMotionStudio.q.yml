@@ -22,6 +22,10 @@ properties:
     getter: true
     setter: explicit
 
+  - name: hud_visible
+    type: bool
+    init_with: true
+
   - name: control_state_is_busy
     type: bool
     init_with: false
@@ -215,6 +219,8 @@ methods:
   - name: render_hud
     guards: [ initialized ]
     body: |
+      if (!hud_visible) return;
+
       camera_studio.setup_projection_on_hud_camera();
       camera_studio.draw_camera_info_overlay();
       motion_studio.render();

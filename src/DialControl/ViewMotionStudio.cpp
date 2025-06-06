@@ -21,6 +21,7 @@ ViewMotionStudio::ViewMotionStudio()
    , camera_studio({})
    , motion_studio({})
    , control_state(STATE_UNDEF)
+   , hud_visible(true)
    , control_state_is_busy(false)
    , control_state_changed_at(0.0f)
    , initialized(false)
@@ -248,6 +249,8 @@ void ViewMotionStudio::render_hud()
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[DialControl::ViewMotionStudio::render_hud]: error: guard \"initialized\" not met");
    }
+   if (!hud_visible) return;
+
    camera_studio.setup_projection_on_hud_camera();
    camera_studio.draw_camera_info_overlay();
    motion_studio.render();
