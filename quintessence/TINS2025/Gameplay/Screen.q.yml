@@ -414,7 +414,12 @@ methods:
     body: |
       view_motion_studio.setup_camera_projection_on_live_camera();
 
+      AllegroFlare::Placement3D environment_model_displacement;
+      environment_model_displacement.position.x = 0.5;
+      environment_model_displacement.position.z = 0.5;
+      environment_model_displacement.start_transform();
       environment_model->draw();
+      environment_model_displacement.restore_transform();
 
       DEVELOPMENT__render_tile_map();
       AllegroFlare::Placement3D placement;
@@ -425,13 +430,22 @@ methods:
          if (entity.flags & TINS2025::Entity::FLAG_HIDDEN) continue;
 
          //entity.draw();
-         placement.position.x = entity.aabb2d.get_x();
-         placement.position.z = entity.aabb2d.get_y();
+         placement.position.x = entity.aabb2d.get_x(); // + entity.aabb2d.get_w() * 0.5f;
+         placement.position.z = entity.aabb2d.get_y(); // + entity.aabb2d.get_h() * 0.5;
          placement.position.y = 0;
+         /*
+         placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
+         placement.size.z = entity.aabb2d.get_h(); // + entity.aabb2d.get_h() * 0.5;
+         placement.size.y = 0;
+         placement.align.x = 0.5;
+         placement.align.z = 0.5;
+         placement.align.y = 0;
+         */
 
          placement.start_transform();
          entity.model->set_texture(entity.model->texture);
          entity.model->draw();
+         al_draw_rectangle(0, 0, entity.aabb2d.get_w(), entity.aabb2d.get_h(), ALLEGRO_COLOR{1, 1, 1, 1}, 0.01);
          placement.restore_transform();
       }
 
