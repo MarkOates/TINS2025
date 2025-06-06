@@ -75,11 +75,12 @@ TEST_F(TINS2025_Gameplay_ScreenTestWithAllegroFrameworksFullFixture,
    screen.set_bitmap_bin(get_framework_bitmap_bin());
    screen.set_font_bin(get_framework_font_bin());
    screen.set_model_bin(get_framework_model_bin());
+   screen.set_dialog_system(get_framework_dialog_system());
    screen.initialize();
 
    framework_register_and_activate_screen("screen", &screen);
 
-   framework_run_loop(6);
+   framework_run_loop(-1);
 }
 
 

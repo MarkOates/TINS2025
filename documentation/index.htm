@@ -74,6 +74,10 @@ table td
   <td class="property">ALLEGRO_BITMAP*</td>
 </tr>
 <tr>
+  <td class="property">type</td>
+  <td class="property">uint32_t</td>
+</tr>
+<tr>
   <td class="property">aabb2d</td>
   <td class="property">AllegroFlare::Physics::AABB2D</td>
 </tr>
@@ -485,6 +489,10 @@ table td
   <td class="property">AllegroFlare::ModelBin*</td>
 </tr>
 <tr>
+  <td class="property">dialog_system</td>
+  <td class="property">AllegroFlare::DialogSystem::DialogSystem*</td>
+</tr>
+<tr>
   <td class="property">current_level_identifier</td>
   <td class="property">std::string</td>
 </tr>
@@ -526,6 +534,14 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>initialize</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>gameplay_suspend_func</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>gameplay_resume_func</b>()</td>
 </tr>
 <tr>
   <td class="method">void</td>
@@ -582,6 +598,10 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>DEVELOPMENT__render_tile_map</b>()</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::DialogTree::NodeBank</td>
+  <td class="method"><b>build_dialog_node_bank</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -643,6 +663,21 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Physics::TileMapCollisionStepper&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Physics/TileMapCollisionStepper.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogSystem::DialogSystem&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogSystem/DialogSystem.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::Nodes::MultipageWithOptions&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeOptions::ExitDialog&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeOptions/ExitDialog.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeOptions::GoToNode&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeBank&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeBank.hpp&quot;]}</td>
+</tr>
     </table>
 </div>  </div>
 </ul>
@@ -666,7 +701,8 @@ table td
     "TINS2025/Gameplay/Level"
   ],
   "AllegroFlare/DialogTree/NodeBank": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogTree/NodeBankFactory": [
     "TINS2025/Game/Configurations/Main"
@@ -678,13 +714,16 @@ table td
     "TINS2025/Game/Configurations/Main"
   ],
   "AllegroFlare/DialogTree/Nodes/MultipageWithOptions": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogTree/NodeOptions/GoToNode": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogTree/NodeOptions/ExitDialog": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "TINS2025/Gameplay/Level": [
     "TINS2025/Game/Configurations/Main",
@@ -803,6 +842,9 @@ table td
     "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/Physics/TileMapCollisionStepper": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/DialogSystem/DialogSystem": [
     "TINS2025/Gameplay/Screen"
   ]
 }

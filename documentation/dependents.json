@@ -16,7 +16,8 @@
     "TINS2025/Gameplay/Level"
   ],
   "AllegroFlare/DialogTree/NodeBank": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogTree/NodeBankFactory": [
     "TINS2025/Game/Configurations/Main"
@@ -28,13 +29,16 @@
     "TINS2025/Game/Configurations/Main"
   ],
   "AllegroFlare/DialogTree/Nodes/MultipageWithOptions": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogTree/NodeOptions/GoToNode": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/DialogTree/NodeOptions/ExitDialog": [
-    "TINS2025/Game/Configurations/Main"
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
   ],
   "TINS2025/Gameplay/Level": [
     "TINS2025/Game/Configurations/Main",
@@ -153,6 +157,9 @@
     "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/Physics/TileMapCollisionStepper": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/DialogSystem/DialogSystem": [
     "TINS2025/Gameplay/Screen"
   ]
 }

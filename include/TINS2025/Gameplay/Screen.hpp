@@ -4,6 +4,8 @@
 #include <AllegroFlare/AssetStudio/Database.hpp>
 #include <AllegroFlare/BitmapBin.hpp>
 #include <AllegroFlare/CollisionObservers/Simple.hpp>
+#include <AllegroFlare/DialogSystem/DialogSystem.hpp>
+#include <AllegroFlare/DialogTree/NodeBank.hpp>
 #include <AllegroFlare/EventEmitter.hpp>
 #include <AllegroFlare/FontBin.hpp>
 #include <AllegroFlare/GameEvent.hpp>
@@ -36,6 +38,7 @@ namespace TINS2025
          AllegroFlare::BitmapBin* bitmap_bin;
          AllegroFlare::FontBin* font_bin;
          AllegroFlare::ModelBin* model_bin;
+         AllegroFlare::DialogSystem::DialogSystem* dialog_system;
          std::string current_level_identifier;
          TINS2025::Gameplay::Level* current_level;
          AllegroFlare::CollisionObservers::Simple collision_observer;
@@ -57,11 +60,15 @@ namespace TINS2025
          void set_bitmap_bin(AllegroFlare::BitmapBin* bitmap_bin);
          void set_font_bin(AllegroFlare::FontBin* font_bin);
          void set_model_bin(AllegroFlare::ModelBin* model_bin);
+         void set_dialog_system(AllegroFlare::DialogSystem::DialogSystem* dialog_system);
          std::string get_data_folder_path() const;
          AllegroFlare::EventEmitter* get_event_emitter() const;
+         AllegroFlare::DialogSystem::DialogSystem* get_dialog_system() const;
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();
+         virtual void gameplay_suspend_func() override;
+         virtual void gameplay_resume_func() override;
          void load_up_world();
          virtual bool load_level_by_identifier(std::string level_identifier="[unset-level_identifier]") override;
          virtual void on_activate() override;
@@ -76,6 +83,7 @@ namespace TINS2025
          virtual void virtual_control_axis_change_func(ALLEGRO_EVENT* ev=nullptr) override;
          ALLEGRO_FONT* obtain_font();
          void DEVELOPMENT__render_tile_map();
+         static AllegroFlare::DialogTree::NodeBank build_dialog_node_bank();
       };
    }
 }

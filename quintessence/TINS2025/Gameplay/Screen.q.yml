@@ -42,6 +42,12 @@ properties:
     init_with: nullptr
     setter: before_initialized
 
+  - name: dialog_system
+    type: AllegroFlare::DialogSystem::DialogSystem*
+    init_with: nullptr
+    getter: true
+    setter: before_initialized
+
   - name: current_level_identifier
     type: std::string
     init_with: '"[unset-current_level]"'
@@ -97,6 +103,7 @@ methods:
       - bitmap_bin
       - font_bin
       - model_bin
+      - dialog_system
     body: |
       set_update_strategy(AllegroFlare::Screens::Base::UpdateStrategy::SEPARATE_UPDATE_AND_RENDER_FUNCS);
       load_up_world();
@@ -106,6 +113,32 @@ methods:
       - al_is_primitives_addon_initialized
 
 
+  - name: gameplay_suspend_func
+    virtual: true
+    override: true
+    body: |
+      // Function that is called immediately after the gameplay is suspended.
+      //AllegroFlare::Logger::warn_from_once(
+         //"AllegroFlare::Screens::Gameplay::gameplay_suspend_func",
+         //"Not implemented in the base class. This method should be implemented in the derived class. Take into account "
+            //"the AllegroFlare/Screens/Gameplay class has a suspend_gameplay func"
+      //);
+      return;
+
+
+  - name: gameplay_resume_func
+    virtual: true
+    override: true
+    body: |
+      // Function that is called immediately after the gameplay is resumed.
+      //AllegroFlare::Logger::warn_from_once(
+         //"AllegroFlare::Screens::Gameplay::gameplay_suspend_func",
+         //"Not implemented in the base class. This method should be implemented in the derived class. Take into account "
+            //"the AllegroFlare/Screens/Gameplay class has a resume_gameplay func"
+      //);
+      return;
+
+
   - name: load_up_world
     body: |
       collision_observer.clear();
@@ -113,9 +146,10 @@ methods:
       // Setup the tile map
       collision_tile_map.resize(100, 100);
       collision_tile_map.initialize();
-      collision_tile_map.set_tile(69, 34, 1);
+      //collision_tile_map.set_tile(69, 34, 1);
 
 
+      // Setup the entities
       entities.reserve(256);
 
       Entity e;
@@ -138,6 +172,17 @@ methods:
          e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
          entities.push_back(e);
       }
+
+
+      // Setup the dialog
+      dialog_system->set_dialog_node_bank(build_dialog_node_bank());
+      //dialog_system->set_standard_dialog_box_font_name("MavenPro-Medium.ttf");
+      //dialog_system->set_standard_dialog_box_font_size(-52);
+      //dialog_system->set_standard_dialog_box_font_line_height(-52); // TODO: Add this feature
+      //dialog_system->set_standard_dialog_box_width(1920 * 0.6);
+      //dialog_system->set_standard_dialog_box_height(248);
+      dialog_system->set_standard_dialog_box_y(1080/5*4+60);
+
 
       return;
 
@@ -177,41 +222,46 @@ methods:
 
   - name: update
     body: |
-      // Observe aabb2d <-> tile steps
-      AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
-         &collision_tile_map,
-         nullptr,
-         16.0f,
-         16.0f
-      );
-      for (auto &entity : entities)
+      if (!get_gameplay_suspended())
       {
-         if ((entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP) == 0) continue;
-         tile_map_collision_stepper.set_aabb2d(&entity.aabb2d);
-         tile_map_collision_stepper.step();
-      }
+         // Observe aabb2d <-> tile steps
+         AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
+            &collision_tile_map,
+            nullptr,
+            16.0f,
+            16.0f
+         );
+         for (auto &entity : entities)
+         {
+            if ((entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP) == 0) continue;
+            tile_map_collision_stepper.set_aabb2d(&entity.aabb2d);
+            tile_map_collision_stepper.step();
+         }
 
-      // Observe changes in bounding box collisions
-      collision_observer.set_subject(player_entity);
-      std::set<void*> collidables;
-      for (auto &entity : entities)
-      {
-         if (entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER) collidables.insert((void*)&entity);
-      }
-      collision_observer.set_collidables(collidables);
-      collision_observer.set_on_test_collide([](void* subject_v, void* collidable_v) -> bool {
-         TINS2025::Entity &subject = *static_cast<TINS2025::Entity*>(subject_v);
-         TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(collidable_v);
+         // Observe changes in bounding box collisions
+         collision_observer.set_subject(player_entity);
+         std::set<void*> collidables;
+         for (auto &entity : entities)
+         {
+            if (entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER) collidables.insert((void*)&entity);
+         }
+         collision_observer.set_collidables(collidables);
+         collision_observer.set_on_test_collide([](void* subject_v, void* collidable_v) -> bool {
+            TINS2025::Entity &subject = *static_cast<TINS2025::Entity*>(subject_v);
+            TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(collidable_v);
 
-         return (subject.aabb2d.collides(&collidable.aabb2d));
-      });
+            return (subject.aabb2d.collides(&collidable.aabb2d));
+         });
 
-      collision_observer.process();
+         collision_observer.process();
 
-      for (auto &entered : collision_observer.get_entered())
-      {
-         TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(entered);
-         collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         for (auto &entered : collision_observer.get_entered())
+         {
+            TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(entered);
+            collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
+            event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
+            //event_emitter->emit_activate_dialog_node_by_name_event("alfred_questioning");
+         }
       }
 
       return;
@@ -401,6 +451,34 @@ methods:
       return;
 
 
+  - name: build_dialog_node_bank
+    static: true
+    type: AllegroFlare::DialogTree::NodeBank
+    body: |
+      AllegroFlare::DialogTree::NodeBank result;
+
+      std::string LOLLIE = "Lollie";
+
+      result.set_nodes({
+         { "pickup_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+               LOLLIE,
+               {
+                  "This is perfect! I just found an essential ingredient for our party!"
+               },
+               {
+                  { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+               }
+            )
+         },
+      });
+
+      return result;
+    body_dependency_symbols:
+      - AllegroFlare::DialogTree::Nodes::MultipageWithOptions
+      - AllegroFlare::DialogTree::NodeOptions::ExitDialog
+      - AllegroFlare::DialogTree::NodeOptions::GoToNode
+
+
 dependencies:
 
 
@@ -442,5 +520,15 @@ dependencies:
     headers: [ AllegroFlare/TileMaps/TileMap.hpp ]
   - symbol: AllegroFlare::Physics::TileMapCollisionStepper
     headers: [ AllegroFlare/Physics/TileMapCollisionStepper.hpp ]
+  - symbol: AllegroFlare::DialogSystem::DialogSystem
+    headers: [ AllegroFlare/DialogSystem/DialogSystem.hpp ]
+  - symbol: AllegroFlare::DialogTree::Nodes::MultipageWithOptions
+    headers: [ AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp ]
+  - symbol: AllegroFlare::DialogTree::NodeOptions::ExitDialog
+    headers: [ AllegroFlare/DialogTree/NodeOptions/ExitDialog.hpp ]
+  - symbol: AllegroFlare::DialogTree::NodeOptions::GoToNode
+    headers: [ AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp ]
+  - symbol: AllegroFlare::DialogTree::NodeBank
+    headers: [ AllegroFlare/DialogTree/NodeBank.hpp ]
 
 

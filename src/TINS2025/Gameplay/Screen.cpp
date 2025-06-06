@@ -2,6 +2,9 @@
 
 #include <TINS2025/Gameplay/Screen.hpp>
 
+#include <AllegroFlare/DialogTree/NodeOptions/ExitDialog.hpp>
+#include <AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp>
+#include <AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp>
 #include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
@@ -25,6 +28,7 @@ Screen::Screen()
    , bitmap_bin(nullptr)
    , font_bin(nullptr)
    , model_bin(nullptr)
+   , dialog_system(nullptr)
    , current_level_identifier("[unset-current_level]")
    , current_level(nullptr)
    , collision_observer({})
@@ -83,6 +87,13 @@ void Screen::set_model_bin(AllegroFlare::ModelBin* model_bin)
 }
 
 
+void Screen::set_dialog_system(AllegroFlare::DialogSystem::DialogSystem* dialog_system)
+{
+   if (get_initialized()) throw std::runtime_error("[Screen::set_dialog_system]: error: guard \"get_initialized()\" not met.");
+   this->dialog_system = dialog_system;
+}
+
+
 std::string Screen::get_data_folder_path() const
 {
    return data_folder_path;
@@ -92,6 +103,12 @@ std::string Screen::get_data_folder_path() const
 AllegroFlare::EventEmitter* Screen::get_event_emitter() const
 {
    return event_emitter;
+}
+
+
+AllegroFlare::DialogSystem::DialogSystem* Screen::get_dialog_system() const
+{
+   return dialog_system;
 }
 
 
@@ -165,9 +182,38 @@ void Screen::initialize()
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[TINS2025::Gameplay::Screen::initialize]: error: guard \"model_bin\" not met");
    }
+   if (!(dialog_system))
+   {
+      std::stringstream error_message;
+      error_message << "[TINS2025::Gameplay::Screen::initialize]: error: guard \"dialog_system\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[TINS2025::Gameplay::Screen::initialize]: error: guard \"dialog_system\" not met");
+   }
    set_update_strategy(AllegroFlare::Screens::Base::UpdateStrategy::SEPARATE_UPDATE_AND_RENDER_FUNCS);
    load_up_world();
    initialized = true;
+   return;
+}
+
+void Screen::gameplay_suspend_func()
+{
+   // Function that is called immediately after the gameplay is suspended.
+   //AllegroFlare::Logger::warn_from_once(
+      //"AllegroFlare::Screens::Gameplay::gameplay_suspend_func",
+      //"Not implemented in the base class. This method should be implemented in the derived class. Take into account "
+         //"the AllegroFlare/Screens/Gameplay class has a suspend_gameplay func"
+   //);
+   return;
+}
+
+void Screen::gameplay_resume_func()
+{
+   // Function that is called immediately after the gameplay is resumed.
+   //AllegroFlare::Logger::warn_from_once(
+      //"AllegroFlare::Screens::Gameplay::gameplay_suspend_func",
+      //"Not implemented in the base class. This method should be implemented in the derived class. Take into account "
+         //"the AllegroFlare/Screens/Gameplay class has a resume_gameplay func"
+   //);
    return;
 }
 
@@ -178,9 +224,10 @@ void Screen::load_up_world()
    // Setup the tile map
    collision_tile_map.resize(100, 100);
    collision_tile_map.initialize();
-   collision_tile_map.set_tile(69, 34, 1);
+   //collision_tile_map.set_tile(69, 34, 1);
 
 
+   // Setup the entities
    entities.reserve(256);
 
    Entity e;
@@ -203,6 +250,17 @@ void Screen::load_up_world()
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
       entities.push_back(e);
    }
+
+
+   // Setup the dialog
+   dialog_system->set_dialog_node_bank(build_dialog_node_bank());
+   //dialog_system->set_standard_dialog_box_font_name("MavenPro-Medium.ttf");
+   //dialog_system->set_standard_dialog_box_font_size(-52);
+   //dialog_system->set_standard_dialog_box_font_line_height(-52); // TODO: Add this feature
+   //dialog_system->set_standard_dialog_box_width(1920 * 0.6);
+   //dialog_system->set_standard_dialog_box_height(248);
+   dialog_system->set_standard_dialog_box_y(1080/5*4+60);
+
 
    return;
 }
@@ -241,41 +299,46 @@ void Screen::on_deactivate()
 
 void Screen::update()
 {
-   // Observe aabb2d <-> tile steps
-   AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
-      &collision_tile_map,
-      nullptr,
-      16.0f,
-      16.0f
-   );
-   for (auto &entity : entities)
+   if (!get_gameplay_suspended())
    {
-      if ((entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP) == 0) continue;
-      tile_map_collision_stepper.set_aabb2d(&entity.aabb2d);
-      tile_map_collision_stepper.step();
-   }
+      // Observe aabb2d <-> tile steps
+      AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
+         &collision_tile_map,
+         nullptr,
+         16.0f,
+         16.0f
+      );
+      for (auto &entity : entities)
+      {
+         if ((entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP) == 0) continue;
+         tile_map_collision_stepper.set_aabb2d(&entity.aabb2d);
+         tile_map_collision_stepper.step();
+      }
 
-   // Observe changes in bounding box collisions
-   collision_observer.set_subject(player_entity);
-   std::set<void*> collidables;
-   for (auto &entity : entities)
-   {
-      if (entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER) collidables.insert((void*)&entity);
-   }
-   collision_observer.set_collidables(collidables);
-   collision_observer.set_on_test_collide([](void* subject_v, void* collidable_v) -> bool {
-      TINS2025::Entity &subject = *static_cast<TINS2025::Entity*>(subject_v);
-      TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(collidable_v);
+      // Observe changes in bounding box collisions
+      collision_observer.set_subject(player_entity);
+      std::set<void*> collidables;
+      for (auto &entity : entities)
+      {
+         if (entity.flags & TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER) collidables.insert((void*)&entity);
+      }
+      collision_observer.set_collidables(collidables);
+      collision_observer.set_on_test_collide([](void* subject_v, void* collidable_v) -> bool {
+         TINS2025::Entity &subject = *static_cast<TINS2025::Entity*>(subject_v);
+         TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(collidable_v);
 
-      return (subject.aabb2d.collides(&collidable.aabb2d));
-   });
+         return (subject.aabb2d.collides(&collidable.aabb2d));
+      });
 
-   collision_observer.process();
+      collision_observer.process();
 
-   for (auto &entered : collision_observer.get_entered())
-   {
-      TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(entered);
-      collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
+      for (auto &entered : collision_observer.get_entered())
+      {
+         TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(entered);
+         collidable.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
+         //event_emitter->emit_activate_dialog_node_by_name_event("alfred_questioning");
+      }
    }
 
    return;
@@ -446,6 +509,28 @@ void Screen::DEVELOPMENT__render_tile_map()
       }
    }
    return;
+}
+
+AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
+{
+   AllegroFlare::DialogTree::NodeBank result;
+
+   std::string LOLLIE = "Lollie";
+
+   result.set_nodes({
+      { "pickup_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            LOLLIE,
+            {
+               "This is perfect! I just found an essential ingredient for our party!"
+            },
+            {
+               { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+            }
+         )
+      },
+   });
+
+   return result;
 }
 
 
