@@ -22,14 +22,9 @@ Entity::~Entity()
 }
 
 
-AllegroFlare::Physics::AABB2D &Entity::get_aabb2d_ref()
-{
-   return aabb2d;
-}
-
-
 void Entity::draw()
 {
+   // Draw the box
    al_draw_rectangle(
       aabb2d.get_x(),
       aabb2d.get_y(),
@@ -38,6 +33,23 @@ void Entity::draw()
       ALLEGRO_COLOR{1, 1, 1, 1},
       1.0
    );
+
+   // Draw the sprite (bottom centered)
+   if (sprite)
+   {
+      ALLEGRO_BITMAP *bitmap = sprite;
+
+      float center_x = aabb2d.get_x() + aabb2d.get_w() / 2.0f;
+      float center_y = aabb2d.get_y() + aabb2d.get_h() / 2.0f;
+
+      float bitmap_w = al_get_bitmap_width(bitmap);
+      float bitmap_h = al_get_bitmap_height(bitmap);
+
+      float draw_x = center_x - bitmap_w / 2.0f;
+      float draw_y = center_y - bitmap_h;
+
+      al_draw_bitmap(bitmap, draw_x, draw_y, 0);
+   }
 }
 
 

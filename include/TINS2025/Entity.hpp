@@ -19,18 +19,17 @@ namespace TINS2025
          FLAG_COLLIDES_WITH_PLAYER = 0x0002,
       };
    private:
-      ALLEGRO_BITMAP* sprite;
-      AllegroFlare::Physics::AABB2D aabb2d;
 
    protected:
 
 
    public:
+      ALLEGRO_BITMAP* sprite;
+      AllegroFlare::Physics::AABB2D aabb2d;
       uint32_t flags;
       Entity();
       ~Entity();
 
-      AllegroFlare::Physics::AABB2D &get_aabb2d_ref();
       void draw();
    };
 }

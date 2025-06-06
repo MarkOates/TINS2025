@@ -176,10 +176,11 @@ void Screen::load_up_world()
    entities.reserve(256);
 
    Entity e;
-   e.get_aabb2d_ref().set_x(1920/2);
-   e.get_aabb2d_ref().set_y(1080/2);
-   e.get_aabb2d_ref().set_w(40);
-   e.get_aabb2d_ref().set_h(20);
+   e.aabb2d.set_x(1920/2);
+   e.aabb2d.set_y(1080/2);
+   e.aabb2d.set_w(40);
+   e.aabb2d.set_h(20);
+   e.sprite = bitmap_bin->auto_get("character-012.png");
    entities.push_back(e);
 
    player_entity = &entities.back();
@@ -187,10 +188,10 @@ void Screen::load_up_world()
 
    {
       Entity e;
-      e.get_aabb2d_ref().set_x(1920/2 + 200);
-      e.get_aabb2d_ref().set_y(1080/2);
-      e.get_aabb2d_ref().set_w(20);
-      e.get_aabb2d_ref().set_h(10);
+      e.aabb2d.set_x(1920/2 + 200);
+      e.aabb2d.set_y(1080/2);
+      e.aabb2d.set_w(20);
+      e.aabb2d.set_h(10);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
       entities.push_back(e);
    }
@@ -244,7 +245,7 @@ void Screen::update()
       TINS2025::Entity &subject = *static_cast<TINS2025::Entity*>(subject_v);
       TINS2025::Entity &collidable = *static_cast<TINS2025::Entity*>(collidable_v);
 
-      return (subject.get_aabb2d_ref().collides(&collidable.get_aabb2d_ref()));
+      return (subject.aabb2d.collides(&collidable.aabb2d));
    });
 
    collision_observer.process();
@@ -293,7 +294,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
       throw std::runtime_error("[TINS2025::Gameplay::Screen::primary_update_func]: error: guard \"initialized\" not met");
    }
    // Update stuff here (take into account delta_time)
-   player_entity->get_aabb2d_ref().set_x(player_entity->get_aabb2d_ref().get_x() + 1.0);
+   player_entity->aabb2d.set_x(player_entity->aabb2d.get_x() + 1.0);
    update();
    return;
 }

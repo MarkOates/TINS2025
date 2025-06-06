@@ -4,11 +4,12 @@ properties:
   - name: sprite
     type: ALLEGRO_BITMAP*
     init_with: nullptr
+    exposed: true
 
   - name: aabb2d
     type: AllegroFlare::Physics::AABB2D
     init_with: '{}'
-    getter_ref: true
+    exposed: true
 
   - name: flags
     type: uint32_t
@@ -33,6 +34,7 @@ methods:
 
   - name: draw
     body: |
+      // Draw the box
       al_draw_rectangle(
          aabb2d.get_x(),
          aabb2d.get_y(),
@@ -41,6 +43,23 @@ methods:
          ALLEGRO_COLOR{1, 1, 1, 1},
          1.0
       );
+
+      // Draw the sprite (bottom centered)
+      if (sprite)
+      {
+         ALLEGRO_BITMAP *bitmap = sprite;
+
+         float center_x = aabb2d.get_x() + aabb2d.get_w() / 2.0f;
+         float center_y = aabb2d.get_y() + aabb2d.get_h() / 2.0f;
+
+         float bitmap_w = al_get_bitmap_width(bitmap);
+         float bitmap_h = al_get_bitmap_height(bitmap);
+
+         float draw_x = center_x - bitmap_w / 2.0f;
+         float draw_y = center_y - bitmap_h;
+
+         al_draw_bitmap(bitmap, draw_x, draw_y, 0);
+      }
     body_dependency_symbols:
       - al_draw_rectangle
 
