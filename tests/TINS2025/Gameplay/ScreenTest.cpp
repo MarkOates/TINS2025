@@ -71,6 +71,7 @@ TEST_F(TINS2025_Gameplay_ScreenTestWithAllegroFrameworksFullFixture,
    TIMED_INTERACTIVE__will_run_as_expected)
 {
    TINS2025::Gameplay::Screen screen;
+   screen.set_data_folder_path(get_framework_data_folder_path());
    screen.set_event_emitter(get_framework_event_emitter());
    screen.set_bitmap_bin(get_framework_bitmap_bin());
    screen.set_font_bin(get_framework_font_bin());

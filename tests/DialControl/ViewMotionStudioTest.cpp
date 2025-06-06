@@ -623,6 +623,7 @@ TEST_F(DialControl_ViewMotionStudioTestWithInteractionFixture,
    model->texture = get_bitmap_bin_ref().auto_get("simple_scene-03.png");
 
    DialControl::ViewMotionStudio view_motion_studio;
+   view_motion_studio.set_data_folder_path(get_data_folder_path());
    view_motion_studio.set_font_bin(&get_font_bin_ref());
    view_motion_studio.initialize();
    view_motion_studio.load_json(cameras_json_string); // Load some test data

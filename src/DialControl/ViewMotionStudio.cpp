@@ -17,7 +17,8 @@ namespace DialControl
 
 
 ViewMotionStudio::ViewMotionStudio()
-   : font_bin(nullptr)
+   : data_folder_path(DEFAULT_DATA_FOLDER_PATH)
+   , font_bin(nullptr)
    , camera_studio({})
    , motion_studio({})
    , control_state(STATE_UNDEF)
@@ -31,6 +32,13 @@ ViewMotionStudio::ViewMotionStudio()
 
 ViewMotionStudio::~ViewMotionStudio()
 {
+}
+
+
+void ViewMotionStudio::set_data_folder_path(std::string data_folder_path)
+{
+   if (get_initialized()) throw std::runtime_error("[ViewMotionStudio::set_data_folder_path]: error: guard \"get_initialized()\" not met.");
+   this->data_folder_path = data_folder_path;
 }
 
 
@@ -80,6 +88,13 @@ void ViewMotionStudio::initialize()
       error_message << "[DialControl::ViewMotionStudio::initialize]: error: guard \"font_bin\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[DialControl::ViewMotionStudio::initialize]: error: guard \"font_bin\" not met");
+   }
+   if (!((data_folder_path != DEFAULT_DATA_FOLDER_PATH)))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::ViewMotionStudio::initialize]: error: guard \"(data_folder_path != DEFAULT_DATA_FOLDER_PATH)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::ViewMotionStudio::initialize]: error: guard \"(data_folder_path != DEFAULT_DATA_FOLDER_PATH)\" not met");
    }
    camera_studio.set_font_bin(font_bin);
    camera_studio.initialize();
@@ -281,8 +296,8 @@ void ViewMotionStudio::on_key_down(ALLEGRO_EVENT* event)
       throw std::runtime_error("[DialControl::ViewMotionStudio::on_key_down]: error: guard \"initialized\" not met");
    }
    // TODO: Fix these paths
-   std::string filename_load = "tests/fixtures/animations/camera_move_1-0n.txt";
-   std::string filename_save = "tests/fixtures/animations/camera_move_1-0n_output.txt";
+   std::string filename_save = data_folder_path + "animations/camera_move_1-0n_output.txt";
+   std::string filename_load = data_folder_path + "animations/camera_move_1-0n.txt";
 
    if (event->keyboard.keycode == ALLEGRO_KEY_TAB)
    {

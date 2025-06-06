@@ -198,6 +198,13 @@ void Screen::initialize()
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[TINS2025::Gameplay::Screen::initialize]: error: guard \"dialog_system\" not met");
    }
+   if (!((data_folder_path != DEFAULT_DATA_FOLDER_PATH)))
+   {
+      std::stringstream error_message;
+      error_message << "[TINS2025::Gameplay::Screen::initialize]: error: guard \"(data_folder_path != DEFAULT_DATA_FOLDER_PATH)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[TINS2025::Gameplay::Screen::initialize]: error: guard \"(data_folder_path != DEFAULT_DATA_FOLDER_PATH)\" not met");
+   }
    set_update_strategy(AllegroFlare::Screens::Base::UpdateStrategy::SEPARATE_UPDATE_AND_RENDER_FUNCS);
    load_up_world();
    initialized = true;
@@ -297,6 +304,7 @@ void Screen::load_up_world()
 
    // Setup view_motion_studio
    view_motion_studio.set_font_bin(font_bin);
+   view_motion_studio.set_data_folder_path(data_folder_path);
    view_motion_studio.initialize();
    //view_motion_studio.load_json(cameras_json_string); // Load some test data
    // TODO: Fix these paths

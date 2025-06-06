@@ -17,6 +17,9 @@ namespace DialControl
 {
    class ViewMotionStudio
    {
+   public:
+      static constexpr char* DEFAULT_DATA_FOLDER_PATH = (char*)"[unset-data_folder_path]";
+
    private:
       enum ControlState
       {
@@ -24,6 +27,7 @@ namespace DialControl
          STATE_CAMERA_STUDIO_CONTROL,
          STATE_MOTION_STUDIO_CONTROL,
       };
+      std::string data_folder_path;
       AllegroFlare::FontBin* font_bin;
       DialControl::CameraStudio camera_studio;
       Timeline::MotionStudio motion_studio;
@@ -42,6 +46,7 @@ namespace DialControl
       ViewMotionStudio();
       ~ViewMotionStudio();
 
+      void set_data_folder_path(std::string data_folder_path);
       void set_font_bin(AllegroFlare::FontBin* font_bin);
       uint32_t get_control_state() const;
       bool get_initialized() const;

@@ -1,6 +1,11 @@
 properties:
 
 
+  - name: data_folder_path
+    type: std::string
+    init_with: DEFAULT_DATA_FOLDER_PATH
+    setter: before_initialized
+
   - name: font_bin
     type: AllegroFlare::FontBin*
     init_with: nullptr
@@ -39,6 +44,12 @@ properties:
     init_with: false
     getter: true
 
+  - name: DEFAULT_DATA_FOLDER_PATH
+    type: char*
+    init_with: '(char*)"[unset-data_folder_path]"'
+    static: true
+    constexpr: true
+
 
 enums:
 
@@ -54,7 +65,7 @@ methods:
 
 
   - name: initialize
-    guards: [ (!initialized), font_bin ]
+    guards: [ (!initialized), font_bin, (data_folder_path != DEFAULT_DATA_FOLDER_PATH) ]
     body: |
       camera_studio.set_font_bin(font_bin);
       camera_studio.initialize();
@@ -251,8 +262,8 @@ methods:
     guards: [ initialized ]
     body: |
       // TODO: Fix these paths
-      std::string filename_load = "tests/fixtures/animations/camera_move_1-0n.txt";
-      std::string filename_save = "tests/fixtures/animations/camera_move_1-0n_output.txt";
+      std::string filename_save = data_folder_path + "animations/camera_move_1-0n_output.txt";
+      std::string filename_load = data_folder_path + "animations/camera_move_1-0n.txt";
 
       if (event->keyboard.keycode == ALLEGRO_KEY_TAB)
       {

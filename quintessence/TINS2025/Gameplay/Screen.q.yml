@@ -131,6 +131,7 @@ methods:
       - font_bin
       - model_bin
       - dialog_system
+      - (data_folder_path != DEFAULT_DATA_FOLDER_PATH)
     body: |
       set_update_strategy(AllegroFlare::Screens::Base::UpdateStrategy::SEPARATE_UPDATE_AND_RENDER_FUNCS);
       load_up_world();
@@ -237,6 +238,7 @@ methods:
 
       // Setup view_motion_studio
       view_motion_studio.set_font_bin(font_bin);
+      view_motion_studio.set_data_folder_path(data_folder_path);
       view_motion_studio.initialize();
       //view_motion_studio.load_json(cameras_json_string); // Load some test data
       // TODO: Fix these paths

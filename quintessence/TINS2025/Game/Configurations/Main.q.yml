@@ -149,6 +149,7 @@ methods:
       result->set_font_bin(runner->get_font_bin());
       result->set_model_bin(runner->get_model_bin());
       result->set_dialog_system(&runner->get_framework()->get_dialog_system_ref());
+      result->set_data_folder_path(runner->get_framework()->get_data_folder_path());
 
 
 
