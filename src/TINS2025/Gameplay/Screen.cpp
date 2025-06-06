@@ -720,13 +720,13 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
                "I did it! What a party!"
             },
             {
-               //{ "Win game", new AllegroFlare::DialogTree::NodeOptions::EmitGameEvent("win_game", "exit_dialog"), 0 }
                { "Win game", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 },
             }
          )
       },
      //AllegroFlare::DialogTree::NodeOptions::GoToNode
-      { "emit_win_game", new AllegroFlare::DialogTree::Nodes::EmitGameEvent("win_game") },
+      { "emit_win_game", new AllegroFlare::DialogTree::Nodes::EmitGameEvent("win_game", "exit_dialog") },
+      { "exit_dialog", new AllegroFlare::DialogTree::Nodes::ExitDialog() },
             //LOTTIE,
             //{
                //"I did it! What a party!"

@@ -49,12 +49,12 @@ std::string Main::app_icon_1024_filename()
 
 std::string Main::app_title()
 {
-   return "Untitled Game";
+   return "Hello Friend";
 }
 
 std::string Main::title_screen_title()
 {
-   return "Untitled Game";
+   return "Hello Friend";
 }
 
 std::string Main::primary_display_icon_filename()
@@ -116,15 +116,32 @@ AllegroFlare::Screens::Gameplay* Main::create_primary_gameplay_screen(AllegroFla
 
    TINS2025::Gameplay::Screen *result = new TINS2025::Gameplay::Screen;
 
-   result->set_data_folder_path(runner->get_framework()->get_data_folder_path());
-   result->set_asset_studio_database(&runner->get_framework()->get_asset_studio_database_ref());
-   result->set_font_bin(runner->get_font_bin());
-   result->set_bitmap_bin(runner->get_bitmap_bin());
-   result->set_model_bin(runner->get_model_bin());
    result->set_event_emitter(runner->get_event_emitter());
+   result->set_bitmap_bin(runner->get_bitmap_bin());
+   result->set_font_bin(runner->get_font_bin());
+   result->set_model_bin(runner->get_model_bin());
+   result->set_dialog_system(&runner->get_framework()->get_dialog_system_ref());
+
+
+
+   //result->set_data_folder_path(runner->get_framework()->get_data_folder_path());
+   //result->set_asset_studio_database(&runner->get_framework()->get_asset_studio_database_ref());
+   //result->set_font_bin(runner->get_font_bin());
+   //result->set_bitmap_bin(runner->get_bitmap_bin());
+   //result->set_model_bin(runner->get_model_bin());
+   //result->set_event_emitter(runner->get_event_emitter());
    result->set_on_paused_callback_func([runner](AllegroFlare::Screens::Gameplay* screen, void* user_data){
       runner->get_event_emitter()->emit_router_event(AllegroFlare::Routers::Standard::EVENT_PAUSE_GAME);
    });
+   result->set_on_finished_callback_func(
+      [runner](AllegroFlare::Screens::Gameplay* screen, void* user_data){
+         runner->get_event_emitter()->emit_router_event(
+            AllegroFlare::Routers::Standard::EVENT_PRIMARY_GAMEPLAY_SCREEN_FINISHED,
+            nullptr,
+            al_get_time()
+         );
+      }
+   );
    result->initialize();
 
    primary_gameplay_screen = result;
@@ -346,6 +363,27 @@ void Main::handle_primary_gameplay_screen_unpaused()
    primary_gameplay_screen->resume_suspended_gameplay();
    event_emitter->emit_router_event(
       AllegroFlare::Routers::Standard::EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN,
+      nullptr,
+      al_get_time()
+   );
+   return;
+}
+
+void Main::handle_primary_gameplay_screen_finished()
+{
+   if (!(primary_gameplay_screen))
+   {
+      std::stringstream error_message;
+      error_message << "[TINS2025::Game::Configurations::Main::handle_primary_gameplay_screen_finished]: error: guard \"primary_gameplay_screen\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[TINS2025::Game::Configurations::Main::handle_primary_gameplay_screen_finished]: error: guard \"primary_gameplay_screen\" not met");
+   }
+   // TODO: Add tests for this behavior
+   // TODO: Consider having and using event_emitter from self
+   AllegroFlare::EventEmitter* event_emitter = primary_gameplay_screen->get_event_emitter();
+   primary_gameplay_screen->resume_suspended_gameplay();
+   event_emitter->emit_router_event(
+      AllegroFlare::Routers::Standard::EVENT_WIN_GAME,
       nullptr,
       al_get_time()
    );
@@ -593,6 +631,10 @@ AllegroFlare::DialogTree::NodeBank Main::build_dialog_bank_by_identifier(std::st
    AllegroFlare::DialogTree::NodeBank system_node_bank =
       AllegroFlare::DialogTree::NodeBankFactory::build_common_system_dialogs_node_bank();
    result_node_bank.merge(&system_node_bank);
+
+   AllegroFlare::DialogTree::NodeBank gameplay_screen_node_bank =
+      TINS2025::Gameplay::Screen::build_dialog_node_bank();
+   result_node_bank.merge(&gameplay_screen_node_bank);
 
    return result_node_bank;
 }

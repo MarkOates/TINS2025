@@ -69,6 +69,7 @@ namespace TINS2025
             virtual void destroy_pause_screen() override;
             virtual void handle_primary_gameplay_screen_paused() override;
             virtual void handle_primary_gameplay_screen_unpaused() override;
+            virtual void handle_primary_gameplay_screen_finished() override;
             virtual std::vector<AllegroFlare::Elements::StoryboardPages::Base *> create_intro_logos_storyboard_pages() override;
             virtual std::vector<AllegroFlare::Elements::StoryboardPages::Base *> create_intro_storyboard_pages() override;
             virtual void handle_arbitrary_storyboard_screen_finished() override;
