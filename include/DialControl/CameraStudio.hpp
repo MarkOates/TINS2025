@@ -24,6 +24,7 @@ namespace DialControl
       AllegroFlare::Camera3D live_camera;
       AllegroFlare::Camera2D hud_camera;
       bool camera_info_overlay_visible;
+      float live_camera_blend_factor;
       bool initialized;
 
    protected:
@@ -37,9 +38,11 @@ namespace DialControl
       void set_cameras(std::vector<AllegroFlare::Camera3D> cameras);
       void set_cameras_(std::vector<DialControl::CameraInfo> cameras_);
       void set_current_camera(AllegroFlare::Camera3D* current_camera);
+      void set_live_camera_blend_factor(float live_camera_blend_factor);
       std::vector<AllegroFlare::Camera3D> get_cameras() const;
       std::vector<DialControl::CameraInfo> get_cameras_() const;
       AllegroFlare::Camera3D* get_current_camera() const;
+      float get_live_camera_blend_factor() const;
       bool get_initialized() const;
       void initialize();
       void update();

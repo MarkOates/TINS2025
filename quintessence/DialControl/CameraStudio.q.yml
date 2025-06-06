@@ -40,6 +40,12 @@ properties:
     type: bool
     init_with: true
 
+  - name: live_camera_blend_factor
+    type: float
+    init_with: 0.1
+    getter: true
+    setter: true
+
   - name: initialized
     type: bool
     init_with: false
@@ -78,7 +84,7 @@ methods:
 
   - name: update
     body: |
-      live_camera.blend(current_camera, 0.1);
+      live_camera.blend(current_camera, live_camera_blend_factor);
       return;
 
 

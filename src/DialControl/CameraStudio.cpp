@@ -24,6 +24,7 @@ CameraStudio::CameraStudio()
    , live_camera({})
    , hud_camera({})
    , camera_info_overlay_visible(true)
+   , live_camera_blend_factor(0.1)
    , initialized(false)
 {
 }
@@ -59,6 +60,12 @@ void CameraStudio::set_current_camera(AllegroFlare::Camera3D* current_camera)
 }
 
 
+void CameraStudio::set_live_camera_blend_factor(float live_camera_blend_factor)
+{
+   this->live_camera_blend_factor = live_camera_blend_factor;
+}
+
+
 std::vector<AllegroFlare::Camera3D> CameraStudio::get_cameras() const
 {
    return cameras;
@@ -74,6 +81,12 @@ std::vector<DialControl::CameraInfo> CameraStudio::get_cameras_() const
 AllegroFlare::Camera3D* CameraStudio::get_current_camera() const
 {
    return current_camera;
+}
+
+
+float CameraStudio::get_live_camera_blend_factor() const
+{
+   return live_camera_blend_factor;
 }
 
 
@@ -125,7 +138,7 @@ void CameraStudio::initialize()
 
 void CameraStudio::update()
 {
-   live_camera.blend(current_camera, 0.1);
+   live_camera.blend(current_camera, live_camera_blend_factor);
    return;
 }
 
