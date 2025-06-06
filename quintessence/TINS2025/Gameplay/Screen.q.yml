@@ -367,6 +367,10 @@ methods:
       // Update the view motion
       view_motion_studio.update();
 
+      // Update the current camera to track the current player position
+      view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.x = player_entity->aabb2d.get_x();
+      view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.z = player_entity->aabb2d.get_y();
+
       return;
     body_dependency_symbols:
       - AllegroFlare::Physics::TileMapCollisionStepper

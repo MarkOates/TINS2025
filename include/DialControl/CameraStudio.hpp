@@ -44,6 +44,7 @@ namespace DialControl
       AllegroFlare::Camera3D* get_current_camera() const;
       float get_live_camera_blend_factor() const;
       bool get_initialized() const;
+      AllegroFlare::Camera3D &get_live_camera_ref();
       void initialize();
       void update();
       void setup_projection_on_live_camera();

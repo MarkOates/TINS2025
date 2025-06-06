@@ -30,6 +30,7 @@ properties:
 
   - name: live_camera
     type: AllegroFlare::Camera3D
+    getter_ref: true
     init_with: '{}'
 
   - name: hud_camera

@@ -96,6 +96,12 @@ bool CameraStudio::get_initialized() const
 }
 
 
+AllegroFlare::Camera3D &CameraStudio::get_live_camera_ref()
+{
+   return live_camera;
+}
+
+
 void CameraStudio::initialize()
 {
    if (!((!initialized)))
