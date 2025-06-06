@@ -308,7 +308,7 @@ void Screen::load_up_world()
    view_motion_studio.initialize();
    //view_motion_studio.load_json(cameras_json_string); // Load some test data
    // TODO: Fix these paths
-   std::string filename_load = "tests/fixtures/animations/camera_move_1-0n.txt";
+   std::string filename_load = data_folder_path + "animations/camera_move_1-0n.txt";
    //std::string filename_save = "tests/fixtures/animations/camera_move_1-0n_output.txt";
    //std::cout << "loading json" << std::endl;
    std::string file_content = AllegroFlare::php::file_get_contents(filename_load);
