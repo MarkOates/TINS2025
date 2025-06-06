@@ -1,0 +1,532 @@
+properties:
+
+
+  - name: font_bin
+    type: AllegroFlare::FontBin*
+    init_with: nullptr
+    constructor_arg: true
+
+  - name: camera
+    type: AllegroFlare::Camera3D*
+    init_with: nullptr
+    constructor_arg: true
+    getter: true
+    setter: true
+
+  - name: camera_name
+    type: std::string
+    init_with: '"[unset-camera_name]"'
+    constructor_arg: true
+    getter: true
+    setter: true
+
+  - name: camera_is_tracking_object
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
+methods:
+
+
+  - name: tos
+    type: std::string
+    parameters:
+      - name: f
+        type: float
+        default_argument: 0.0f
+    body: |
+      std::stringstream ss;
+      ss << f;
+      return ss.str();
+
+
+  - name: tosv
+    type: std::string
+    parameters:
+      - name: v
+        type: AllegroFlare::Vec3D
+        default_argument: '{}'
+    body: |
+      std::stringstream ss;
+      ss << "      " << v.x << "      " << v.y << "      " << v.z;
+      return ss.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+
+  - name: tosv2
+    type: std::string
+    parameters:
+      - name: v
+        type: AllegroFlare::Vec2D
+        default_argument: '{}'
+    body: |
+      std::stringstream ss;
+      ss << "      " << v.x << "      " << v.y;
+      return ss.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+
+  - name: hfov_degrees
+    type: float
+    body: |
+      if (camera->zoom <= 0.0f)
+      {
+         // A zoom value of 0 or less would lead to division by zero in the perspective setup
+         // or an undefined/extremely wide FoV.
+         // You might want to throw an error or return a specific value.
+         // For example, using AllegroFlare::Logger:
+         // AllegroFlare::Logger::warn_from(
+         //    "AllegroFlare::Camera3D::get_horizontal_fov_degrees",
+         //    "Zoom value is non-positive (" + std::to_string(zoom) + "), FoV calculation might be meaningless or invalid."
+         // );
+         // Returning 180 for zoom -> 0+ as a practical limit, or handle as an error.
+         // If zoom is exactly 0, it's a mathematical singularity for 1/zoom.
+         // If zoom is negative, the interpretation of 'zoom' might differ.
+         // For now, let's assume zoom must be positive.
+         if (camera->zoom == 0.0f) return 180.0f; // Effectively infinite FoV tends to 180 degrees
+         return 0.0f; // Or some other indicator of an invalid state for negative zoom
+      }
+
+      float hfov_rad = 2.0f * std::atan(1.0f / camera->zoom);
+      return hfov_rad * (180.0f / ALLEGRO_PI);
+    body_dependency_symbols:
+      - std::atan
+
+
+  - name: render
+    type: void
+    guards:
+      - al_is_system_installed()
+      - al_is_primitives_addon_initialized()
+      - al_is_font_addon_initialized()
+      - font_bin
+      - camera
+    body: |
+      int y = -400;
+      float spac = 80;
+
+      float ry = y+1080/2 - spac - 40;
+      auto w = ALLEGRO_COLOR{1, 1, 1, 1};
+      auto g = ALLEGRO_COLOR{0.56, 0.93, 0.56, 1};
+      auto f = obtain_font();
+      auto bf = obtain_bold_font();
+
+      //draw_pill(1920/2 - 130, ry,       280, 48, 90.0, 8.0, "name", w, "Camera A");
+      draw_pill(1920/2 - 130, ry,       280, 48, 90.0, 8.0, "name", w, camera_name, w, f, bf);
+      //draw_pill(1920/2-60 - 360 + 10, ry,       220, 48, 90.0, 8.0, "zoom", w, "110%");
+      draw_pill(1920/2-60 - 360 + 10, ry,       220, 48, 90.0, 8.0, "zoom", w, tos(camera->zoom * 100) + "%", w, f, bf);
+      //draw_pill(1920/2 + 200, ry,       240, 48, 80.0, 8.0, "DOF", w, "90deg");
+      draw_pill(1920/2 + 200, ry,       240, 48, 80.0, 8.0, "HFoV", w, tos(hfov_degrees()), w, f, bf);
+      //draw_pill(1920/2 - 860, ry, 400, 48, 136.0, 8.0, "position", w, "     0.2       10       20");
+      draw_pill(1920/2 - 860, ry, 400, 48, 136.0, 8.0, "position", w, tosv(camera->position), w, f, bf);
+      //draw_pill(1920/2 + 500, ry, 400, 48, 136.0, 8.0, "stepout", w, "     0.2       10       20");
+      draw_pill(1920/2 + 500, ry, 400, 48, 136.0, 8.0, "stepout", w, tosv(camera->stepout), w, f, bf);
+
+      draw_pill(1920/2 + 500 + 130, ry + 56, 270, 48, 136.0-30, 8.0, "shift", w, tosv2(camera->shift), w, f, bf);
+
+      if (camera_is_tracking_object)
+      {
+         draw_pill(1920/2 - 860, ry+48, 180, 48, 48.0, 8.0, "*", g, "tracking", g, f, bf);
+      }
+
+      float n_spin = camera->spin;
+      //draw_pill(1920/2 - 885, y+1080/2 + spac*4,       200, 48, 80.0, 8.0, "spin", w, "3 / 32");
+      //draw_pill(1920/2 - 885, y+1080/2 + spac*5,       200, 48, 80.0, 8.0, "tilt", w, "8 / 32");
+      //draw_pill(1920/2 - 885, y+1080/2 + spac*6,       200, 48, 80.0, 8.0, "roll", w, "0 / 32");
+      draw_pill(1920/2 - 885, y+1080/2 + spac*4,       200, 48, 80.0, 8.0, "spin", w, tos(camera->spin), w, f, bf);
+      draw_radial_diagram(1920/2 - 885 + 260, y+1080/2 + spac*4 + 48/2, 30, n_spin - 0.25);
+
+      draw_pill(1920/2 - 885, y+1080/2 + spac*5,       200, 48, 80.0, 8.0, "tilt", w, tos(camera->tilt), w, f, bf);
+      draw_radial_diagram(1920/2 - 885 + 260, y+1080/2 + spac*5 + 48/2, 30, camera->tilt);
+
+      draw_pill(1920/2 - 885, y+1080/2 + spac*6,       200, 48, 80.0, 8.0, "roll", w, tos(camera->roll), w, f, bf);
+      draw_radial_diagram(1920/2 - 885 + 260, y+1080/2 + spac*6 + 48/2, 30, camera->roll, false);
+
+
+
+
+      //draw_pill(1920/2 + 700, y+1080/2 + spac*2,       200, 48, 80.0, 8.0, "far", w, "1000");
+      draw_pill(1920/2 + 700, y+1080/2 + spac*2,       200, 48, 80.0, 8.0, "far", w, tos(camera->far_plane), w, f, bf);
+      //draw_pill(1920/2 + 700, y+1080/2 + spac*7,       200, 48, 80.0, 8.0, "near", w, "0.125");
+      draw_pill(1920/2 + 700, y+1080/2 + spac*7,       200, 48, 80.0, 8.0, "near", w, tos(camera->near_plane), w, f, bf);
+
+
+      return;
+    body_dependency_symbols:
+      - AllegroFlare::Vec2D
+      - al_draw_rounded_rectangle
+      - al_draw_text
+
+
+  - name: draw_pill
+    static: true
+    type: void
+    parameters:
+      - name: x
+        type: float
+        default_argument: 0.0f
+      - name: y
+        type: float
+        default_argument: 0.0f
+      - name: w
+        type: float
+        default_argument: 300.0f
+      - name: h
+        type: float
+        default_argument: 50.0f
+      - name: column_divider_pos
+        type: float
+        default_argument: 100.0f
+      - name: column_divider_padding
+        type: float
+        default_argument: 6.0f
+      - name: label
+        type: std::string
+        default_argument: '"[unset-label]"'
+      - name: label_color
+        type: ALLEGRO_COLOR
+        default_argument: ALLEGRO_COLOR{1, 1, 1, 1}
+      - name: value
+        type: std::string
+        default_argument: '"[unset-value]"'
+      - name: value_color
+        type: ALLEGRO_COLOR
+        default_argument: ALLEGRO_COLOR{1, 1, 1, 1}
+      - name: font
+        type: ALLEGRO_FONT*
+        default_argument: nullptr
+      - name: bold_font
+        type: ALLEGRO_FONT*
+        default_argument: nullptr
+    guards: [ font, bold_font ]
+    body: |
+      //float x = 1920/2;
+      //float y = 1080/3;
+      //ALLEGRO_FONT *font = obtain_font();
+      //ALLEGRO_FONT *bold_font = obtain_bold_font();
+      //float text_width = al_get_text_width(font, quote.c_str());
+      //float text_height = al_get_font_line_height(font);
+      float h_text_width = w/2;
+      float h_text_height = h/2;
+      //AllegroFlare::Vec2D padding = {30, 20};
+      float h_line_height = al_get_font_line_height(font) / 2;
+      //float h_line_height = 
+
+      al_draw_filled_rounded_rectangle(
+         x, // - padding.x,
+         y, // - padding.y,
+         x+w, // + padding.x,
+         y+h, // + padding.y,
+         8.0f,
+         8.0f,
+         ALLEGRO_COLOR{0, 0, 0, 1}
+         //2.0f
+      );
+
+      /*
+      al_draw_rounded_rectangle(
+         x-h_text_width - padding.x,
+         y-h_text_height - padding.y,
+         x+h_text_width + padding.x,
+         y+h_text_height + padding.y,
+         8.0f,
+         8.0f,
+         ALLEGRO_COLOR{1, 1, 1, 1},
+         2.0f
+      );
+      */
+
+      al_draw_text(
+         bold_font,
+         label_color,
+         x+column_divider_pos-column_divider_padding, y+h_text_height-h_line_height,
+         ALLEGRO_ALIGN_RIGHT,
+         label.c_str()
+      );
+
+      al_draw_text(
+         font,
+         value_color, //ALLEGRO_COLOR{1, 1, 1, 1},
+         x+column_divider_pos+column_divider_padding, y+h_text_height-h_line_height,
+         ALLEGRO_ALIGN_LEFT,
+         value.c_str()
+      );
+
+      //al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, x, y-h_text_height, ALLEGRO_ALIGN_LEFT, quote.c_str());
+      return;
+    body_dependency_symbols:
+      - AllegroFlare::Vec2D
+      - al_draw_rounded_rectangle
+      - al_draw_text
+
+
+
+  - name: draw_radial_diagram
+    parameters:
+      - name: x
+        type: float
+        default_argument: 0.0f
+      - name: y
+        type: float
+        default_argument: 0.0f
+      - name: radius
+        type: float
+        default_argument: 100.0f
+      - name: value
+        type: float
+        default_argument: 0.75f
+      - name: draw_backstep_triangle
+        type: bool
+        default_argument: true
+    body: |
+      draw_radial_ticks(x, y, radius, 32, 3, 4, 0, 2.0);
+      draw_radial_ticks(x, y, radius, 8, 10, 2, 0, 2.0);
+      draw_radial_ticks(x, y, radius, 4, 10, 0, 0, 2.0);
+      draw_clockwise_radial_line(x, y, radius - 3, value, 6.0, ALLEGRO_COLOR{1, 1, 1, 1});
+      if (draw_backstep_triangle)
+      {
+         draw_rotating_triangle_toward_center(x, y, 14, radius-6, value + 0.5, ALLEGRO_COLOR{1, 1, 1, 1});
+      }
+      //draw_rotating_triangle_toward_center
+      return;
+
+
+
+  - name: draw_radial_ticks
+    type: void
+    parameters:
+      - name: cx
+        type: float
+        default_argument: 0.0f
+      - name: cy
+        type: float
+        default_argument: 0.0f
+      - name: r
+        type: float
+        default_argument: 300.0f
+      - name: t
+        type: int
+        default_argument: 50.0f
+      - name: l
+        type: float
+        default_argument: 100.0f
+      - name: s
+        type: int
+        default_argument: 0
+      - name: o
+        type: int
+        default_argument: 0
+      - name: line_thickness
+        type: float
+        default_argument: 2.0
+    body: |
+      for (int i = 0; i < t; ++i)
+      {
+         // Determine whether to skip this tick
+         if (s > 0 && ((i + o) % s == 0))
+         {
+            continue;
+         }
+
+         float angle = ALLEGRO_PI * 2.0f * i / t;
+
+         float x1 = cx + std::cos(angle) * r;
+         float y1 = cy + std::sin(angle) * r;
+         float x2 = cx + std::cos(angle) * (r + l);
+         float y2 = cy + std::sin(angle) * (r + l);
+
+         al_draw_line(x1, y1, x2, y2, al_map_rgb(255, 255, 255), line_thickness);
+      }
+    body_dependency_symbols:
+      - std::cos
+      - std::sin
+
+
+  - name: draw_clockwise_radial_line
+    type: void
+    parameters:
+      - name: cx
+        type: float
+        default_argument: 0.0f
+      - name: cy
+        type: float
+        default_argument: 0.0f
+      - name: r
+        type: float
+        default_argument: 100.0f
+      - name: v
+        type: float
+        default_argument: 0.75f
+      - name: t
+        type: float
+        default_argument: 4.0f
+      - name: c
+        type: ALLEGRO_COLOR
+        default_argument: ALLEGRO_COLOR{1, 1, 1, 1}
+    body: |
+      float normalized_v = fmodf(v, 1.0f);
+      if (normalized_v < 0.0f)
+      {
+         normalized_v += 1.0f;
+      }
+
+      // Convert to clockwise angle (Allegro uses counter-clockwise by default)
+      float angle = ALLEGRO_PI * 2.0f * normalized_v;
+
+      float x2 = cx + std::cos(angle) * r;
+      float y2 = cy + std::sin(angle) * r;
+
+      al_draw_line(cx, cy, x2, y2, c, t);
+      return;
+
+      /*
+      void draw_clockwise_radial_line(float cx, float cy, float r,
+                                      float v, float t, ALLEGRO_COLOR c)
+      {
+         // Ensure v is within [0.0, 1.0]
+         float normalized_v = fmodf(v, 1.0f);
+         if (normalized_v < 0.0f)
+         {
+            normalized_v += 1.0f;
+         }
+
+         // Convert to clockwise angle (Allegro uses counter-clockwise by default)
+         float angle = ALLEGRO_PI * 2.0f * normalized_v;
+
+         float x2 = cx + std::cos(angle) * r;
+         float y2 = cy + std::sin(angle) * r;
+
+         al_draw_line(cx, cy, x2, y2, c, t);
+      }
+      */
+    body_dependency_symbols:
+      - fmodf
+      - std::cos
+      - std::sin
+
+
+
+  - name: draw_rotating_triangle_toward_center
+    type: void
+    parameters:
+      - name: x
+        type: float
+        default_argument: 0.0f
+      - name: y
+        type: float
+        default_argument: 0.0f
+      - name: l
+        type: float
+        default_argument: 100.0f
+      - name: d
+        type: float
+        default_argument: 0.75f
+      - name: v
+        type: float
+        default_argument: 4.0f
+      - name: c
+        type: ALLEGRO_COLOR
+        default_argument: ALLEGRO_COLOR{1, 1, 1, 1}
+    body: |
+      //void draw_rotating_triangle_toward_center(float x, float y, float l,
+                                                //float d, float v,
+                                                //ALLEGRO_COLOR c)
+      //{
+         // Normalize v to [0.0, 1.0]
+         float normalized_v = fmodf(v, 1.0f);
+         if (normalized_v < 0.0f)
+         {
+            normalized_v += 1.0f;
+         }
+
+         // Compute angle of the triangle's base center (clockwise)
+         float angle = ALLEGRO_PI * 2.0f * normalized_v;
+
+         // Compute triangle center point (apex, pointing toward the center)
+         float tx = x + std::cos(angle) * d;
+         float ty = y + std::sin(angle) * d;
+
+         // Angle pointing toward the center
+         float pointing_angle = angle + ALLEGRO_PI; // flip direction
+
+         // Compute triangle points
+         float half_base = l / 2.0f;
+         float height = (std::sqrt(3.0f) / 2.0f) * l;
+
+         // Apex (pointing toward center)
+         float apex_x = tx + std::cos(pointing_angle) * height;
+         float apex_y = ty + std::sin(pointing_angle) * height;
+
+         // Base corners
+         float base_angle = pointing_angle + ALLEGRO_PI / 2.0f;
+
+         float base1_x = tx + std::cos(base_angle) * half_base;
+         float base1_y = ty + std::sin(base_angle) * half_base;
+
+         float base2_x = tx - std::cos(base_angle) * half_base;
+         float base2_y = ty - std::sin(base_angle) * half_base;
+
+         // Draw triangle
+         //al_draw_triangle(apex_x, apex_y,
+                          //base1_x, base1_y,
+                          //base2_x, base2_y,
+                          //c, thickness);
+         al_draw_filled_triangle(apex_x, apex_y,
+                          base1_x, base1_y,
+                          base2_x, base2_y,
+                          c );
+      //}
+
+
+
+
+  - name: obtain_font
+    private: true
+    type: ALLEGRO_FONT*
+    guards: [ font_bin ]
+    body: |
+      return font_bin->auto_get("Inter-Medium.ttf -26");
+
+
+  - name: obtain_bold_font
+    private: true
+    type: ALLEGRO_FONT*
+    guards: [ font_bin ]
+    body: |
+      return font_bin->auto_get("Inter-bold.ttf -26");
+
+
+dependencies:
+
+
+  - symbol: AllegroFlare::FontBin
+    headers: [ AllegroFlare/FontBin.hpp ]
+  - symbol: ALLEGRO_FONT
+    headers: [ allegro5/allegro_font.h ]
+  - symbol: al_draw_text
+    headers: [ allegro5/allegro_font.h ]
+  - symbol: al_draw_rounded_rectangle
+    headers: [ allegro5/allegro_primitives.h ]
+  - symbol: AllegroFlare::Vec2D
+    headers: [ AllegroFlare/Vec2D.hpp ]
+  - symbol: ALLEGRO_COLOR
+    headers: [ allegro5/allegro.h ]
+  - symbol: AllegroFlare::Camera3D
+    headers: [ AllegroFlare/Camera3D.hpp ]
+  - symbol: AllegroFlare::Vec3D
+    headers: [ AllegroFlare/Vec3D.hpp ]
+  - symbol: std::atan
+    headers: [ cmath ]
+  - symbol: std::cos
+    headers: [ cmath ]
+  - symbol: std::sin
+    headers: [ cmath ]
+  - symbol: fmodf
+    headers: [ math.h ]
+
+

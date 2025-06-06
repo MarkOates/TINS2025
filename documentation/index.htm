@@ -54,13 +54,1007 @@ table td
 <body>
 <h1>Table of Contents</h1>
 <ul>
+  <li><a href="#quintessence/DialControl/CameraControl.q.yml">quintessence/DialControl/CameraControl.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/CameraInfo.q.yml">quintessence/DialControl/CameraInfo.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/CameraInfoOverlay.q.yml">quintessence/DialControl/CameraInfoOverlay.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/CameraStudio.q.yml">quintessence/DialControl/CameraStudio.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/Game/Configurations/Main.q.yml">quintessence/DialControl/Game/Configurations/Main.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/GameProgressAndStateInfo.q.yml">quintessence/DialControl/GameProgressAndStateInfo.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/Gameplay/Level.q.yml">quintessence/DialControl/Gameplay/Level.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/Gameplay/Screen.q.yml">quintessence/DialControl/Gameplay/Screen.q.yml</a></li>
+  <li><a href="#quintessence/DialControl/ViewMotionStudio.q.yml">quintessence/DialControl/ViewMotionStudio.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Entity.q.yml">quintessence/TINS2025/Entity.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Game/Configurations/Main.q.yml">quintessence/TINS2025/Game/Configurations/Main.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/GameProgressAndStateInfo.q.yml">quintessence/TINS2025/GameProgressAndStateInfo.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Gameplay/Level.q.yml">quintessence/TINS2025/Gameplay/Level.q.yml</a></li>
   <li><a href="#quintessence/TINS2025/Gameplay/Screen.q.yml">quintessence/TINS2025/Gameplay/Screen.q.yml</a></li>
+  <li><a href="#quintessence/Timeline/Keyframe.q.yml">quintessence/Timeline/Keyframe.q.yml</a></li>
+  <li><a href="#quintessence/Timeline/MotionStudio.q.yml">quintessence/Timeline/MotionStudio.q.yml</a></li>
+  <li><a href="#quintessence/Timeline/Parameter.q.yml">quintessence/Timeline/Parameter.q.yml</a></li>
+  <li><a href="#quintessence/Timeline/ParameterMappings/AllegroFlare/Camera3D.q.yml">quintessence/Timeline/ParameterMappings/AllegroFlare/Camera3D.q.yml</a></li>
+  <li><a href="#quintessence/Timeline/ParameterView.q.yml">quintessence/Timeline/ParameterView.q.yml</a></li>
 </ul>
 <h1>Components</h1>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/CameraControl.q.yml">quintessence/DialControl/CameraControl.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">camera</td>
+  <td class="property">AllegroFlare::Camera3D*</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>on_key_down</b>(ALLEGRO_EVENT* event=nullptr)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_EVENT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::KeyboardCommandMapper&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/KeyboardCommandMapper.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/CameraInfo.q.yml">quintessence/DialControl/CameraInfo.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">camera</td>
+  <td class="property">AllegroFlare::Camera3D</td>
+</tr>
+<tr>
+  <td class="property">position_tracks_a_target</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">object_being_tracked</td>
+  <td class="property">void*</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/CameraInfoOverlay.q.yml">quintessence/DialControl/CameraInfoOverlay.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">font_bin</td>
+  <td class="property">AllegroFlare::FontBin*</td>
+</tr>
+<tr>
+  <td class="property">camera</td>
+  <td class="property">AllegroFlare::Camera3D*</td>
+</tr>
+<tr>
+  <td class="property">camera_name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">camera_is_tracking_object</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>tos</b>(float f=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>tosv</b>(AllegroFlare::Vec3D v={})</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>tosv2</b>(AllegroFlare::Vec2D v={})</td>
+</tr>
+<tr>
+  <td class="method">float</td>
+  <td class="method"><b>hfov_degrees</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>render</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw_pill</b>(float x=0.0f, float y=0.0f, float w=300.0f, float h=50.0f, float column_divider_pos=100.0f, float column_divider_padding=6.0f, std::string label=&quot;[unset-label]&quot;, ALLEGRO_COLOR label_color=ALLEGRO_COLOR{1, 1, 1, 1}, std::string value=&quot;[unset-value]&quot;, ALLEGRO_COLOR value_color=ALLEGRO_COLOR{1, 1, 1, 1}, ALLEGRO_FONT* font=nullptr, ALLEGRO_FONT* bold_font=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw_radial_diagram</b>(float x=0.0f, float y=0.0f, float radius=100.0f, float value=0.75f, bool draw_backstep_triangle=true)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw_radial_ticks</b>(float cx=0.0f, float cy=0.0f, float r=300.0f, int t=50.0f, float l=100.0f, int s=0, int o=0, float line_thickness=2.0)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw_clockwise_radial_line</b>(float cx=0.0f, float cy=0.0f, float r=100.0f, float v=0.75f, float t=4.0f, ALLEGRO_COLOR c=ALLEGRO_COLOR{1, 1, 1, 1})</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw_rotating_triangle_toward_center</b>(float x=0.0f, float y=0.0f, float l=100.0f, float d=0.75f, float v=4.0f, ALLEGRO_COLOR c=ALLEGRO_COLOR{1, 1, 1, 1})</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_font</b>()</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_bold_font</b>()</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_FONT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_font.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_draw_text&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_font.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_draw_rounded_rectangle&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Vec2D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Vec2D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_COLOR&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Vec3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Vec3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::atan&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::cos&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::sin&quot;, &quot;headers&quot;=&gt;[&quot;cmath&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;fmodf&quot;, &quot;headers&quot;=&gt;[&quot;math.h&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/CameraStudio.q.yml">quintessence/DialControl/CameraStudio.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">font_bin</td>
+  <td class="property">AllegroFlare::FontBin*</td>
+</tr>
+<tr>
+  <td class="property">cameras</td>
+  <td class="property">std::vector&lt;AllegroFlare::Camera3D&gt;</td>
+</tr>
+<tr>
+  <td class="property">cameras_</td>
+  <td class="property">std::vector&lt;DialControl::CameraInfo&gt;</td>
+</tr>
+<tr>
+  <td class="property">current_camera_idx</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">current_camera</td>
+  <td class="property">AllegroFlare::Camera3D*</td>
+</tr>
+<tr>
+  <td class="property">live_camera</td>
+  <td class="property">AllegroFlare::Camera3D</td>
+</tr>
+<tr>
+  <td class="property">hud_camera</td>
+  <td class="property">AllegroFlare::Camera2D</td>
+</tr>
+<tr>
+  <td class="property">camera_info_overlay_visible</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>initialize</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>update</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>setup_projection_on_live_camera</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>setup_projection_on_hud_camera</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>toggle_camera_info_overlay_visibility</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>show_camera_info_overlay</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>hide_camera_info_overlay</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>draw_camera_info_overlay</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_current_camera_to_next_camera</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_current_camera_to_previous_camera</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>on_key_down</b>(ALLEGRO_EVENT* event=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_json_dump</b>()</td>
+</tr>
+<tr>
+  <td class="method">nlohmann::json</td>
+  <td class="method"><b>build_json</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_json</b>(std::string json_string=&quot;[unset-json_string]&quot;)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_EVENT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Camera2D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Camera2D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::KeyboardCommandMapper&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/KeyboardCommandMapper.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;nlohmann::json&quot;, &quot;headers&quot;=&gt;[&quot;lib/nlohmann/json.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::JSONLoaders::AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/JSONLoaders/AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::CameraInfo&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/CameraInfo.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::CameraInfoOverlay&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/CameraInfoOverlay.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/Game/Configurations/Main.q.yml">quintessence/DialControl/Game/Configurations/Main.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">primary_gameplay_screen</td>
+  <td class="property">DialControl::Gameplay::Screen*</td>
+</tr>
+<tr>
+  <td class="property">primary_gameplay_subscreen</td>
+  <td class="property">AllegroFlare::Screens::Subscreen::Screen*</td>
+</tr>
+<tr>
+  <td class="property">pause_screen</td>
+  <td class="property">AllegroFlare::Screens::TitledMenuScreen*</td>
+</tr>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>app_icon_1024_filename</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>app_title</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>title_screen_title</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>primary_display_icon_filename</b>()</td>
+</tr>
+<tr>
+  <td class="method">int</td>
+  <td class="method"><b>get_num_save_profiles</b>()</td>
+</tr>
+<tr>
+  <td class="method">int</td>
+  <td class="method"><b>get_num_manual_save_slots</b>()</td>
+</tr>
+<tr>
+  <td class="method">int</td>
+  <td class="method"><b>get_num_autosave_save_slots</b>()</td>
+</tr>
+<tr>
+  <td class="method">int</td>
+  <td class="method"><b>get_num_quicksave_save_slots</b>()</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle</td>
+  <td class="method"><b>get_saving_and_loading_start_style</b>()</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::SavingAndLoading::SavingAndLoading::SaveStyle</td>
+  <td class="method"><b>get_saving_and_loading_save_style</b>()</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::SavingAndLoading::SavingAndLoading::LoadStyle</td>
+  <td class="method"><b>get_saving_and_loading_load_style</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::tuple&lt;std::string, AllegroFlare::Achievement*, bool, bool&gt;&gt;</td>
+  <td class="method"><b>build_achievements</b>()</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::Screens::Gameplay*</td>
+  <td class="method"><b>create_primary_gameplay_screen</b>(AllegroFlare::Runners::Complete* runner=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>destroy_primary_gameplay_screen</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_save_file_content_into_gameplay</b>(std::string save_file_content=&quot;[unset-save_file_content]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_save_file_content_for_current_game</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>handle_save_file_loading_finished</b>()</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::Screens::Subscreen::Screen*</td>
+  <td class="method"><b>create_primary_gameplay_subscreen</b>(AllegroFlare::Runners::Complete* runner=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::Screens::Base*</td>
+  <td class="method"><b>create_pause_screen</b>(AllegroFlare::Runners::Complete* runner=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>destroy_pause_screen</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>handle_primary_gameplay_screen_paused</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>handle_primary_gameplay_screen_unpaused</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;AllegroFlare::Elements::StoryboardPages::Base *&gt;</td>
+  <td class="method"><b>create_intro_logos_storyboard_pages</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;AllegroFlare::Elements::StoryboardPages::Base *&gt;</td>
+  <td class="method"><b>create_intro_storyboard_pages</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>handle_arbitrary_storyboard_screen_finished</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;AllegroFlare::Elements::StoryboardPages::Base *&gt;</td>
+  <td class="method"><b>create_arbitrary_storyboard_pages_by_identifier</b>(std::string identifier=&quot;[unset-identifier]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
+  <td class="method"><b>build_title_screen_menu_options</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_audio_controller</b>(AllegroFlare::AudioController* audio_controller=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_last_played_session_or_start_new</b>(AllegroFlare::GameSession* game_session=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::GameProgressAndStateInfos::Base*</td>
+  <td class="method"><b>create_game_progress_and_state_info_saver_loader</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>setup_new_game_progress_and_state_info_DEPRECATED</b>(AllegroFlare::GameSession* game_session=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;AllegroFlare::LoadASavedGame::SaveSlots::Base*&gt;</td>
+  <td class="method"><b>build_save_slots_for_load_a_saved_game_screen</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>handle_game_event</b>(AllegroFlare::GameEvent* game_event=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>continue_from_last_save</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
+  <td class="method"><b>build_level_list_for_level_select_screen_by_identifier</b>(std::string identifier=&quot;[unset-identifier]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::DialogTree::NodeBank</td>
+  <td class="method"><b>build_dialog_bank_by_identifier</b>(std::string identifier=&quot;[identifier-discarded]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">AllegroFlare::Levels::Base*</td>
+  <td class="method"><b>load_level_by_identifier</b>(std::string identifier=&quot;[unset-identifier]&quot;)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameConfigurations::Complete&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameConfigurations/Complete.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Levels::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Levels/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeBank&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeBank.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeBankFactory&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeBankFactory.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::Nodes::Wait&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/Nodes/Wait.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::Nodes::ExitProgram&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/Nodes/ExitProgram.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::Nodes::MultipageWithOptions&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeOptions::GoToNode&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::DialogTree::NodeOptions::ExitDialog&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/DialogTree/NodeOptions/ExitDialog.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::Gameplay::Level&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/Gameplay/Level.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Achievement&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Achievement.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Elements::StoryboardPages::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Elements/StoryboardPages/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameSession&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameSession.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameProgressAndStateInfos::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameProgressAndStateInfos/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::LoadASavedGame::SaveSlots::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/LoadASavedGame/SaveSlots/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::LoadASavedGame::SaveSlots::Empty&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/LoadASavedGame/SaveSlots/Empty.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::Gameplay::Screen&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/Gameplay/Screen.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::GameProgressAndStateInfo&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/GameProgressAndStateInfo.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Screens::Gameplay&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Screens/Gameplay.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Runners::Complete&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Runners/Complete.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::AudioController&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/AudioController.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::EventNames&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/EventNames.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameEventDatas::AchievementUnlocked&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameEventDatas/AchievementUnlocked.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameEvent&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameEvent.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Screens::Subscreen::Screen&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Screens/Subscreen/Screen.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Screens::TitledMenuScreen&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Screens/TitledMenuScreen.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Screens::TitledMenuScreenFactory&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Screens/TitledMenuScreenFactory.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Screens::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Screens/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::SavingAndLoading::SavingAndLoading::LoadStyle&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/SavingAndLoading/SavingAndLoading.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::SavingAndLoading::SavingAndLoading::SaveStyle&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/SavingAndLoading/SavingAndLoading.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/SavingAndLoading/SavingAndLoading.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/GameProgressAndStateInfo.q.yml">quintessence/DialControl/GameProgressAndStateInfo.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">player_num_lives</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">player_inventory_items</td>
+  <td class="property">std::vector&lt;std::string&gt;</td>
+</tr>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>add_player_inventory_item</b>(std::string item_identifier=&quot;[unset-item_identifier]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>export_to_string</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>import_from_string</b>(std::string data_string=&quot;[unset-data_string]&quot;)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameProgressAndStateInfos::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameProgressAndStateInfos/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::JSONLoaders::DialControl::GameProgressAndStateInfo&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/JSONLoaders/DialControl/GameProgressAndStateInfo.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/Gameplay/Level.q.yml">quintessence/DialControl/Gameplay/Level.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">title</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Levels::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Levels/Base.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/Gameplay/Screen.q.yml">quintessence/DialControl/Gameplay/Screen.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">data_folder_path</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">asset_studio_database</td>
+  <td class="property">AllegroFlare::AssetStudio::Database*</td>
+</tr>
+<tr>
+  <td class="property">event_emitter</td>
+  <td class="property">AllegroFlare::EventEmitter*</td>
+</tr>
+<tr>
+  <td class="property">bitmap_bin</td>
+  <td class="property">AllegroFlare::BitmapBin*</td>
+</tr>
+<tr>
+  <td class="property">font_bin</td>
+  <td class="property">AllegroFlare::FontBin*</td>
+</tr>
+<tr>
+  <td class="property">model_bin</td>
+  <td class="property">AllegroFlare::ModelBin*</td>
+</tr>
+<tr>
+  <td class="property">current_level_identifier</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">current_level</td>
+  <td class="property">DialControl::Gameplay::Level*</td>
+</tr>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">DEFAULT_DATA_FOLDER_PATH</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>initialize</b>()</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>load_level_by_identifier</b>(std::string level_identifier=&quot;[unset-level_identifier]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>on_activate</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>on_deactivate</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>update</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>render</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>game_event_func</b>(AllegroFlare::GameEvent* game_event=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>primary_update_func</b>(double time_now=0.0f, double delta_time=1.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>primary_render_func</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>virtual_control_button_up_func</b>(AllegroFlare::Player* player=nullptr, AllegroFlare::VirtualControllers::Base* virtual_controller=nullptr, int virtual_controller_button_num=0, bool is_repeat=false)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>virtual_control_button_down_func</b>(AllegroFlare::Player* player=nullptr, AllegroFlare::VirtualControllers::Base* virtual_controller=nullptr, int virtual_controller_button_num=0, bool is_repeat=false)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>virtual_control_axis_change_func</b>(ALLEGRO_EVENT* ev=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">ALLEGRO_FONT*</td>
+  <td class="method"><b>obtain_font</b>()</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_FONT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_EVENT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Screens::Gameplay&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Screens/Gameplay.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::BitmapBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/BitmapBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::EventEmitter&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/EventEmitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::ModelBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/ModelBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_is_primitives_addon_initialized&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Player&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Player.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::VirtualControllers::Base&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/VirtualControllers/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::VirtualControllers::GenericController&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/VirtualControllers/GenericController.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::Gameplay::Screen&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/Gameplay/Screen.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::Gameplay::Level&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/Gameplay/Level.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::GameEvent&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/GameEvent.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::AssetStudio::Database&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/AssetStudio/Database.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DialControl/ViewMotionStudio.q.yml">quintessence/DialControl/ViewMotionStudio.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">font_bin</td>
+  <td class="property">AllegroFlare::FontBin*</td>
+</tr>
+<tr>
+  <td class="property">camera_studio</td>
+  <td class="property">DialControl::CameraStudio</td>
+</tr>
+<tr>
+  <td class="property">motion_studio</td>
+  <td class="property">Timeline::MotionStudio</td>
+</tr>
+<tr>
+  <td class="property">control_state</td>
+  <td class="property">uint32_t</td>
+</tr>
+<tr>
+  <td class="property">control_state_is_busy</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">control_state_changed_at</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>initialize</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>build_parameters_for_camera_1</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>link_camera_1_to_parameters</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;Timeline::ParameterView&gt;</td>
+  <td class="method"><b>xxbuild_parameter_views_for_parameters</b>(AllegroFlare::FontBin* font_bin=nullptr, std::vector&lt;Timeline::Parameter&gt;* p=nullptr, float height=Timeline::ParameterView::DEFAULT_HEIGHT)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>update</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>setup_camera_projection_on_live_camera</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>toggle_control_state</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>render_hud</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>on_key_down</b>(ALLEGRO_EVENT* event=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_json</b>(std::string json_string=&quot;[unset-json_string]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_json_string</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_control_state</b>(uint32_t control_state=STATE_UNDEF, bool override_if_busy=false)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_control_state_string</b>(uint32_t control_state=STATE_UNDEF)</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>is_valid_control_state</b>(uint32_t control_state=STATE_UNDEF)</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>is_control_state</b>(uint32_t possible_control_state=STATE_UNDEF)</td>
+</tr>
+<tr>
+  <td class="method">float</td>
+  <td class="method"><b>infer_current_control_state_age</b>(float time_now=al_get_time())</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_font</b>()</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_bold_font</b>()</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::CameraStudio&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/CameraStudio.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::MotionStudio&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/MotionStudio.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_EVENT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::ParameterMappings::AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/ParameterMappings/AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Parameter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::ParameterView&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/ParameterView.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Logger&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Logger.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_FONT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_font.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;DialControl::CameraInfoOverlay&quot;, &quot;headers&quot;=&gt;[&quot;DialControl/CameraInfoOverlay.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::php&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/UsefulPHP.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
 <br><br><br>
 <br><br><br>
 <ul>
@@ -681,9 +1675,806 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Timeline/Keyframe.q.yml">quintessence/Timeline/Keyframe.q.yml</h3>
+    <h3>Overview</h3>
+    <p>{"todos"=>["Modify is_focused to be a bitflag of size complementary to the class size, I think uint16_t is correct"]}</p>    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">interpolator_func</td>
+  <td class="property">std::function&lt;float(float)&gt;</td>
+</tr>
+<tr>
+  <td class="property">value</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">time</td>
+  <td class="property">double</td>
+</tr>
+<tr>
+  <td class="property">focused</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_focused</b>(bool focused=false)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_as_focused</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_as_unfocused</b>()</td>
+</tr>
+<tr>
+  <td class="method">Timeline::Keyframe</td>
+  <td class="method"><b>construct</b>(double time=0.0, float value=0.0f, std::function&lt;float(float)&gt; interpolator_func={})</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Keyframe&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Keyframe.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Timeline/MotionStudio.q.yml">quintessence/Timeline/MotionStudio.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">parameters</td>
+  <td class="property">std::vector&lt;Timeline::Parameter&gt;</td>
+</tr>
+<tr>
+  <td class="property">parameter_views</td>
+  <td class="property">std::vector&lt;Timeline::ParameterView&gt;</td>
+</tr>
+<tr>
+  <td class="property">parameter_view_idx</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">wrap_parameter_view_idx_change</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">timeline_placement</td>
+  <td class="property">AllegroFlare::Placement2D</td>
+</tr>
+<tr>
+  <td class="property">playback_speed</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">playhead</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">playhead_max</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">playhead_movement_fine</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">playhead_movement_macro</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">playing</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">timeline_start_position</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">timeline_time_scale</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">timeline_overlay_visible</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>render</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>toggle_timeline_visibility</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_timeline_start_position</b>(float delta=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>modify_timeline_time_scale</b>(float delta=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>toggle_playback</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>update_playback</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_playhead_position</b>(float playhead_position=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_playhead</b>(float delta=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_keyframe_value</b>(float delta=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_keyframe_time</b>(float delta=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>next_keyframe</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>previous_keyframe</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>add_keyframe</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>remove_keyframe</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>next_parameter_view</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>previous_parameter_view</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>on_key_down</b>(ALLEGRO_EVENT* event=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;Timeline::ParameterView&gt;</td>
+  <td class="method"><b>build_parameter_views_for_parameters</b>(AllegroFlare::FontBin* font_bin=nullptr, std::vector&lt;Timeline::Parameter&gt;* p=nullptr, float height=Timeline::ParameterView::DEFAULT_HEIGHT)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_json_dump</b>()</td>
+</tr>
+<tr>
+  <td class="method">nlohmann::json</td>
+  <td class="method"><b>build_json</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>load_json</b>(std::string json_string=&quot;[unset-json_string]&quot;)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Parameter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::ParameterView&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/ParameterView.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::KeyboardCommandMapper&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/KeyboardCommandMapper.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_EVENT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Placement2D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Placement2D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_draw_line&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;nlohmann::json&quot;, &quot;headers&quot;=&gt;[&quot;lib/nlohmann/json.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::JSONLoaders::Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/JSONLoaders/Timeline/Parameter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::JSONLoaders::AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/JSONLoaders/AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Timeline/Parameter.q.yml">quintessence/Timeline/Parameter.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">initial_value</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">parameter</td>
+  <td class="property">float*</td>
+</tr>
+<tr>
+  <td class="property">keyframes</td>
+  <td class="property">std::vector&lt;Timeline::Keyframe&gt;</td>
+</tr>
+<tr>
+  <td class="property">has_min_value</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">has_max_value</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">min_value</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">max_value</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">interpolate_initial_value_to_1st_keyframe</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">Timeline::Parameter</td>
+  <td class="method"><b>build</b>(std::string name=&quot;[unset-name]&quot;, float* parameter=nullptr, std::vector&lt;Timeline::Keyframe&gt; keyframes={}, float initial_value=0.0f, bool has_min_value=true, bool has_max_value=true, float min_value=0.0f, float max_value=1.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>add_keyframe</b>(double time=0.0, float value=0.0f, std::function&lt;float(float)&gt; interpolator_func={})</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>remove_keyframe_at_index</b>(std::size_t index=0)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>assign_to_time</b>(double position=0.0)</td>
+</tr>
+<tr>
+  <td class="method">float</td>
+  <td class="method"><b>calculate_value_at</b>(double position=0.0)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Keyframe&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Keyframe.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Parameter.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Timeline/ParameterMappings/AllegroFlare/Camera3D.q.yml">quintessence/Timeline/ParameterMappings/AllegroFlare/Camera3D.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<p>This class contains no properties</p>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">std::vector&lt;Timeline::Parameter&gt;</td>
+  <td class="method"><b>build_parameters</b>(::AllegroFlare::Camera3D* camera=nullptr)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Parameter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;:&quot;:AllegroFlare::Camera3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Camera3D.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Timeline/ParameterView.q.yml">quintessence/Timeline/ParameterView.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">font_bin</td>
+  <td class="property">AllegroFlare::FontBin*</td>
+</tr>
+<tr>
+  <td class="property">label</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">track</td>
+  <td class="property">Timeline::Parameter*</td>
+</tr>
+<tr>
+  <td class="property">width</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">height</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">x_scale</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">time_scale</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">start_x</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">selection_cursor_x</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">icon_font_size</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">hidden</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">focused</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">focused_keyframe_idx</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">DEFAULT_HEIGHT</td>
+  <td class="property">float</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_as_focused</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>set_as_unfocused</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>add_keyframe</b>(float time=0.0f, float value=0.0f, std::function&lt;float(float)&gt; interpolator_func={})</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>remove_keyframe_at_index</b>(std::size_t index=0)</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>remove_keyframe_at_focused_keyframe_idx</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_keyframe_value</b>(float delta=0.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_keyframe_time</b>(float delta=0.0f, float keyframe_max_time=120.0f)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>next_keyframe</b>(bool wrap=false)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>previous_keyframe</b>(bool wrap=false)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>render</b>()</td>
+</tr>
+<tr>
+  <td class="private_method">void</td>
+  <td class="private_method"><b>draw_selected_node_icon</b>(float x=0.0f, float y=0.0f)</td>
+</tr>
+<tr>
+  <td class="private_method">void</td>
+  <td class="private_method"><b>draw_node_icon</b>(float x=0.0f, float y=0.0f)</td>
+</tr>
+<tr>
+  <td class="private_method">void</td>
+  <td class="private_method"><b>draw_centered_unicode_character</b>(ALLEGRO_FONT* font=nullptr, ALLEGRO_COLOR color=ALLEGRO_COLOR{1, 1, 1, 1}, int x=0, int y=0, uint32_t icon=61445, int flags=0)</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_icon_font</b>()</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_bigger_icon_font</b>()</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_track_label_font</b>()</td>
+</tr>
+<tr>
+  <td class="private_method">ALLEGRO_FONT*</td>
+  <td class="private_method"><b>obtain_track_values_font</b>()</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_is_primitives_addon_initialized&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Timeline::Track*&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Timeline/Track.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::FontBin*&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/FontBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_COLOR&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_FONT*&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Color::*&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Color.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_FONT&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Timeline::Track&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Timeline/Track.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Color::&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Color.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Timeline::Parameter&quot;, &quot;headers&quot;=&gt;[&quot;Timeline/Parameter.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
 <h1>Dependents</h1>
 <pre>
 {
+  "ALLEGRO_EVENT": [
+    "DialControl/CameraControl",
+    "DialControl/CameraStudio",
+    "DialControl/Gameplay/Screen",
+    "DialControl/ViewMotionStudio",
+    "TINS2025/Gameplay/Screen",
+    "Timeline/MotionStudio"
+  ],
+  "AllegroFlare/Camera3D": [
+    "DialControl/CameraControl",
+    "DialControl/CameraInfo",
+    "DialControl/CameraInfoOverlay",
+    "DialControl/CameraStudio"
+  ],
+  "AllegroFlare/KeyboardCommandMapper": [
+    "DialControl/CameraControl",
+    "DialControl/CameraStudio",
+    "Timeline/MotionStudio"
+  ],
+  "AllegroFlare/FontBin": [
+    "DialControl/CameraInfoOverlay",
+    "DialControl/CameraStudio",
+    "DialControl/Gameplay/Screen",
+    "DialControl/ViewMotionStudio",
+    "TINS2025/Gameplay/Screen",
+    "Timeline/MotionStudio",
+    "Timeline/ParameterView",
+    "Timeline/ParameterView"
+  ],
+  "ALLEGRO_FONT": [
+    "DialControl/CameraInfoOverlay",
+    "DialControl/Gameplay/Screen",
+    "DialControl/ViewMotionStudio",
+    "TINS2025/Gameplay/Screen",
+    "Timeline/ParameterView",
+    "Timeline/ParameterView"
+  ],
+  "al_draw_text": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "al_draw_rounded_rectangle": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "AllegroFlare/Vec2D": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "ALLEGRO_COLOR": [
+    "DialControl/CameraInfoOverlay",
+    "Timeline/ParameterView"
+  ],
+  "AllegroFlare/Vec3D": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "std/atan": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "std/cos": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "std/sin": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "fmodf": [
+    "DialControl/CameraInfoOverlay"
+  ],
+  "AllegroFlare/Camera2D": [
+    "DialControl/CameraStudio"
+  ],
+  "nlohmann/json": [
+    "DialControl/CameraStudio",
+    "Timeline/MotionStudio"
+  ],
+  "AllegroFlare/JSONLoaders/AllegroFlare/Camera3D": [
+    "DialControl/CameraStudio",
+    "Timeline/MotionStudio"
+  ],
+  "DialControl/CameraInfo": [
+    "DialControl/CameraStudio"
+  ],
+  "DialControl/CameraInfoOverlay": [
+    "DialControl/CameraStudio",
+    "DialControl/ViewMotionStudio"
+  ],
+  "AllegroFlare/GameConfigurations/Complete": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Levels/Base": [
+    "DialControl/Game/Configurations/Main",
+    "DialControl/Gameplay/Level",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Level"
+  ],
+  "AllegroFlare/DialogTree/NodeBank": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/DialogTree/NodeBankFactory": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/Nodes/Wait": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/Nodes/ExitProgram": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/DialogTree/Nodes/MultipageWithOptions": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/DialogTree/NodeOptions/GoToNode": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/DialogTree/NodeOptions/ExitDialog": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "DialControl/Gameplay/Level": [
+    "DialControl/Game/Configurations/Main",
+    "DialControl/Gameplay/Screen"
+  ],
+  "AllegroFlare/Achievement": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Elements/StoryboardPages/Base": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameSession": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameProgressAndStateInfos/Base": [
+    "DialControl/Game/Configurations/Main",
+    "DialControl/GameProgressAndStateInfo",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/GameProgressAndStateInfo"
+  ],
+  "AllegroFlare/LoadASavedGame/SaveSlots/Base": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/LoadASavedGame/SaveSlots/Empty": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "DialControl/Gameplay/Screen": [
+    "DialControl/Game/Configurations/Main",
+    "DialControl/Gameplay/Screen"
+  ],
+  "DialControl/GameProgressAndStateInfo": [
+    "DialControl/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/Gameplay": [
+    "DialControl/Game/Configurations/Main",
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Runners/Complete": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/AudioController": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/EventNames": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameEventDatas/AchievementUnlocked": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/GameEvent": [
+    "DialControl/Game/Configurations/Main",
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Game/Configurations/Main",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Screens/Subscreen/Screen": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/TitledMenuScreen": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/TitledMenuScreenFactory": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/Screens/Base": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/SavingAndLoading/SavingAndLoading/LoadStyle": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/SavingAndLoading/SavingAndLoading/SaveStyle": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "AllegroFlare/SavingAndLoading/SavingAndLoading/StartStyle": [
+    "DialControl/Game/Configurations/Main",
+    "TINS2025/Game/Configurations/Main"
+  ],
+  "DialControl/JSONLoaders/DialControl/GameProgressAndStateInfo": [
+    "DialControl/GameProgressAndStateInfo"
+  ],
+  "AllegroFlare/BitmapBin": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/EventEmitter": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/ModelBin": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "al_is_primitives_addon_initialized": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen",
+    "Timeline/ParameterView"
+  ],
+  "AllegroFlare/Player": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/VirtualControllers/Base": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/VirtualControllers/GenericController": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/AssetStudio/Database": [
+    "DialControl/Gameplay/Screen",
+    "TINS2025/Gameplay/Screen"
+  ],
+  "DialControl/CameraStudio": [
+    "DialControl/ViewMotionStudio"
+  ],
+  "Timeline/MotionStudio": [
+    "DialControl/ViewMotionStudio"
+  ],
+  "Timeline/ParameterMappings/AllegroFlare/Camera3D": [
+    "DialControl/ViewMotionStudio"
+  ],
+  "Timeline/Parameter": [
+    "DialControl/ViewMotionStudio",
+    "Timeline/MotionStudio",
+    "Timeline/Parameter",
+    "Timeline/ParameterMappings/AllegroFlare/Camera3D",
+    "Timeline/ParameterView"
+  ],
+  "Timeline/ParameterView": [
+    "DialControl/ViewMotionStudio",
+    "Timeline/MotionStudio"
+  ],
+  "AllegroFlare/Logger": [
+    "DialControl/ViewMotionStudio"
+  ],
+  "AllegroFlare/php": [
+    "DialControl/ViewMotionStudio"
+  ],
   "ALLEGRO_BITMAP": [
     "TINS2025/Entity"
   ],
@@ -693,60 +2484,9 @@ table td
   "al_draw_rectangle": [
     "TINS2025/Entity"
   ],
-  "AllegroFlare/GameConfigurations/Complete": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/Levels/Base": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Level"
-  ],
-  "AllegroFlare/DialogTree/NodeBank": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/DialogTree/NodeBankFactory": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/DialogTree/Nodes/Wait": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/DialogTree/Nodes/ExitProgram": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/DialogTree/Nodes/MultipageWithOptions": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/DialogTree/NodeOptions/GoToNode": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/DialogTree/NodeOptions/ExitDialog": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Screen"
-  ],
   "TINS2025/Gameplay/Level": [
     "TINS2025/Game/Configurations/Main",
     "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/Achievement": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/Elements/StoryboardPages/Base": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/GameSession": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/GameProgressAndStateInfos/Base": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/GameProgressAndStateInfo"
-  ],
-  "AllegroFlare/LoadASavedGame/SaveSlots/Base": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/LoadASavedGame/SaveSlots/Empty": [
-    "TINS2025/Game/Configurations/Main"
   ],
   "TINS2025/Gameplay/Screen": [
     "TINS2025/Game/Configurations/Main",
@@ -755,82 +2495,8 @@ table td
   "TINS2025/GameProgressAndStateInfo": [
     "TINS2025/Game/Configurations/Main"
   ],
-  "AllegroFlare/Screens/Gameplay": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/Runners/Complete": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/AudioController": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/EventNames": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/GameEventDatas/AchievementUnlocked": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/GameEvent": [
-    "TINS2025/Game/Configurations/Main",
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/Screens/Subscreen/Screen": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/Screens/TitledMenuScreen": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/Screens/TitledMenuScreenFactory": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/Screens/Base": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/SavingAndLoading/SavingAndLoading/LoadStyle": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/SavingAndLoading/SavingAndLoading/SaveStyle": [
-    "TINS2025/Game/Configurations/Main"
-  ],
-  "AllegroFlare/SavingAndLoading/SavingAndLoading/StartStyle": [
-    "TINS2025/Game/Configurations/Main"
-  ],
   "TINS2025/JSONLoaders/TINS2025/GameProgressAndStateInfo": [
     "TINS2025/GameProgressAndStateInfo"
-  ],
-  "ALLEGRO_FONT": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "ALLEGRO_EVENT": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/BitmapBin": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/EventEmitter": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/FontBin": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/ModelBin": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "al_is_primitives_addon_initialized": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/Player": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/VirtualControllers/Base": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/VirtualControllers/GenericController": [
-    "TINS2025/Gameplay/Screen"
-  ],
-  "AllegroFlare/AssetStudio/Database": [
-    "TINS2025/Gameplay/Screen"
   ],
   "AllegroFlare/CollisionObservers/Simple": [
     "TINS2025/Gameplay/Screen"
@@ -846,6 +2512,30 @@ table td
   ],
   "AllegroFlare/DialogSystem/DialogSystem": [
     "TINS2025/Gameplay/Screen"
+  ],
+  "Timeline/Keyframe": [
+    "Timeline/Keyframe",
+    "Timeline/Parameter"
+  ],
+  "AllegroFlare/Placement2D": [
+    "Timeline/MotionStudio"
+  ],
+  "al_draw_line": [
+    "Timeline/MotionStudio"
+  ],
+  "Timeline/JSONLoaders/Timeline/Parameter": [
+    "Timeline/MotionStudio"
+  ],
+  ":AllegroFlare/Camera3D": [
+    "Timeline/ParameterMappings/AllegroFlare/Camera3D"
+  ],
+  "AllegroFlare/Timeline/Track": [
+    "Timeline/ParameterView",
+    "Timeline/ParameterView"
+  ],
+  "AllegroFlare/Color/": [
+    "Timeline/ParameterView",
+    "Timeline/ParameterView"
   ]
 }
 </pre>
