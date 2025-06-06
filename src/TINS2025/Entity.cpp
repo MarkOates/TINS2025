@@ -11,6 +11,7 @@ namespace TINS2025
 
 Entity::Entity()
    : sprite(nullptr)
+   , model(nullptr)
    , type(TINS2025::Entity::ENTITY_TYPE_UNDEF)
    , aabb2d({})
    , flags(0)

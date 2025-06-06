@@ -289,6 +289,10 @@
   "al_draw_rectangle": [
     "TINS2025/Entity"
   ],
+  "AllegroFlare/Model3D": [
+    "TINS2025/Entity",
+    "TINS2025/Gameplay/Screen"
+  ],
   "TINS2025/Gameplay/Level": [
     "TINS2025/Game/Configurations/Main",
     "TINS2025/Gameplay/Screen"
@@ -319,6 +323,9 @@
     "TINS2025/Gameplay/Screen"
   ],
   "DialControl/ViewMotionStudio": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Placement3D": [
     "TINS2025/Gameplay/Screen"
   ],
   "Timeline/Keyframe": [

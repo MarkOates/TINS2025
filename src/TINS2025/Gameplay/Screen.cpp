@@ -6,6 +6,7 @@
 #include <AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp>
 #include <AllegroFlare/DialogTree/Nodes/MultipageWithOptions.hpp>
 #include <AllegroFlare/Physics/TileMapCollisionStepper.hpp>
+#include <AllegroFlare/Placement3D.hpp>
 #include <AllegroFlare/UsefulPHP.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
@@ -36,6 +37,7 @@ Screen::Screen()
    , collision_observer({})
    , collision_tile_map({})
    , entities({})
+   , environment_model(nullptr)
    , player_entity(nullptr)
    , initialized(false)
 {
@@ -223,8 +225,14 @@ void Screen::load_up_world()
 {
    collision_observer.clear();
 
+
+   // Load up the world model
+   environment_model = model_bin->auto_get("simple_scene-03.obj");
+   environment_model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+
+
    // Setup the tile map
-   collision_tile_map.resize(100, 100);
+   collision_tile_map.resize(1000, 1000);
    collision_tile_map.initialize();
    //collision_tile_map.set_tile(69, 34, 1);
 
@@ -233,23 +241,35 @@ void Screen::load_up_world()
    entities.reserve(256);
 
    Entity e;
-   e.aabb2d.set_x(1920/2);
-   e.aabb2d.set_y(1080/2);
-   e.aabb2d.set_w(40);
-   e.aabb2d.set_h(20);
+   //e.aabb2d.set_x(1920/2);
+   //e.aabb2d.set_y(1080/2);
+   //e.aabb2d.set_w(40);
+   //e.aabb2d.set_h(20);
+   e.aabb2d.set_x(0);
+   e.aabb2d.set_y(3.0);
+   e.aabb2d.set_w(0.25);
+   e.aabb2d.set_h(0.25);
    e.sprite = bitmap_bin->auto_get("character-012.png");
    e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
+   e.model = model_bin->auto_get("centered_unit_cube-02.obj");
+   e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
    entities.push_back(e);
 
    player_entity = &entities.back();
 
    {
       Entity e;
-      e.aabb2d.set_x(1920/2 + 200);
-      e.aabb2d.set_y(1080/2);
-      e.aabb2d.set_w(20);
-      e.aabb2d.set_h(10);
+      //e.aabb2d.set_x(1920/2 + 200);
+      //e.aabb2d.set_y(1080/2);
+      //e.aabb2d.set_w(20);
+      //e.aabb2d.set_h(10);
+      e.aabb2d.set_x(0 + 2);
+      e.aabb2d.set_y(3.0);
+      e.aabb2d.set_w(0.25);
+      e.aabb2d.set_h(0.25);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      e.model = model_bin->auto_get("centered_unit_cube-02.obj");
+      e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
       entities.push_back(e);
    }
 
@@ -319,8 +339,8 @@ void Screen::update()
       AllegroFlare::Physics::TileMapCollisionStepper tile_map_collision_stepper(
          &collision_tile_map,
          nullptr,
-         16.0f,
-         16.0f
+         2.0f,
+         2.0f
       );
       for (auto &entity : entities)
       {
@@ -358,28 +378,42 @@ void Screen::update()
    // Update the view motion
    view_motion_studio.update();
 
-   // TODO
-   //view_motion_studio.setup_camera_projection_on_live_camera();
-
-   // Render the view motion hud
-   view_motion_studio.render_hud();
-
    return;
 }
 
 void Screen::render()
 {
+   view_motion_studio.setup_camera_projection_on_live_camera();
+
+   environment_model->draw();
+
    DEVELOPMENT__render_tile_map();
+   AllegroFlare::Placement3D placement;
 
    for (auto &entity : entities)
    {
-      if ((entity.flags & TINS2025::Entity::FLAG_HIDDEN) == 0) entity.draw();
+      if (entity.flags & TINS2025::Entity::FLAG_HIDDEN) continue;
+
+      //entity.draw();
+      placement.position.x = entity.aabb2d.get_x();
+      placement.position.z = entity.aabb2d.get_y();
+      placement.position.y = 1;
+
+      placement.start_transform();
+      entity.model->set_texture(entity.model->texture);
+      entity.model->draw();
+      placement.restore_transform();
    }
 
-   //DEVELOPMENT__render_tile_map();
+   //view_motion_studio.setup_camera_projection_on_live_camera();
 
-   //ALLEGRO_FONT *font = obtain_font();
-   //al_draw_text(font, ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/2 - 30, ALLEGRO_ALIGN_CENTER, "Hello");
+   // Render the view motion hud
+   view_motion_studio.render_hud();
+   //DEVELOPMENT__render_tile_map();
+   //for (auto &entity : entities)
+   //{
+      //if ((entity.flags & TINS2025::Entity::FLAG_HIDDEN) == 0) entity.draw_bbox();
+   //}
    return;
 }
 
@@ -406,7 +440,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
    }
    // Update stuff here (take into account delta_time)
    //player_entity->aabb2d.set_velocity_x(player_entity->aabb2d.get_x() + 1.0);
-   player_entity->aabb2d.set_velocity_x(2.0);
+   player_entity->aabb2d.set_velocity_x(0.02);
 
    update();
    return;
@@ -504,8 +538,8 @@ ALLEGRO_FONT* Screen::obtain_font()
 void Screen::DEVELOPMENT__render_tile_map()
 {
    AllegroFlare::TileMaps::TileMap<int> &tile_map = collision_tile_map;
-   float tile_width=16.0f;
-   float tile_height=16.0f;
+   float tile_width=2.0f;
+   float tile_height=2.0f;
 
    for (int y=0; y<tile_map.get_num_rows(); y++)
    {

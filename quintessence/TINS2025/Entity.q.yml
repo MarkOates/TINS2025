@@ -6,6 +6,11 @@ properties:
     init_with: nullptr
     exposed: true
 
+  - name: model
+    type: AllegroFlare::Model3D*
+    init_with: nullptr
+    exposed: true
+
   - name: type
     type: uint32_t
     init_with: TINS2025::Entity::ENTITY_TYPE_UNDEF
@@ -87,5 +92,7 @@ dependencies:
     headers: [ AllegroFlare/Physics/AABB2D.hpp ]
   - symbol: al_draw_rectangle
     headers: [ allegro5/allegro_primitives.h ]
+  - symbol: AllegroFlare::Model3D
+    headers: [ AllegroFlare/Model3D.hpp ]
 
 

@@ -1068,6 +1068,10 @@ table td
   <td class="property">ALLEGRO_BITMAP*</td>
 </tr>
 <tr>
+  <td class="property">model</td>
+  <td class="property">AllegroFlare::Model3D*</td>
+</tr>
+<tr>
   <td class="property">type</td>
   <td class="property">uint32_t</td>
 </tr>
@@ -1097,6 +1101,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_draw_rectangle&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Model3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Model3D.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -1511,6 +1518,10 @@ table td
   <td class="property">std::vector&lt;TINS2025::Entity&gt;</td>
 </tr>
 <tr>
+  <td class="property">environment_model</td>
+  <td class="property">AllegroFlare::Model3D*</td>
+</tr>
+<tr>
   <td class="property">player_entity</td>
   <td class="property">TINS2025::Entity*</td>
 </tr>
@@ -1681,6 +1692,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::php&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/UsefulPHP.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Model3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Model3D.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::Placement3D&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Placement3D.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -2495,6 +2512,10 @@ table td
   "al_draw_rectangle": [
     "TINS2025/Entity"
   ],
+  "AllegroFlare/Model3D": [
+    "TINS2025/Entity",
+    "TINS2025/Gameplay/Screen"
+  ],
   "TINS2025/Gameplay/Level": [
     "TINS2025/Game/Configurations/Main",
     "TINS2025/Gameplay/Screen"
@@ -2525,6 +2546,9 @@ table td
     "TINS2025/Gameplay/Screen"
   ],
   "DialControl/ViewMotionStudio": [
+    "TINS2025/Gameplay/Screen"
+  ],
+  "AllegroFlare/Placement3D": [
     "TINS2025/Gameplay/Screen"
   ],
   "Timeline/Keyframe": [

@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <AllegroFlare/Model3D.hpp>
 #include <AllegroFlare/Physics/AABB2D.hpp>
 #include <allegro5/allegro.h>
 #include <cstdint>
@@ -32,6 +33,7 @@ namespace TINS2025
 
    public:
       ALLEGRO_BITMAP* sprite;
+      AllegroFlare::Model3D* model;
       uint32_t type;
       AllegroFlare::Physics::AABB2D aabb2d;
       uint32_t flags;

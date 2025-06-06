@@ -225,11 +225,11 @@
         {
           "focused": false,
           "time": 0.0,
-          "value": -0.20000001788139343
+          "value": 0
         },
         {
           "focused": true,
-          "time": 2.51666522026062,
+          "time": 0,
           "value": 0.0
         }
       ],

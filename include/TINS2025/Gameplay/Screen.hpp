@@ -9,6 +9,7 @@
 #include <AllegroFlare/EventEmitter.hpp>
 #include <AllegroFlare/FontBin.hpp>
 #include <AllegroFlare/GameEvent.hpp>
+#include <AllegroFlare/Model3D.hpp>
 #include <AllegroFlare/ModelBin.hpp>
 #include <AllegroFlare/Player.hpp>
 #include <AllegroFlare/Screens/Gameplay.hpp>
@@ -46,6 +47,7 @@ namespace TINS2025
          AllegroFlare::CollisionObservers::Simple collision_observer;
          AllegroFlare::TileMaps::TileMap<int> collision_tile_map;
          std::vector<TINS2025::Entity> entities;
+         AllegroFlare::Model3D* environment_model;
          TINS2025::Entity* player_entity;
          bool initialized;
 
