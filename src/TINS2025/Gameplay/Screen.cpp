@@ -631,7 +631,7 @@ void Screen::refresh_environment_and_world(bool set_player_position)
 
    // Clear the bitmap bin, except, restore the player entities sprite
    bitmap_bin->clear();
-   player_entity->sprite = bitmap_bin->auto_get("character_a-01.png");
+   player_entity->sprite = bitmap_bin->auto_get("player_character.png");
 
 
    // Relad the TMJ and refill the tile layer data
