@@ -611,6 +611,11 @@ void Screen::refresh_environment_and_world()
          e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
          e.sprite = bitmap_bin->auto_get("friend_2.png");
       }
+      else if (object->name == "apple")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_APPLE;
+         e.sprite = bitmap_bin->auto_get("apple.png");
+      }
       entities.push_back(e);
       
       //std::function<void(AllegroFlare::Tiled::TMJObject*, void*)> function={}, void* user_data=nullptr)
