@@ -28,6 +28,13 @@ namespace TINS2025
          ENTITY_TYPE_FRIEND,
          ENTITY_TYPE_APPLE,
       };
+      enum AnimationMode
+      {
+         ANIMATION_MODE_UNDEF = 0,
+         ANIMATION_MODE_STANDING,
+         ANIMATION_MODE_WALKING_WOBBLY,
+         ANIMATION_MODE_JUMPING_IN_EXCITEMENT,
+      };
    private:
 
    protected:
@@ -37,6 +44,7 @@ namespace TINS2025
       ALLEGRO_BITMAP* sprite;
       AllegroFlare::Model3D* model;
       uint32_t type;
+      uint32_t animation_mode;
       AllegroFlare::Physics::AABB2D aabb2d;
       uint32_t flags;
       Entity();

@@ -10,7 +10,6 @@ TEST(TINS2025_EntityTest, can_be_created_without_blowing_up)
 }
 
 
-
 /*
   - name: handle_enter_player_box_box_collision
     private: true

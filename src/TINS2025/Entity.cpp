@@ -13,6 +13,7 @@ Entity::Entity()
    : sprite(nullptr)
    , model(nullptr)
    , type(TINS2025::Entity::ENTITY_TYPE_UNDEF)
+   , animation_mode(TINS2025::Entity::ANIMATION_MODE_STANDING)
    , aabb2d({})
    , flags(0)
 {

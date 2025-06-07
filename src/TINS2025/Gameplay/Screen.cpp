@@ -272,7 +272,7 @@ void Screen::load_up_world()
    Entity e;
    e.aabb2d.set_x(9.0);
    e.aabb2d.set_y(5.0);
-   e.aabb2d.set_w(0.25);
+   e.aabb2d.set_w(0.75);
    e.aabb2d.set_h(0.25);
    //e.sprite = bitmap_bin->auto_get("character_a-01.png");
    e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
@@ -285,7 +285,7 @@ void Screen::load_up_world()
    player_entity = &entities.back();
 
 
-   refresh_environment_and_world();
+   refresh_environment_and_world(true);
 
 
    // Setup the dialog
@@ -344,9 +344,20 @@ void Screen::load_up_world()
          //player_box->position.z += value.y * 0.02;
          //player_entity->aabb2d.set_velocity_x(value.x * 0.02);
          //player_entity->aabb2d.set_velocity_y(value.y * 0.02);
-         player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 2);
-         player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 2);
+         player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 3);
+         player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 3);
          //player_entity->position.z += value.y * 0.02;
+
+         float threshold = 0.1f; // example threshold
+         if (std::abs(value.x) > threshold || std::abs(value.y) > threshold)
+         {
+         //if (value.x > 0.01
+            player_entity->animation_mode = TINS2025::Entity::ANIMATION_MODE_WALKING_WOBBLY;
+         }
+         else
+         {
+            player_entity->animation_mode = TINS2025::Entity::ANIMATION_MODE_STANDING;
+         }
 
          // Relative to camera:
          //float angle = camera.spin;
@@ -448,6 +459,13 @@ void Screen::update()
             break;
          }
       }
+
+      // Update entity animations
+      //for (auto &entity : entities)
+      //{
+          //float bounce_counter = sin(time_now*34)*0.5 + 0.5;
+          //get_bitmap_placement_ref().anchor = { 0, -(bounce_counter * 3.0f) };
+      //}
    }
 
    // Update the view motion
@@ -480,7 +498,10 @@ void Screen::render()
       sorted_entities.end(),
       [](const TINS2025::Entity &a, const TINS2025::Entity &b)
       {
-         return a.aabb2d.get_y() < b.aabb2d.get_y(); // back to front
+         float a_center_y = a.aabb2d.get_y() + a.aabb2d.get_h() * 0.5f;
+         float b_center_y = b.aabb2d.get_y() + b.aabb2d.get_h() * 0.5f;
+         return a_center_y < b_center_y; // back to front
+         //return a.aabb2d.get_y() < b.aabb2d.get_y(); // back to front
       }
    );
 
@@ -492,10 +513,25 @@ void Screen::render()
       if (entity.flags & TINS2025::Entity::FLAG_INACTIVE) continue;
       if (entity.flags & TINS2025::Entity::FLAG_HIDDEN) continue;
 
+      float animation_y_offset = 0.0f;
+      if (entity.animation_mode == TINS2025::Entity::ANIMATION_MODE_JUMPING_IN_EXCITEMENT)
+      {
+         //float bounce_counter = sin(time_now*34)*0.5 + 0.5;
+         //get_bitmap_placement_ref().anchor = { 0, -(bounce_counter * 3.0f) };
+         animation_y_offset = std::sin(al_get_time()*34)*0.4 + 0.5;
+      }
+      else if (entity.animation_mode == TINS2025::Entity::ANIMATION_MODE_WALKING_WOBBLY)
+      {
+         float i = 0.125 * 0.5; // intensity
+         animation_y_offset = std::sin(al_get_time()*34)*i + i;
+      }
+
       //entity.draw();
-      placement.position.x = entity.aabb2d.get_x(); // + entity.aabb2d.get_w() * 0.5f;
-      placement.position.z = entity.aabb2d.get_y(); // + entity.aabb2d.get_h() * 0.5;
-      placement.position.y = 0;
+      float entity_center_x = entity.aabb2d.get_x() + entity.aabb2d.get_w() * 0.5f;
+      float entity_center_y = entity.aabb2d.get_y() + entity.aabb2d.get_h() * 0.5f;
+      placement.position.x = entity_center_x; //entity.aabb2d.get_x() + ; // + entity.aabb2d.get_w() * 0.5f;
+      placement.position.z = entity_center_y; //entity.aabb2d.get_y(); // + entity.aabb2d.get_h() * 0.5;
+      placement.position.y = animation_y_offset;
       placement.scale.x = 1.0; // + entity.aabb2d.get_w() * 0.5f;
       placement.scale.y = 1.25; // + entity.aabb2d.get_w() * 0.5f;
       //placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
@@ -560,7 +596,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    return;
 }
 
-void Screen::refresh_environment_and_world()
+void Screen::refresh_environment_and_world(bool set_player_position)
 {
 
    // Clear out all the entities (non-character)
@@ -590,12 +626,26 @@ void Screen::refresh_environment_and_world()
    collision_tile_map.fill_with_data(data);
 
 
-   tmj_data_loader.for_each_object([this](AllegroFlare::Tiled::TMJObject* object, void* user_data) {
+   tmj_data_loader.for_each_object([this, set_player_position]
+         (AllegroFlare::Tiled::TMJObject* object, void* user_data) {
       int tile_width = 16;
       int tile_height = 16;
+      float object_x = object->x / (float)tile_width;
+      float object_y = object->y / (float)tile_height;
+
+      if (object->name == "player_character")
+      {
+         if (set_player_position)
+         {
+            player_entity->aabb2d.set_x(object_x);
+            player_entity->aabb2d.set_y(object_y);
+         }
+         return;
+      }
+
       Entity e;
-      e.aabb2d.set_x(object->x / (float)tile_width);
-      e.aabb2d.set_y(object->y / (float)tile_height);
+      e.aabb2d.set_x(object_x);
+      e.aabb2d.set_y(object_y);
       e.aabb2d.set_w(1.0);
       e.aabb2d.set_h(1.0);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
@@ -616,6 +666,7 @@ void Screen::refresh_environment_and_world()
          e.type = TINS2025::Entity::ENTITY_TYPE_APPLE;
          e.sprite = bitmap_bin->auto_get("apple.png");
       }
+
       entities.push_back(e);
       
       //std::function<void(AllegroFlare::Tiled::TMJObject*, void*)> function={}, void* user_data=nullptr)
