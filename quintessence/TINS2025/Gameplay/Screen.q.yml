@@ -398,7 +398,14 @@ methods:
                case TINS2025::Entity::ENTITY_TYPE_APPLE:
                   entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
                   entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
-                  event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
+                  event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
+                  QUEST__apple_collected = true;
+               break;
+
+               case TINS2025::Entity::ENTITY_TYPE_CARROT:
+                  entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
+                  entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
+                  event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
                   QUEST__apple_collected = true;
                break;
 
@@ -634,41 +641,16 @@ methods:
             e.type = TINS2025::Entity::ENTITY_TYPE_APPLE;
             e.sprite = bitmap_bin->auto_get("apple.png");
          }
+         else if (object->name == "carrot")
+         {
+            e.type = TINS2025::Entity::ENTITY_TYPE_CARROT;
+            e.sprite = bitmap_bin->auto_get("carrot.png");
+         }
 
          entities.push_back(e);
          
          //std::function<void(AllegroFlare::Tiled::TMJObject*, void*)> function={}, void* user_data=nullptr)
       });
-
-
-
-      /*
-      { // Add an "apple"
-         Entity e;
-         e.aabb2d.set_x(0 + 2);
-         e.aabb2d.set_y(3.0);
-         e.aabb2d.set_w(1.0);
-         e.aabb2d.set_h(1.0);
-         e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
-         e.type = TINS2025::Entity::ENTITY_TYPE_APPLE;
-         e.model = model_bin->auto_get("centered_unit_cube-02.obj");
-         e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
-         entities.push_back(e);
-      }
-
-      { // Add a "building entry"
-         Entity e;
-         e.aabb2d.set_x(10.0);
-         e.aabb2d.set_y(9.0);
-         e.aabb2d.set_w(1.0);
-         e.aabb2d.set_h(1.0);
-         e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
-         e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
-         e.model = model_bin->auto_get("centered_unit_cube-02.obj");
-         e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
-         entities.push_back(e);
-      }
-      */
 
 
 
@@ -910,10 +892,10 @@ methods:
       std::string FRANK = "Frank";
 
       result.set_nodes({
-         { "pickup_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+         { "pickup_food", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
                LOTTIE,
                {
-                  "This is perfect! I just found an essential ingredient for a perfect cake!"
+                  "Sweet! I just found an essential ingredient for a perfect cake!"
                },
                {
                   { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }

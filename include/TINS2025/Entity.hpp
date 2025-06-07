@@ -28,6 +28,7 @@ namespace TINS2025
          ENTITY_TYPE_FRIEND_1,
          ENTITY_TYPE_FRIEND_2,
          ENTITY_TYPE_APPLE,
+         ENTITY_TYPE_CARROT,
       };
       enum AnimationMode
       {
