@@ -342,6 +342,9 @@
   "AllegroFlare/Tiled/TMJDataLoader": [
     "TINS2025/Gameplay/Screen"
   ],
+  "std/remove_if": [
+    "TINS2025/Gameplay/Screen"
+  ],
   "Timeline/Keyframe": [
     "Timeline/Keyframe",
     "Timeline/Parameter"

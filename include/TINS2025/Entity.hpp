@@ -25,7 +25,7 @@ namespace TINS2025
       {
          ENTITY_TYPE_UNDEF = 0,
          ENTITY_TYPE_PLAYER,
-         ENTITY_TYPE_BUILDING_ENTRY,
+         ENTITY_TYPE_FRIEND,
          ENTITY_TYPE_APPLE,
       };
    private:

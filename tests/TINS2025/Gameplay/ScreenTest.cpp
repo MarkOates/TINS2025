@@ -68,7 +68,7 @@ TEST_F(TINS2025_Gameplay_ScreenTest, type__has_the_expected_value_matching_TYPE)
 */
 
 TEST_F(TINS2025_Gameplay_ScreenTestWithAllegroFrameworksFullFixture,
-   TIMED_INTERACTIVE__will_run_as_expected)
+   CAPTURE__TIMED_INTERACTIVE__will_run_as_expected)
 {
    TINS2025::Gameplay::Screen screen;
    screen.set_data_folder_path(get_framework_data_folder_path());

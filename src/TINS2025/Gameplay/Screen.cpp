@@ -13,6 +13,7 @@
 #include <AllegroFlare/UsefulPHP.hpp>
 #include <AllegroFlare/VirtualControllers/GenericController.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
+#include <algorithm>
 #include <allegro5/allegro_primitives.h>
 #include <cmath>
 #include <iostream>
@@ -243,7 +244,6 @@ void Screen::load_up_world()
    // Load up the world model
    collision_tile_map.initialize();
 
-   refresh_environment();
    //environment_model = model_bin->auto_get("simple_scene-03.obj");
    //environment_model->texture = bitmap_bin->auto_get("simple_scene-03.png");
 
@@ -270,43 +270,21 @@ void Screen::load_up_world()
    entities.reserve(256);
 
    Entity e;
-   e.aabb2d.set_x(3.0);
-   e.aabb2d.set_y(3.0);
+   e.aabb2d.set_x(9.0);
+   e.aabb2d.set_y(5.0);
    e.aabb2d.set_w(0.25);
    e.aabb2d.set_h(0.25);
-   e.sprite = bitmap_bin->auto_get("character-012.png");
+   //e.sprite = bitmap_bin->auto_get("character_a-01.png");
    e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
+   e.type = TINS2025::Entity::ENTITY_TYPE_PLAYER;
    e.model = model_bin->auto_get("character_model-01.obj");
-   e.model->texture = bitmap_bin->auto_get("character-012.png");
+   e.model->texture = bitmap_bin->auto_get("character_a-01.png");
    entities.push_back(e);
 
    player_entity = &entities.back();
 
-   { // Add an "apple"
-      Entity e;
-      e.aabb2d.set_x(0 + 2);
-      e.aabb2d.set_y(3.0);
-      e.aabb2d.set_w(1.0);
-      e.aabb2d.set_h(1.0);
-      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
-      e.type |= TINS2025::Entity::ENTITY_TYPE_APPLE;
-      e.model = model_bin->auto_get("centered_unit_cube-02.obj");
-      e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
-      entities.push_back(e);
-   }
 
-   { // Add a "building entry"
-      Entity e;
-      e.aabb2d.set_x(10.0);
-      e.aabb2d.set_y(9.0);
-      e.aabb2d.set_w(1.0);
-      e.aabb2d.set_h(1.0);
-      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
-      e.type |= TINS2025::Entity::ENTITY_TYPE_BUILDING_ENTRY;
-      e.model = model_bin->auto_get("centered_unit_cube-02.obj");
-      e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
-      entities.push_back(e);
-   }
+   refresh_environment_and_world();
 
 
    // Setup the dialog
@@ -464,7 +442,7 @@ void Screen::update()
                event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
             break;
 
-            case TINS2025::Entity::ENTITY_TYPE_BUILDING_ENTRY:
+            case TINS2025::Entity::ENTITY_TYPE_FRIEND:
                event_emitter->emit_activate_dialog_node_by_name_event("enter_home");
             break;
          }
@@ -504,7 +482,9 @@ void Screen::render()
       placement.position.x = entity.aabb2d.get_x(); // + entity.aabb2d.get_w() * 0.5f;
       placement.position.z = entity.aabb2d.get_y(); // + entity.aabb2d.get_h() * 0.5;
       placement.position.y = 0;
-      placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
+      placement.scale.x = 1.0; // + entity.aabb2d.get_w() * 0.5f;
+      placement.scale.y = 1.25; // + entity.aabb2d.get_w() * 0.5f;
+      //placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
       //placement.size.z = entity.aabb2d.get_h(); // + entity.aabb2d.get_h() * 0.5;
       /*
       //placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
@@ -566,9 +546,84 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    return;
 }
 
-void Screen::refresh_environment()
+void Screen::refresh_environment_and_world()
 {
-   // TODO: Reload the environment model
+   // Clear out all the entities (non-character)
+   entities.erase(
+      std::remove_if(entities.begin(), entities.end(),
+         [](const TINS2025::Entity &entity)
+         {
+            return entity.type != TINS2025::Entity::ENTITY_TYPE_PLAYER;
+         }),
+      entities.end()
+   );
+
+
+   // Clear the bitmap bin
+   bitmap_bin->clear();
+
+
+   // Relad the TMJ and refill the tile layer data
+   AllegroFlare::Tiled::TMJDataLoader tmj_data_loader;
+   tmj_data_loader.set_filename(data_folder_path + "maps/hello_friend-world_map-0n.tmj");
+   tmj_data_loader.load();
+
+   auto data = tmj_data_loader.get_tilelayer_data_by_name_as_2d_vector("collision");
+
+   collision_tile_map.resize(tmj_data_loader.get_num_columns(), tmj_data_loader.get_num_rows());
+   collision_tile_map.fill_with_data(data);
+
+
+   tmj_data_loader.for_each_object([this](AllegroFlare::Tiled::TMJObject* object, void* user_data) {
+      int tile_width = 16;
+      int tile_height = 16;
+      Entity e;
+      e.aabb2d.set_x(object->x / (float)tile_width);
+      e.aabb2d.set_y(object->y / (float)tile_height);
+      e.aabb2d.set_w(1.0);
+      e.aabb2d.set_h(1.0);
+      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
+      //e.model = model_bin->auto_get("centered_unit_cube-02.obj");
+      //e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+      e.model = model_bin->auto_get("character_model-01.obj");
+      e.model->texture = bitmap_bin->auto_get("character_a-01.png");
+      entities.push_back(e);
+      
+      //std::function<void(AllegroFlare::Tiled::TMJObject*, void*)> function={}, void* user_data=nullptr)
+   });
+
+
+
+   { // Add an "apple"
+      Entity e;
+      e.aabb2d.set_x(0 + 2);
+      e.aabb2d.set_y(3.0);
+      e.aabb2d.set_w(1.0);
+      e.aabb2d.set_h(1.0);
+      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      e.type = TINS2025::Entity::ENTITY_TYPE_APPLE;
+      e.model = model_bin->auto_get("centered_unit_cube-02.obj");
+      e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+      entities.push_back(e);
+   }
+
+   { // Add a "building entry"
+      Entity e;
+      e.aabb2d.set_x(10.0);
+      e.aabb2d.set_y(9.0);
+      e.aabb2d.set_w(1.0);
+      e.aabb2d.set_h(1.0);
+      e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
+      e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
+      e.model = model_bin->auto_get("centered_unit_cube-02.obj");
+      e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+      entities.push_back(e);
+   }
+
+
+
+   // Reload the environment model
    std::string model_filename = "hello_friend-environment-0n.obj";
    std::string image_filename = "hello_friend-environment-0n.png";
 
@@ -577,16 +632,6 @@ void Screen::refresh_environment()
    environment_model = model_bin->auto_get(model_filename);
    environment_model->texture = bitmap_bin->auto_get(image_filename);
 
-
-   AllegroFlare::Tiled::TMJDataLoader tmj_data_loader;
-   tmj_data_loader.set_filename(data_folder_path + "maps/hello_friend-world_map-0n.tmj");
-   tmj_data_loader.load();
-
-   //get_tilelayers_tile_data
-   auto data = tmj_data_loader.get_tilelayer_data_by_name_as_2d_vector("collision");
-
-   collision_tile_map.resize(tmj_data_loader.get_num_columns(), tmj_data_loader.get_num_rows());
-   collision_tile_map.fill_with_data(data);
    return;
 }
 
@@ -601,7 +646,7 @@ void Screen::display_switch_in_func()
    }
    AllegroFlare::Screens::Gameplay::display_switch_in_func();
 
-   refresh_environment();
+   refresh_environment_and_world();
 
    return;
 }
