@@ -92,6 +92,11 @@ properties:
     type: int
     init_with: 0
 
+  - name: QUEST__apple_collected
+    type: bool
+    init_with: false
+    getter: true
+
   - name: initialized
     type: bool
     init_with: false
@@ -394,10 +399,22 @@ methods:
                   entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
                   entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
                   event_emitter->emit_activate_dialog_node_by_name_event("pickup_apple");
+                  QUEST__apple_collected = true;
                break;
 
-               case TINS2025::Entity::ENTITY_TYPE_FRIEND:
-                  event_emitter->emit_activate_dialog_node_by_name_event("enter_home");
+               case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
+                  if (QUEST__apple_collected)
+                  {
+                     event_emitter->emit_activate_dialog_node_by_name_event("celebrate_won_game");
+                  }
+                  else
+                  {
+                     event_emitter->emit_activate_dialog_node_by_name_event("tell_requirements");
+                  }
+               break;
+
+               case TINS2025::Entity::ENTITY_TYPE_FRIEND_2:
+                  event_emitter->emit_activate_dialog_node_by_name_event("inconsequential_dialog");
                break;
             }
          }
@@ -604,12 +621,12 @@ methods:
          e.model = model_bin->auto_get("character_model-01.obj");
          if (object->name == "friend_1")
          {
-            e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
+            e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND_1;
             e.sprite = bitmap_bin->auto_get("friend_1.png");
          }
          else if (object->name == "friend_2")
          {
-            e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
+            e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND_2;
             e.sprite = bitmap_bin->auto_get("friend_2.png");
          }
          else if (object->name == "apple")
@@ -889,22 +906,59 @@ methods:
       AllegroFlare::DialogTree::NodeBank result;
 
       std::string LOTTIE = "Lottie";
+      std::string DITTO = "Ditto";
+      std::string FRANK = "Frank";
 
       result.set_nodes({
          { "pickup_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
                LOTTIE,
                {
-                  "This is perfect! I just found an essential ingredient for our party!"
+                  "This is perfect! I just found an essential ingredient for a perfect cake!"
                },
                {
                   { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
                }
             )
          },
-         { "enter_home", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+         { "inconsequential_dialog", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+               FRANK,
+               {
+                  "Hmm. What a wonderful day for a bake!"
+               },
+               {
+                  { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+               }
+            )
+         },
+         { "tell_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+               DITTO,
+               {
+                  "Eeks! I'm so flummoxed!",
+                  "The anual bake-a-thon is happening right now and my pie is going to be a disaster!",
+                  "I'll need an apple to make my layered cake into a reality.",
+               },
+               {
+                  { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+               }
+            )
+         },
+         { "celebrate_won_game", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+               DITTO,
+               {
+                  "Thank you so much!!",
+                  "You've saved my new groundbreaking layered apple pie!",
+               },
+               {
+                  { "->Reply", new AllegroFlare::DialogTree::NodeOptions::GoToNode("reply_to_won_game"), 0 },
+               }
+            )
+         },
+         { "reply_to_won_game", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
                LOTTIE,
                {
-                  "I did it! What a party!"
+                  "Yay!!",
+                  "I'm so glad I could help!",
+                  "Best of luck to you in the competition!"
                },
                {
                   { "Win game", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 },

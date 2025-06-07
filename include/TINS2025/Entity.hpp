@@ -25,7 +25,8 @@ namespace TINS2025
       {
          ENTITY_TYPE_UNDEF = 0,
          ENTITY_TYPE_PLAYER,
-         ENTITY_TYPE_FRIEND,
+         ENTITY_TYPE_FRIEND_1,
+         ENTITY_TYPE_FRIEND_2,
          ENTITY_TYPE_APPLE,
       };
       enum AnimationMode

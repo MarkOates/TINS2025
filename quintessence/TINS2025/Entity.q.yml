@@ -51,7 +51,8 @@ enums:
     enumerators:
        - ENTITY_TYPE_UNDEF
        - ENTITY_TYPE_PLAYER
-       - ENTITY_TYPE_FRIEND
+       - ENTITY_TYPE_FRIEND_1
+       - ENTITY_TYPE_FRIEND_2
        - ENTITY_TYPE_APPLE
 
 
