@@ -139,8 +139,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":272,
-                 "y":72
+                 "x":248,
+                 "y":88
                 }, 
                 {
                  "height":0,
@@ -161,7 +161,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":4,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

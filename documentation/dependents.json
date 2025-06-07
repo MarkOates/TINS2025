@@ -345,6 +345,10 @@
   "std/remove_if": [
     "TINS2025/Gameplay/Screen"
   ],
+  "std/sort": [
+    "TINS2025/Gameplay/Screen",
+    "Timeline/Parameter"
+  ],
   "Timeline/Keyframe": [
     "Timeline/Keyframe",
     "Timeline/Parameter"
@@ -357,9 +361,6 @@
   ],
   "Timeline/JSONLoaders/Timeline/Parameter": [
     "Timeline/MotionStudio"
-  ],
-  "std/sort": [
-    "Timeline/Parameter"
   ],
   ":AllegroFlare/Camera3D": [
     "Timeline/ParameterMappings/AllegroFlare/Camera3D"

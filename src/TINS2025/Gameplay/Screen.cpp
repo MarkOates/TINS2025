@@ -473,8 +473,21 @@ void Screen::render()
 
    if (!hide_view_motion_studio_hud) DEVELOPMENT__render_tile_map();
 
+
+   std::vector<TINS2025::Entity> sorted_entities = entities;
+   std::sort(
+      sorted_entities.begin(),
+      sorted_entities.end(),
+      [](const TINS2025::Entity &a, const TINS2025::Entity &b)
+      {
+         return a.aabb2d.get_y() < b.aabb2d.get_y(); // back to front
+      }
+   );
+
+
    AllegroFlare::Placement3D placement;
-   for (auto &entity : entities)
+   //for (auto &entity : entities)
+   for (auto &entity : sorted_entities)
    {
       if (entity.flags & TINS2025::Entity::FLAG_INACTIVE) continue;
       if (entity.flags & TINS2025::Entity::FLAG_HIDDEN) continue;
