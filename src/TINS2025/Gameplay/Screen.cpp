@@ -278,7 +278,8 @@ void Screen::load_up_world()
    e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_TILEMAP;
    e.type = TINS2025::Entity::ENTITY_TYPE_PLAYER;
    e.model = model_bin->auto_get("character_model-01.obj");
-   e.model->texture = bitmap_bin->auto_get("character_a-01.png");
+   e.sprite = bitmap_bin->auto_get("player_character.png");
+   e.model->texture = e.sprite;
    entities.push_back(e);
 
    player_entity = &entities.back();
@@ -496,7 +497,7 @@ void Screen::render()
       */
 
       placement.start_transform();
-      entity.model->set_texture(entity.model->texture);
+      entity.model->set_texture(entity.sprite);
       entity.model->draw();
       if (!hide_view_motion_studio_hud)
       {
@@ -548,6 +549,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
 
 void Screen::refresh_environment_and_world()
 {
+
    // Clear out all the entities (non-character)
    entities.erase(
       std::remove_if(entities.begin(), entities.end(),
@@ -559,8 +561,9 @@ void Screen::refresh_environment_and_world()
    );
 
 
-   // Clear the bitmap bin
+   // Clear the bitmap bin, except, restore the player entities sprite
    bitmap_bin->clear();
+   player_entity->sprite = bitmap_bin->auto_get("character_a-01.png");
 
 
    // Relad the TMJ and refill the tile layer data
@@ -583,11 +586,18 @@ void Screen::refresh_environment_and_world()
       e.aabb2d.set_w(1.0);
       e.aabb2d.set_h(1.0);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
-      e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
-      //e.model = model_bin->auto_get("centered_unit_cube-02.obj");
-      //e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
+
       e.model = model_bin->auto_get("character_model-01.obj");
-      e.model->texture = bitmap_bin->auto_get("character_a-01.png");
+      if (object->name == "friend_1")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
+         e.sprite = bitmap_bin->auto_get("friend_1.png");
+      }
+      else if (object->name == "friend_2")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND;
+         e.sprite = bitmap_bin->auto_get("friend_2.png");
+      }
       entities.push_back(e);
       
       //std::function<void(AllegroFlare::Tiled::TMJObject*, void*)> function={}, void* user_data=nullptr)
@@ -595,6 +605,7 @@ void Screen::refresh_environment_and_world()
 
 
 
+   /*
    { // Add an "apple"
       Entity e;
       e.aabb2d.set_x(0 + 2);
@@ -620,6 +631,7 @@ void Screen::refresh_environment_and_world()
       e.model->texture = bitmap_bin->auto_get("simple_scene-03.png");
       entities.push_back(e);
    }
+   */
 
 
 

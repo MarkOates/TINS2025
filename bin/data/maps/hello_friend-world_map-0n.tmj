@@ -133,7 +133,7 @@
                 {
                  "height":0,
                  "id":2,
-                 "name":"apple",
+                 "name":"friend_2",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -141,6 +141,18 @@
                  "width":0,
                  "x":272,
                  "y":72
+                }, 
+                {
+                 "height":0,
+                 "id":3,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":416,
+                 "y":120
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -149,7 +161,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":3,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
