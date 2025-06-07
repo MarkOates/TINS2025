@@ -311,12 +311,22 @@ void Screen::load_up_world()
 
    // Setup the dialog
    dialog_system->set_dialog_node_bank(build_dialog_node_bank());
-   dialog_system->set_standard_dialog_box_font_name("Quicksand-Regular.ttf");
+   dialog_system->set_standard_dialog_box_font_name("Quicksand-SemiBold.ttf");
    dialog_system->set_standard_dialog_box_font_size(-52);
    //dialog_system->set_standard_dialog_box_font_line_height(-52); // TODO: Add this feature
-   //dialog_system->set_standard_dialog_box_width(1920 * 0.6);
-   //dialog_system->set_standard_dialog_box_height(248);
-   dialog_system->set_standard_dialog_box_y(1080/5*4+60);
+   dialog_system->set_standard_dialog_box_width(1920 * 0.5);
+   dialog_system->set_standard_dialog_box_height(248);
+   dialog_system->set_standard_dialog_box_y(1080/5*4);
+
+   dialog_system->set_standard_dialog_box_frame_color(al_color_html("c6987e"));
+   dialog_system->set_standard_dialog_box_background_color(al_color_html("fdf5e6"));
+   dialog_system->set_standard_dialog_box_text_color(al_color_html("9f6b32"));
+   dialog_system->set_standard_dialog_box_label_color(al_color_html("fdf5e6"));
+
+   //dialog_system->set_standard_dialog_box_frame_color(al_color_html("6dbacc"));
+   //dialog_system->set_standard_dialog_box_background_color(al_color_html("6dbacc"));
+   //dialog_system->set_standard_dialog_box_text_color(al_color_html("000000"));
+   //dialog_system->set_standard_dialog_box_label_color(al_color_html("000000"));
 
 
    // Setup view_motion_studio
