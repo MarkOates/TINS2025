@@ -469,6 +469,13 @@ void Screen::update()
                QUEST__apple_collected = true;
             break;
 
+            case TINS2025::Entity::ENTITY_TYPE_RED_CARROT:
+               entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
+               entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
+               event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
+               QUEST__apple_collected = true;
+            break;
+
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
                if (QUEST__apple_collected)
                {
@@ -697,6 +704,11 @@ void Screen::refresh_environment_and_world(bool set_player_position)
          e.type = TINS2025::Entity::ENTITY_TYPE_CARROT;
          e.sprite = bitmap_bin->auto_get("carrot.png");
       }
+      else if (object->name == "red_carrot")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_RED_CARROT;
+         e.sprite = bitmap_bin->auto_get("red_carrot.png");
+      }
 
       entities.push_back(e);
       
@@ -758,6 +770,7 @@ void Screen::primary_render_func()
       throw std::runtime_error("[TINS2025::Gameplay::Screen::primary_render_func]: error: guard \"initialized\" not met");
    }
    // Render stuff here
+   al_clear_to_color(al_color_html("d3e7ea"));
    render();
    return;
 }
