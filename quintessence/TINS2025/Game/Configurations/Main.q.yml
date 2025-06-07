@@ -76,7 +76,7 @@ methods:
     override: true
     type: int
     body: |
-      return 3;
+      return 0;
 
 
   - name: get_num_autosave_save_slots
@@ -100,7 +100,8 @@ methods:
     override: true
     type: AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle
     body: |
-      return AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle::GAME_START_STYLE_A;
+      //return AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle::GAME_START_STYLE_A;
+      return AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle::GAME_START_STYLE_B; // 1 save slot
 
 
   - name: get_saving_and_loading_save_style

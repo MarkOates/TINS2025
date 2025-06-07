@@ -41,6 +41,7 @@ Screen::Screen()
    , current_level(nullptr)
    , collision_observer({})
    , collision_tile_map({})
+   , environment_overlay_placement()
    , entities({})
    , environment_model(nullptr)
    , player_entity(nullptr)
@@ -246,6 +247,8 @@ void Screen::load_up_world()
    //environment_model = model_bin->auto_get("simple_scene-03.obj");
    //environment_model->texture = bitmap_bin->auto_get("simple_scene-03.png");
 
+   environment_overlay_placement.rotation.x = 0.25;
+   environment_overlay_placement.position.y = 0.25;
 
    // Setup the tile map
    ////collision_tile_map.resize(1000, 1000);
@@ -283,8 +286,8 @@ void Screen::load_up_world()
       Entity e;
       e.aabb2d.set_x(0 + 2);
       e.aabb2d.set_y(3.0);
-      e.aabb2d.set_w(0.25);
-      e.aabb2d.set_h(0.25);
+      e.aabb2d.set_w(1.0);
+      e.aabb2d.set_h(1.0);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
       e.type |= TINS2025::Entity::ENTITY_TYPE_APPLE;
       e.model = model_bin->auto_get("centered_unit_cube-02.obj");
@@ -294,8 +297,8 @@ void Screen::load_up_world()
 
    { // Add a "building entry"
       Entity e;
-      e.aabb2d.set_x(0);
-      e.aabb2d.set_y(4.0);
+      e.aabb2d.set_x(10.0);
+      e.aabb2d.set_y(9.0);
       e.aabb2d.set_w(1.0);
       e.aabb2d.set_h(1.0);
       e.flags |= TINS2025::Entity::FLAG_COLLIDES_WITH_PLAYER;
@@ -352,8 +355,8 @@ void Screen::load_up_world()
          //player_box->position.z += value.y * 0.02;
          //player_entity->aabb2d.set_velocity_x(value.x * 0.02);
          //player_entity->aabb2d.set_velocity_y(value.y * 0.02);
-         player_entity->aabb2d.set_velocity_x(value.x * 0.01625);
-         player_entity->aabb2d.set_velocity_y(value.y * 0.01625);
+         player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 2);
+         player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 2);
          //player_entity->position.z += value.y * 0.02;
 
          // Relative to camera:
@@ -479,9 +482,9 @@ void Screen::render()
    environment_model->draw();
    environment_model_displacement.restore_transform();
 
-   DEVELOPMENT__render_tile_map();
-   AllegroFlare::Placement3D placement;
+   if (!hide_view_motion_studio_hud) DEVELOPMENT__render_tile_map();
 
+   AllegroFlare::Placement3D placement;
    for (auto &entity : entities)
    {
       if (entity.flags & TINS2025::Entity::FLAG_INACTIVE) continue;
@@ -491,9 +494,11 @@ void Screen::render()
       placement.position.x = entity.aabb2d.get_x(); // + entity.aabb2d.get_w() * 0.5f;
       placement.position.z = entity.aabb2d.get_y(); // + entity.aabb2d.get_h() * 0.5;
       placement.position.y = 0;
-      /*
       placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
-      placement.size.z = entity.aabb2d.get_h(); // + entity.aabb2d.get_h() * 0.5;
+      //placement.size.z = entity.aabb2d.get_h(); // + entity.aabb2d.get_h() * 0.5;
+      /*
+      //placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
+      //placement.size.z = entity.aabb2d.get_h(); // + entity.aabb2d.get_h() * 0.5;
       placement.size.y = 0;
       placement.align.x = 0.5;
       placement.align.z = 0.5;
@@ -503,7 +508,10 @@ void Screen::render()
       placement.start_transform();
       entity.model->set_texture(entity.model->texture);
       entity.model->draw();
-      al_draw_rectangle(0, 0, entity.aabb2d.get_w(), entity.aabb2d.get_h(), ALLEGRO_COLOR{1, 1, 1, 1}, 0.01);
+      if (!hide_view_motion_studio_hud)
+      {
+         al_draw_rectangle(0, 0, entity.aabb2d.get_w(), entity.aabb2d.get_h(), ALLEGRO_COLOR{1, 1, 1, 1}, 0.01);
+      }
       placement.restore_transform();
    }
 
@@ -743,10 +751,16 @@ ALLEGRO_FONT* Screen::obtain_font()
 
 void Screen::DEVELOPMENT__render_tile_map()
 {
+   AllegroFlare::Placement3D tile_map_placement = environment_overlay_placement;
+   float o = 0.25;
+   tile_map_placement.rotation.x = 0.25;
+   tile_map_placement.position.y = 0.25;
+
    AllegroFlare::TileMaps::TileMap<int> &tile_map = collision_tile_map;
    float tile_width=1.0f;
    float tile_height=1.0f;
 
+   tile_map_placement.start_transform();
    for (int y=0; y<tile_map.get_num_rows(); y++)
    {
       for (int x=0; x<tile_map.get_num_columns(); x++)
@@ -761,7 +775,7 @@ void Screen::DEVELOPMENT__render_tile_map()
 
             case 1:
               al_draw_filled_rectangle(x * tile_width, y * tile_height, (x+1) * tile_width, (y+1) * tile_height, 
-                 ALLEGRO_COLOR{0.65, 0.62, 0.6, 1.0});
+                 ALLEGRO_COLOR{0.94f*o, 0.42f*o, 0.8f*o, 1.0f*o});
             break;
 
             default:
@@ -771,6 +785,7 @@ void Screen::DEVELOPMENT__render_tile_map()
          }
       }
    }
+   tile_map_placement.restore_transform();
    return;
 }
 

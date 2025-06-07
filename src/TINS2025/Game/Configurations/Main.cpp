@@ -69,7 +69,7 @@ int Main::get_num_save_profiles()
 
 int Main::get_num_manual_save_slots()
 {
-   return 3;
+   return 0;
 }
 
 int Main::get_num_autosave_save_slots()
@@ -84,7 +84,8 @@ int Main::get_num_quicksave_save_slots()
 
 AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle Main::get_saving_and_loading_start_style()
 {
-   return AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle::GAME_START_STYLE_A;
+   //return AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle::GAME_START_STYLE_A;
+   return AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle::GAME_START_STYLE_B; // 1 save slot
 }
 
 AllegroFlare::SavingAndLoading::SavingAndLoading::SaveStyle Main::get_saving_and_loading_save_style()

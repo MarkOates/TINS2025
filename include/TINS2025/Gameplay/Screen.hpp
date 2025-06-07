@@ -11,6 +11,7 @@
 #include <AllegroFlare/GameEvent.hpp>
 #include <AllegroFlare/Model3D.hpp>
 #include <AllegroFlare/ModelBin.hpp>
+#include <AllegroFlare/Placement3D.hpp>
 #include <AllegroFlare/Player.hpp>
 #include <AllegroFlare/Screens/Gameplay.hpp>
 #include <AllegroFlare/TileMaps/TileMap.hpp>
@@ -53,6 +54,7 @@ namespace TINS2025
          TINS2025::Gameplay::Level* current_level;
          AllegroFlare::CollisionObservers::Simple collision_observer;
          AllegroFlare::TileMaps::TileMap<int> collision_tile_map;
+         AllegroFlare::Placement3D environment_overlay_placement;
          std::vector<TINS2025::Entity> entities;
          AllegroFlare::Model3D* environment_model;
          TINS2025::Entity* player_entity;
