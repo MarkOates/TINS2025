@@ -674,7 +674,10 @@ void Screen::update()
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_4:
                //if (!QUEST__dialog_2_triggered)
                //{
+               event_emitter->emit_play_music_track_event("chipper_tune");
                event_emitter->emit_activate_dialog_node_by_name_event("character_starts_bakeoff");
+               //event_emitter->emit_activate_dialog_node_by_name_event("character_starts_bakeoff");
+               //start_chapter_2
                //QUEST__dialog_2_triggered = true;
                //}
             break;
@@ -1000,8 +1003,12 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       current_chapter_number = 2;
       refresh_environment_and_world(true);
       dipping_to_black = false;
-      resume_suspended_gameplay();
+      //resume_suspended_gameplay();
+      //event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements"); //
+      //event_emitter->emit_play_music_track_event("chipper_tune"); // HERE
       event_emitter->emit_play_music_track_event("chipper_tune");
+      //event_emitter->emit_activate_dialog_node_by_name_event("character_starts_bakeoff");
+      //event_emitter->emit_activate_dialog_node_by_name_event(""); // HERE
    }
    else if (game_event->is_type("start_chapter_3"))
    {
@@ -1725,16 +1732,21 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       )},
       { "player_presents_cakes", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "This is it!",
-            "The last ingredient we all needed was...",
-            "We needed to see all of our cakes combined!",
+            "Making a layered cake with all our cakes combined is the answer!",
+            //"The last ingredient we all needed was...",
+            //"We needed to see all of our cakes combined!",
+            //"It turns out the last missing ingredient we needed for the competition was...",
+            //"Layers!",
             "Each of you measured the perfect ratios, but...",
             "You didn't take into account that each of you ALSO had perfect ratios with EACH OTHER!",
             "It turns out the last missing ingredient we needed for the competition was...",
             "Layers!",
+            //"It turns out the last missing ingredient we needed for the competition was...",
+            //"Layers!",
             //"each other's ratios, as well.",
             //"This is the layered cake with all our cakes combined!",
             //"We have to work together!",
-            "Making a layered cake with all our cakes combined is the answer!",
+            //"Making a layered cake with all our cakes combined is the answer!",
             //"I know it!",
             "Working TOGETHER is the answer to a perfect cake! Not against one another.",
             "This is why the flower wouldn't bloom!",
