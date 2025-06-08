@@ -1201,9 +1201,11 @@ methods:
                   "Eeks! I'm so flummoxed!",
                   "The annual bake-a-thon is happening soon and my cake is going to be a disaster!",
                   "It was supposed to be a glorious event, what with the flower blooming and all.",
-                  "But all of us had the bright idea to turn this year's bake-a-thon into a competition.",
-                  "So now I'm all stressed out!!!",
-                  "There's got to be some way I can fix my cake. Maybe if I had an apple!",
+                  "But now everyone's so stressed about it...",
+                  "...and it's stressing ME out!!!",
+                  "I wanted to hang out with Derek and make cakes, but he's all mopy so we can't do that.",
+                  "Maybe if I put a special ingredient in my cake, it'll cheer him up.",
+                  "He's always loved apples."
                },
                {
                   { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
