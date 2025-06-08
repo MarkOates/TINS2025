@@ -35,10 +35,12 @@ namespace TINS2025
          ENTITY_TYPE_DIALOG_TRIGGER_2,
          ENTITY_TYPE_DIALOG_TRIGGER_3,
          ENTITY_TYPE_DIALOG_TRIGGER_4,
+         ENTITY_TYPE_DIALOG_TRIGGER_5,
          ENTITY_TYPE_BUNBUCKS_CAKE,
          ENTITY_TYPE_CAKE_1,
          ENTITY_TYPE_CAKE_2,
          ENTITY_TYPE_CAKE_3,
+         ENTITY_TYPE_COMPOSITE_CAKE,
       };
       enum AnimationMode
       {

@@ -56,7 +56,7 @@ Screen::Screen()
    , QUEST__friend_1_requirements_asked(false)
    , QUEST__friend_2_requirements_asked(false)
    , QUEST__friend_3_requirements_asked(false)
-   , current_chapter_number(1)
+   , current_chapter_number(2)
    , dip_to_black_overlay_opacity(0.0f)
    , dipping_to_black(false)
    , initialized(false)
@@ -675,6 +675,14 @@ void Screen::update()
                //}
             break;
 
+            case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_5:
+               //if (!QUEST__dialog_2_triggered)
+               //{
+               event_emitter->emit_activate_dialog_node_by_name_event("player_shows_cakes_combined");
+               //QUEST__dialog_2_triggered = true;
+               //}
+            break;
+
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
                //if (QUEST__apple_collected)
                //{
@@ -741,7 +749,8 @@ void Screen::update()
       if (dip_to_black_overlay_opacity > 1.0)
       {
          dip_to_black_overlay_opacity = 1.0f;
-         event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
+         if (current_chapter_number == 1) event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
+         if (current_chapter_number == 2) event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_3"));
       }
    }
    else
@@ -804,14 +813,21 @@ void Screen::render()
 
 
       float item_y_offset = 0;
-      if (entity.type == TINS2025::Entity::ENTITY_TYPE_CARROT)
+      if (entity.type == TINS2025::Entity::ENTITY_TYPE_CAKE_1
+       || entity.type == TINS2025::Entity::ENTITY_TYPE_CAKE_2
+       || entity.type == TINS2025::Entity::ENTITY_TYPE_CAKE_3
+      )
       {
-         //item_y_offset = -0.25;
+         item_y_offset = 0.45;
       }
-      else if (entity.type == TINS2025::Entity::ENTITY_TYPE_RED_CARROT)
+      else if (entity.type == TINS2025::Entity::ENTITY_TYPE_COMPOSITE_CAKE)
       {
-         //item_y_offset = -0.25;
+         item_y_offset = 0.35;
       }
+      //else if (entity.type == TINS2025::Entity::ENTITY_TYPE_RED_CARROT)
+      //{
+         //item_y_offset = -0.25;
+      //}
       
 
       //entity.draw();
@@ -914,14 +930,36 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
       else { } // Not found
    }
+   else if (game_event->is_type("show_composite_cake"))
+   {
+      // TODO: Sound effect, "poof" or "tada"
+      auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
+            return e.type == TINS2025::Entity::ENTITY_TYPE_COMPOSITE_CAKE;
+      });
+      if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      else { } // Not found
+   }
    else if (game_event->is_type("end_chapter_1"))
    {
+      dipping_to_black = true;
+      suspend_gameplay();
+   }
+   else if (game_event->is_type("end_chapter_2"))
+   {
+      //current_chapter_number = 3; // HACK
       dipping_to_black = true;
       suspend_gameplay();
    }
    else if (game_event->is_type("start_chapter_2"))
    {
       current_chapter_number = 2;
+      refresh_environment_and_world(true);
+      dipping_to_black = false;
+      resume_suspended_gameplay();
+   }
+   else if (game_event->is_type("start_chapter_3"))
+   {
+      current_chapter_number = 3;
       refresh_environment_and_world(true);
       dipping_to_black = false;
       resume_suspended_gameplay();
@@ -976,12 +1014,14 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       int tile_width = 16;
       int tile_height = 16;
       float object_x = object->x / (float)tile_width;
+
       float object_y = object->y / (float)tile_height;
       float object_w = object->width / (float)tile_width;
       float object_h = object->height / (float)tile_height;
 
-      if (current_chapter_number == 2 && object->object_layer_name == "entities_chapter_1") return;
-      if (current_chapter_number == 1 && object->object_layer_name == "entities_chapter_2") return;
+      if (current_chapter_number == 3 && object->object_layer_name != "entities_chapter_3") return;
+      if (current_chapter_number == 2 && object->object_layer_name != "entities_chapter_2") return;
+      if (current_chapter_number == 1 && object->object_layer_name != "entities_chapter_1") return;
 
 
       if (object->name == "player_character")
@@ -1060,6 +1100,13 @@ void Screen::refresh_environment_and_world(bool set_player_position)
          e.aabb2d.set_w(object_w);
          e.aabb2d.set_h(object_h);
       }
+      else if (object->name == "dialog_trigger_5")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_5;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
       else if (object->name == "bunbucks_cake")
       {
          e.type = TINS2025::Entity::ENTITY_TYPE_BUNBUCKS_CAKE;
@@ -1071,24 +1118,43 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       else if (object->name == "cake_1")
       {
          e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_1;
-         //e.flags |= TINS2025::Entity::FLAG_HIDDEN;
-         e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         //e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.sprite = bitmap_bin->auto_get("composite_cake-01.png");
+         e.model = model_bin->auto_get("cake_1.obj");
+         //e.model = model_bin->auto_get("composite_cake-01.obj");
          e.aabb2d.set_w(1.0);
          e.aabb2d.set_h(1.0);
       }
       else if (object->name == "cake_2")
       {
-         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_1;
-         //e.flags |= TINS2025::Entity::FLAG_HIDDEN;
-         e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_2;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         //e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.sprite = bitmap_bin->auto_get("composite_cake-01.png");
+         e.model = model_bin->auto_get("cake_2.obj");
          e.aabb2d.set_w(1.0);
          e.aabb2d.set_h(1.0);
       }
       else if (object->name == "cake_3")
       {
-         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_1;
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_3;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         //e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.sprite = bitmap_bin->auto_get("composite_cake-01.png");
+         e.model = model_bin->auto_get("cake_3.obj");
+         //e.model = model_bin->auto_get("composite_cake-01.obj");
+         e.aabb2d.set_w(1.0);
+         e.aabb2d.set_h(1.0);
+      }
+      else if (object->name == "composite_cake")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_COMPOSITE_CAKE;
          //e.flags |= TINS2025::Entity::FLAG_HIDDEN;
-         e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         //e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.sprite = bitmap_bin->auto_get("composite_cake-01.png");
+         //e.model = model_bin->auto_get("cake_3.obj");
+         e.model = model_bin->auto_get("composite_cake-01.obj");
          e.aabb2d.set_w(1.0);
          e.aabb2d.set_h(1.0);
       }
@@ -1195,10 +1261,10 @@ void Screen::key_down_func(ALLEGRO_EVENT* ev)
    //{
       //event_emitter->emit_game_event(AllegroFlare::GameEvent("end_chapter_1"));
    //}
-   else if (ev->keyboard.keycode == ALLEGRO_KEY_Y)
-   {
-      event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
-   }
+   //else if (ev->keyboard.keycode == ALLEGRO_KEY_Y)
+   //{
+      //event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
+   //}
    else
    {
       switch (input_mode)
@@ -1411,6 +1477,122 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       { "character_starts_bakeoff", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Amazing!",
             "The bakeoff has begun!",
+            "But wait, if this is a competition, how do we know who will be the winner?"
+            //"Normally, just around this time, the plant would start showing signs of budding.",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_01"), 0 } }
+         //}, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 } }
+         //}, { { "exit for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("exit_dialog"), 0 } }
+      )},
+      { "bakeoff_01", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
+            "Well, we each present our cakes one by one.",
+            "And, whichever one makes the flower bloom the most is declared the winner!",
+            //"The bakeoff has begun!",
+            //"But wait, if this is a competition, how do we know who will be the winner?"
+            //"Normally, just around this time, the plant would start showing signs of budding.",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_02"), 0 } }
+         //}, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 } }
+         //}, { { "exit for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("exit_dialog"), 0 } }
+      )},
+      { "bakeoff_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "Oh wow!",
+            "It sure didn't like my Bunbucks cake.",
+            "I can see why it didn't bloom. I can't wait to see your cakes!",
+            "Let the bake-off begin!"
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_03"), 0 } }
+      )},
+      { "bakeoff_03", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+            "I'll present my cake first!",
+            //"It sure didn't like my Bunbucks cake.",
+            //"I can see why it didn't bloom. I can't wait to see your cakes!",
+            //"Let the bake-off begin!"
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_04"), 0 } }
+      )},
+      { "bakeoff_04", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "show_cake_1",
+            "bakeoff_05"
+         )
+      },
+      { "bakeoff_05", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+            "Wah!!",
+            "The flower didn't react at all.",
+            "Oh no! I'm super disappointed in myself.",
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_06"), 0 } }
+      )},
+      //{ "bakeoff_05", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+            //"Wah!!",
+            //"The flower didn't react at all.",
+            //"Oh no! I'm super disappointed in myself.",
+         //}, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_06"), 0 } }
+      //)},
+
+
+      { "bakeoff_06", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
+            "Yikes!",
+            "I guess that gives me a better chance of winning the competition!",
+            "Ok, I'll present my cake now!",
+            //"It sure didn't like my Bunbucks cake.",
+            //"I can see why it didn't bloom. I can't wait to see your cakes!",
+            //"Let the bake-off begin!"
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_07"), 0 } }
+      )},
+      { "bakeoff_07", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "show_cake_2",
+            "bakeoff_08"
+         )
+      },
+      { "bakeoff_08", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+            "How?!",
+            "I put my best into this one.",
+            "There's no way I couldn't have worked.",
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_9"), 0 } }
+      )},
+
+
+      { "bakeoff_9", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+            "Yikes!",
+            "I guess that gives me a better chance of winning the competition!",
+            "Ok, I'll present my cake now!",
+            //"It sure didn't like my Bunbucks cake.",
+            //"I can see why it didn't bloom. I can't wait to see your cakes!",
+            //"Let the bake-off begin!"
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_10"), 0 } }
+      )},
+      { "bakeoff_10", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "show_cake_3",
+            "bakeoff_11"
+         )
+      },
+      { "bakeoff_11", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+            "How?!",
+            "I put my best into this one.",
+            "There's no way I couldn't have worked.",
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_12"), 0 } }
+      )},
+
+
+      { "bakeoff_12", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "Hmm...",
+            "This is indeed strange!",
+            "Why would none of the cakes work for the flower.",
+            "Hmm...",
+            "Wait! I know what it is!",
+            "Quick, everybody!",
+            "GIVE ME ALL YOUR CAKES!"
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("->trigger_end_chapter_2"), 0 } }
+      )},
+      { "->trigger_end_chapter_2", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "end_chapter_2",
+            "exit_dialog"
+         )
+      },
+
+
+      { "player_shows_cakes_combined", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "This is all our cakes combined!",
+            "We have to work together!",
+            "Not against one another.",
             //"And the flower is in full bloom!",
             //"Something's not quite right.",
             //"Normally, just around this time, the plant would start showing signs of budding.",
