@@ -34,6 +34,7 @@ namespace TINS2025
          ENTITY_TYPE_DIALOG_TRIGGER_1,
          ENTITY_TYPE_DIALOG_TRIGGER_2,
          ENTITY_TYPE_DIALOG_TRIGGER_3,
+         ENTITY_TYPE_BUNBUCKS_CAKE,
       };
       enum AnimationMode
       {

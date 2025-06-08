@@ -201,6 +201,18 @@
                  "width":0,
                  "x":688,
                  "y":160
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"bunbucks_cake",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":416,
+                 "y":256
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -253,7 +265,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":18,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

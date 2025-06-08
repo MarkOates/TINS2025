@@ -751,7 +751,28 @@ methods:
       //{
          //start_cinematic_camera("central_core_cinematic");
       //}
-      if (game_event->is_type("win_game"))
+      if (game_event->is_type("spawn_bunbucks_cake"))
+      {
+         auto it = std::find_if(entities.begin(), entities.end(),
+            [](const TINS2025::Entity &e)
+            {
+               return e.type == TINS2025::Entity::ENTITY_TYPE_BUNBUCKS_CAKE;
+            });
+
+         if (it != entities.end())
+         {
+            // Found the entity, *it refers to it
+            (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN;
+         }
+         else
+         {
+            // Not found
+         }
+      }
+      else if (game_event->is_type("end_chapter_1"))
+      {
+      }
+      else if (game_event->is_type("win_game"))
       {
          call_on_finished_callback_func(); // Consider technique to exit
          // HERE
@@ -876,6 +897,14 @@ methods:
             e.flags |= TINS2025::Entity::FLAG_HIDDEN;
             e.aabb2d.set_w(object_w);
             e.aabb2d.set_h(object_h);
+         }
+         else if (object->name == "bunbucks_cake")
+         {
+            e.type = TINS2025::Entity::ENTITY_TYPE_BUNBUCKS_CAKE;
+            e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+            e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+            e.aabb2d.set_w(1.0);
+            e.aabb2d.set_h(1.0);
          }
 
          entities.push_back(e);
@@ -1185,9 +1214,35 @@ methods:
                "I mean, comments on the internet can't all be wrong right?",
                "...",
                "OK, here I go...",
-            }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
-                  //{ "Win game", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 },
+            //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+            }, { { "use bunbucks", new AllegroFlare::DialogTree::NodeOptions::GoToNode("use_bunbucks"), 0 } }
          )},
+         { "use_bunbucks", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+               "spawn_bunbucks_cake",
+               "->character_tries_bunbucks_cake"
+            )
+               //"It was 50% off too!",
+               //"Heheh! It gets the job done!",
+               //"I mean, comments on the internet can't all be wrong right?",
+               //"...",
+               //"OK, here I go...",
+            //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+            //}, {  "use bunbucks", new AllegroFlare::DialogTree::NodeOptions::GoToNode("use_bunbucks"), 0 },
+         },
+         { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+               "Huh.",
+               "Weird.",
+               "Nothing happened.",
+               "Well, should be no big deal, heh.",
+               "I mean, everybody's presenting cakes at the bake-a-thon so it should be fine by then.",
+               "...right?"
+            }, { { "End Ch1", new AllegroFlare::DialogTree::NodeOptions::GoToNode("->trigger_end_chapter_1"), 0 } }
+         )},
+         { "->trigger_end_chapter_1", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+               "end_chapter_1",
+               "exit_dialog"
+            )
+         },
          { "pickup_food", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
                LOTTIE,
                {
