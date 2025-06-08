@@ -1270,7 +1270,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             {
                "Ooh an orange carrot.",
                "Unlike red carrots, the orange ones are the most common cultivar of Daucus carota sativus.",
-               "This carrot looks relly yummy right now.",
+               "This carrot looks really yummy right now.",
                "I forgot to eat my snack on the way down here.",
                "Mmm... sweet, delicious beta-carotene."
             },
