@@ -130,6 +130,24 @@ AllegroFlare::EventEmitter* Screen::get_event_emitter() const
 }
 
 
+AllegroFlare::BitmapBin* Screen::get_bitmap_bin() const
+{
+   return bitmap_bin;
+}
+
+
+AllegroFlare::FontBin* Screen::get_font_bin() const
+{
+   return font_bin;
+}
+
+
+AllegroFlare::ModelBin* Screen::get_model_bin() const
+{
+   return model_bin;
+}
+
+
 AllegroFlare::DialogSystem::DialogSystem* Screen::get_dialog_system() const
 {
    return dialog_system;
@@ -1548,8 +1566,9 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          )
       },
       { "character_starts_bakeoff", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
-            "Amazing!",
-            "Today's the big day for the bake-off!",
+            "Yaaayy!",
+            "It's now time for the big bake-off cake reveal!",
+            //"Today's the big day for the bake-off!",
             "But wait, if this is a competition, how do we know who will be the winner?"
             //"Normally, just around this time, the plant would start showing signs of budding.",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
@@ -1814,6 +1833,8 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       )},
 
       { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "Heuh!",
+            "...",
             "Huh.",
             "Weird.",
             "Nothing happened.",

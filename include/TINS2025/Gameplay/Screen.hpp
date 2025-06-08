@@ -89,6 +89,9 @@ namespace TINS2025
          void set_dialog_system(AllegroFlare::DialogSystem::DialogSystem* dialog_system);
          std::string get_data_folder_path() const;
          AllegroFlare::EventEmitter* get_event_emitter() const;
+         AllegroFlare::BitmapBin* get_bitmap_bin() const;
+         AllegroFlare::FontBin* get_font_bin() const;
+         AllegroFlare::ModelBin* get_model_bin() const;
          AllegroFlare::DialogSystem::DialogSystem* get_dialog_system() const;
          bool get_QUEST__collected_apple() const;
          bool get_QUEST__collected_carrot() const;
