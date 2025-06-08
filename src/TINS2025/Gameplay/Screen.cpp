@@ -47,7 +47,12 @@ Screen::Screen()
    , environment_model(nullptr)
    , player_entity(nullptr)
    , input_mode(0)
-   , QUEST__apple_collected(false)
+   , QUEST__collected_apple(false)
+   , QUEST__collected_carrot(false)
+   , QUEST__collected_red_carrot(false)
+   , QUEST__dialog_1_triggered(false)
+   , QUEST__dialog_2_triggered(false)
+   , QUEST__dialog_3_triggered(false)
    , initialized(false)
 {
 }
@@ -125,9 +130,39 @@ AllegroFlare::DialogSystem::DialogSystem* Screen::get_dialog_system() const
 }
 
 
-bool Screen::get_QUEST__apple_collected() const
+bool Screen::get_QUEST__collected_apple() const
 {
-   return QUEST__apple_collected;
+   return QUEST__collected_apple;
+}
+
+
+bool Screen::get_QUEST__collected_carrot() const
+{
+   return QUEST__collected_carrot;
+}
+
+
+bool Screen::get_QUEST__collected_red_carrot() const
+{
+   return QUEST__collected_red_carrot;
+}
+
+
+bool Screen::get_QUEST__dialog_1_triggered() const
+{
+   return QUEST__dialog_1_triggered;
+}
+
+
+bool Screen::get_QUEST__dialog_2_triggered() const
+{
+   return QUEST__dialog_2_triggered;
+}
+
+
+bool Screen::get_QUEST__dialog_3_triggered() const
+{
+   return QUEST__dialog_3_triggered;
 }
 
 
@@ -511,33 +546,60 @@ void Screen::update()
                entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
                entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
                event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
-               QUEST__apple_collected = true;
+               QUEST__collected_apple = true;
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_CARROT:
                entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
                entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
                event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
-               QUEST__apple_collected = true;
+               QUEST__collected_carrot = true;
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_RED_CARROT:
                entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
                entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
                event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
-               QUEST__apple_collected = true;
+               QUEST__collected_red_carrot = true;
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_1:
-               event_emitter->emit_activate_dialog_node_by_name_event("character_intro_dialog");
+               if (!QUEST__dialog_1_triggered)
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("character_intro_dialog");
+                  QUEST__dialog_1_triggered = true;
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("character_attempts_to_leave");
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_2:
-               event_emitter->emit_activate_dialog_node_by_name_event("character_enters_town");
+               if (!QUEST__dialog_2_triggered)
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("character_enters_town");
+                  QUEST__dialog_2_triggered = true;
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_3:
-               event_emitter->emit_activate_dialog_node_by_name_event("character_sees_plant");
+               if (QUEST__collected_apple && QUEST__collected_carrot && QUEST__collected_red_carrot)
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("character_suspicious_of_plant");
+               }
+               else
+               {
+                  if (!QUEST__dialog_3_triggered)
+                  {
+                     event_emitter->emit_activate_dialog_node_by_name_event("character_sees_plant");
+                     QUEST__dialog_3_triggered = true;
+                  }
+                  else
+                  {
+                     event_emitter->emit_activate_dialog_node_by_name_event("character_sees_plant_again");
+                  }
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
@@ -547,16 +609,36 @@ void Screen::update()
                //}
                //else
                //{
-               event_emitter->emit_activate_dialog_node_by_name_event("friend_1_requirements");
-               //}
+               if (!QUEST__collected_apple)
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("friend_1_requirements");
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("friend_1_requirements_met");
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_2:
-               event_emitter->emit_activate_dialog_node_by_name_event("friend_2_requirements");
+               if (!QUEST__collected_carrot)
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("friend_2_requirements");
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("friend_2_requirements_met");
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_3:
-               event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements");
+               if (!QUEST__collected_red_carrot)
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements");
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements_met");
+               }
             break;
          }
       }
@@ -1065,6 +1147,10 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "I came all the way to this small town just to see it!",
          }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
       )},
+      { "character_attempts_to_leave", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "As much as I'd like to leave and get some goodies from Bunbucks, I really want to check out the flower."
+         }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+      )},
       { "character_enters_town", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "What a cute little town!",
             "I had no idea this place would be so small.",
@@ -1093,6 +1179,28 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "Maybe I should talk to the local villagers and see what their thoughts are on such a wonderful thing.",
             //"
          }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+      )},
+      { "character_sees_plant_again", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "Maybe I should talk to the local villagers and see what their thoughts are on such a wonderful flower.",
+            //"
+         }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+      )},
+      { "character_suspicious_of_plant", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "Hmmm...",
+            "Something's not quite right.",
+            "Normally, just around this time, the plant would start showing signs of budding.",
+            "But, it's like... nothing.",
+            "No worry! I read some guy's comment on a video once. He said that this happens some time.",
+            "The comment said something about how the flower needs a cake, and it will start to bloom.",
+            "I came prepared!",
+            "I picked up a little cake at Bunbucks on the way here."
+            "It was 50% off too!",
+            "Heheh! Whatever gets the job done!",
+            "I mean, comments on the internet can't all be wrong right?",
+            "...",
+            "OK, here I go...",
+         }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+               //{ "Win game", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 },
       )},
       { "pickup_food", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
             LOTTIE,
@@ -1149,6 +1257,47 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
                "But all of us had the bright idea to turn this year's bake-a-thon into a competition.",
                "So now I'm all stressed out!!!",
                "There's got to be some way I can fix my cake. Maybe if I had an apple!",
+            },
+            {
+               { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+            }
+         )
+      },
+      { "friend_1_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            FRIEND_1,
+            {
+               "Amazing!",
+               "This apple is exactly what I need!",
+               "Well... at least I think it is.",
+               "The competition still has me stressed, but at least I can move forward!",
+            },
+            {
+               { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+            }
+         )
+      },
+      { "friend_2_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            FRIEND_2,
+            {
+               "Woo-hoo!",
+               "This carrot is perfect for my cake!",
+               "Meeehg... except I'm still stressed about the compeition.",
+               "Thank to you I at least have something I can work with.",
+            },
+            {
+               { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+            }
+         )
+      },
+      { "friend_3_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            FRIEND_3,
+            {
+               "Yes!!",
+               "This big juicy red carrot is perfecto!",
+               "Except one thing...",
+               "I'm still going to have to make the cake for the competition.",
+               "How stressful!",
+               "I guess I better get going if I'm going to make this work."
             },
             {
                { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }

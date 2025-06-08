@@ -59,7 +59,12 @@ namespace TINS2025
          AllegroFlare::Model3D* environment_model;
          TINS2025::Entity* player_entity;
          int input_mode;
-         bool QUEST__apple_collected;
+         bool QUEST__collected_apple;
+         bool QUEST__collected_carrot;
+         bool QUEST__collected_red_carrot;
+         bool QUEST__dialog_1_triggered;
+         bool QUEST__dialog_2_triggered;
+         bool QUEST__dialog_3_triggered;
          bool initialized;
 
       protected:
@@ -79,7 +84,12 @@ namespace TINS2025
          std::string get_data_folder_path() const;
          AllegroFlare::EventEmitter* get_event_emitter() const;
          AllegroFlare::DialogSystem::DialogSystem* get_dialog_system() const;
-         bool get_QUEST__apple_collected() const;
+         bool get_QUEST__collected_apple() const;
+         bool get_QUEST__collected_carrot() const;
+         bool get_QUEST__collected_red_carrot() const;
+         bool get_QUEST__dialog_1_triggered() const;
+         bool get_QUEST__dialog_2_triggered() const;
+         bool get_QUEST__dialog_3_triggered() const;
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();
