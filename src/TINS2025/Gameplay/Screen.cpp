@@ -56,7 +56,7 @@ Screen::Screen()
    , QUEST__friend_1_requirements_asked(false)
    , QUEST__friend_2_requirements_asked(false)
    , QUEST__friend_3_requirements_asked(false)
-   , current_chapter_number(1)
+   , current_chapter_number(2)
    , dip_to_black_overlay_opacity(0.0f)
    , dipping_to_black(false)
    , initialized(false)
@@ -678,7 +678,7 @@ void Screen::update()
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_5:
                //if (!QUEST__dialog_2_triggered)
                //{
-               event_emitter->emit_activate_dialog_node_by_name_event("player_shows_cakes_combined");
+               event_emitter->emit_activate_dialog_node_by_name_event("start_chapter_3");
                //QUEST__dialog_2_triggered = true;
                //}
             break;
@@ -938,6 +938,17 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       });
       if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
       else { } // Not found
+   }
+   else if (game_event->is_type("plant_begins"))
+   {
+      // Start reveal music here
+
+      // TODO: Sound effect, "poof" or "tada"
+      //auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
+            //return e.type == TINS2025::Entity::ENTITY_TYPE_THE_PLANT;
+      //});
+      //if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      //else { } // Not found
    }
    else if (game_event->is_type("show_the_plant"))
    {
@@ -1449,7 +1460,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "like...",
             "...ever!",
             "I bet they're pretty cool and relaxed just knowing it's nearby!",
-            "Oooh! And there's the rare flower! Right over there!",
+            "Oooh! And there's it is! The rare flower!",
             "And it hasn't bloomed yet. It looks like I got here just in time!",
             "I can't wait to get a closer look."
          }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
@@ -1506,7 +1517,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       )},
       { "bakeoff_01", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
             "Well, we each present our cakes one by one.",
-            "And, whichever one makes the flower bloom the most is declared the winner!",
+            "And, whoever makes the flower bloom the most is declared the winner!",
             //"The bakeoff has begun!",
             //"But wait, if this is a competition, how do we know who will be the winner?"
             //"Normally, just around this time, the plant would start showing signs of budding.",
@@ -1523,7 +1534,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_03"), 0 } }
       )},
       { "bakeoff_03", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
-            "I'll present my cake first!",
+            "OK! I'll present my cake first!",
             //"It sure didn't like my Bunbucks cake.",
             //"I can see why it didn't bloom. I can't wait to see your cakes!",
             //"Let the bake-off begin!"
@@ -1536,6 +1547,8 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       },
       { "bakeoff_05", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
             "Wah!!",
+            "...",
+            "Huh?",
             "The flower didn't react at all.",
             "Oh no! I'm super disappointed in myself.",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_06"), 0 } }
@@ -1550,7 +1563,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
 
       { "bakeoff_06", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
             "Yikes!",
-            "I guess that gives me a better chance of winning the competition!",
+            "Heh heh! I guess that gives me a better chance of winning the competition!",
             "Ok, I'll present my cake now!",
             //"It sure didn't like my Bunbucks cake.",
             //"I can see why it didn't bloom. I can't wait to see your cakes!",
@@ -1563,16 +1576,21 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          )
       },
       { "bakeoff_08", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+            "Heegh!!",
             "How?!",
             "I put my best into this one.",
-            "There's no way I couldn't have worked.",
+            "There's no way it couldn't have worked.",
+            "I measured the perfect proportions!",
+            "How could this be?!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_9"), 0 } }
       )},
 
 
       { "bakeoff_9", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
             "Yikes!",
-            "I guess that gives me a better chance of winning the competition!",
+            "If you guys put your amazing cakes, and that' didn't work...",
+            "EEsshh.",
+            "But maybe that means I'll be the winner.",
             "Ok, I'll present my cake now!",
             //"It sure didn't like my Bunbucks cake.",
             //"I can see why it didn't bloom. I can't wait to see your cakes!",
@@ -1585,9 +1603,11 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          )
       },
       { "bakeoff_11", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
-            "How?!",
-            "I put my best into this one.",
-            "There's no way I couldn't have worked.",
+            "Yah!!", // Change
+            "Wahh?!", // Change
+            "But... I put my best into this one.", // Change
+            "There's no way!",
+            "And I measured the perfect proportions too!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_12"), 0 } }
       )},
 
@@ -1598,7 +1618,12 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "Why would none of the cakes work for the flower.",
             "What did my botany book have to say about this?",
             "Hmm...",
+            "It's peculiar that *all three* of you said something about how you had the pefect propotions!",
+            "Wait! THAT'S IT!",
             "Wait! I know what it is!",
+            "I know what we need to do!",
+            "In order to make the perfect cake... we all must...",
+            "There's not time to explain!",
             "Quick, everybody!",
             "GIVE ME ALL YOUR CAKES!"
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("->trigger_end_chapter_2"), 0 } }
@@ -1610,25 +1635,64 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       },
 
 
-      { "player_shows_cakes_combined", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
-            "This is all our cakes combined!",
-            "We have to work together!",
-            "Not against one another.",
-            "If we put all of our cakes together into a single, layered cake, it has to work!",
-            "And, I noticed all our cakes were the perfect dimensions to stack on top of each other.",
+      { "start_chapter_3", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+            "Woooww!",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_01"), 0 } }
+      )},
+      { "cake_reveal_01", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
+            "Amazing!",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_02"), 0 } }
+      )},
+      { "cake_reveal_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+            "It's perfect!",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("player_presents_cakes"), 0 } }
+      )},
+      { "player_presents_cakes", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "This is it!",
+            "The last ingredient we all needed was...",
+            "We needed to see all of our cakes combined!",
+            "Each of you measured the perfect ratios, but...",
+            "You didn't take into account that each of you ALSO had perfect ratios with EACH OTHER!",
+            "It turns out the last missing ingredient we needed for the competition was...",
+            "Layers!",
+            //"each other's ratios, as well.",
+            //"This is the layered cake with all our cakes combined!",
+            //"We have to work together!",
+            "Working TOGETHER is the answer to a perfect cake! Not against one another.",
+            "This is the layered cake with all our cakes combined!",
+            "When we put all of our cakes together into a single, layered cake, it's like something else entirely!",
+            //"This is the layered cake with all our cakes combined!",
+            //"I know it!",
+            //"And, I noticed all our cakes were the perfect dimensions to stack on top of each other.",
             "This cake is so amazing!",
             "The ratios are just... just... perfect!",
-            "I think this cake deserves a... a... gold medal!",
+            "I think all our cakes deserves a... a... gold medal!",
+            //"Oh wait! I can see the plant reacting!",
+            //"And the flower is in full bloom!",
+            //"Something's not quite right.",
+            //"Normally, just around this time, the plant would start showing signs of budding.",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("show_plant_reveal_01"), 0 } }
+      )},
+      { "show_plant_reveal_01", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "plant_begins",
+            "show_plant_reveal_02"
+         )
+      },
+      { "show_plant_reveal_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Oh wait! I can see the plant reacting!",
             //"And the flower is in full bloom!",
             //"Something's not quite right.",
             //"Normally, just around this time, the plant would start showing signs of budding.",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
-         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("show_plant_reveal"), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("show_plant_reveal_03"), 0 } }
       )},
-      { "show_plant_reveal", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+      { "show_plant_reveal_03", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
             "show_the_plant",
-            "celebrate_plant"
+            "celebrate_plant_02"
          )
       },
       { "celebrate_plant", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
