@@ -1235,7 +1235,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "Something's not quite right.",
             "Normally, just around this time, the plant would start showing signs of budding.",
             "But, it's like... nothing.",
-            "No worry! I read some guy's comment on a video once. He said that this happens some time.",
+            "No worry! I read some guy's comment on a video once. He said that this happens sometimes.",
             "The comment said something about how the flower needs a cake, and it will start to bloom.",
             "I came prepared!",
             "I picked up a little cake at Bunbucks on the way here.",
