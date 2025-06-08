@@ -403,8 +403,8 @@ void Screen::load_up_world()
          //player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 3);
          //player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 3);
 
-         player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 3);
-         player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 3);
+         player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 3.5);
+         player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 3.5);
          //player_entity->position.z += value.y * 0.02;
 
          float threshold = 0.1f; // example threshold
@@ -540,6 +540,10 @@ void Screen::update()
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_2:
+               event_emitter->emit_activate_dialog_node_by_name_event("inconsequential_dialog");
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_FRIEND_3:
                event_emitter->emit_activate_dialog_node_by_name_event("inconsequential_dialog");
             break;
          }
@@ -757,6 +761,11 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       {
          e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND_2;
          e.sprite = bitmap_bin->auto_get("friend_2.png");
+      }
+      else if (object->name == "friend_3")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_FRIEND_3;
+         e.sprite = bitmap_bin->auto_get("friend_3.png");
       }
       else if (object->name == "apple")
       {
