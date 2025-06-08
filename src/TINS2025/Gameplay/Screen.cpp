@@ -541,22 +541,22 @@ void Screen::update()
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
-               if (QUEST__apple_collected)
-               {
-                  event_emitter->emit_activate_dialog_node_by_name_event("celebrate_won_game");
-               }
-               else
-               {
-                  event_emitter->emit_activate_dialog_node_by_name_event("tell_requirements");
-               }
+               //if (QUEST__apple_collected)
+               //{
+                  //event_emitter->emit_activate_dialog_node_by_name_event("celebrate_won_game");
+               //}
+               //else
+               //{
+               event_emitter->emit_activate_dialog_node_by_name_event("friend_1_requirements");
+               //}
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_2:
-               event_emitter->emit_activate_dialog_node_by_name_event("inconsequential_dialog");
+               event_emitter->emit_activate_dialog_node_by_name_event("friend_2_requirements");
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_3:
-               event_emitter->emit_activate_dialog_node_by_name_event("inconsequential_dialog");
+               event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements");
             break;
          }
       }
@@ -1052,8 +1052,9 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
    AllegroFlare::DialogTree::NodeBank result;
 
    std::string LOTTIE = "Lottie";
-   std::string DITTO = "Ditto";
-   std::string FRANK = "Frank";
+   std::string FRIEND_1 = "Ditto";
+   std::string FRIEND_2 = "Frank";
+   std::string FRIEND_3 = "Derek";
 
    result.set_nodes({
       //character_enters_town
@@ -1071,7 +1072,10 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "1...",
             "2...",
             "3 houses here!",
-            "I bet the residents here are pretty grateful to be in the presence one of the rarest plants ever!",
+            "I bet the residents here are pretty grateful to be in the presence one of the rarest plants...",
+            "like...",
+            "...ever!",
+            "I bet they're pretty cool and relaxed just knowing it's nearby!",
             "Oooh! And there's the rare flower! Right over there!",
             "And it hasn't bloomed yet. It looks like I got here just in time!",
             "I can't wait to get a closer look."
@@ -1085,7 +1089,9 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "I couldn't be more excited!",
             "It's even more miraculous than I could have dreamed!",
             "And it still hasn't even bloomed yet!",
-            "EEEeeee!!"
+            "EEEeeee!!",
+            "Maybe I should talk to the local villagers and see what their thoughts are on such a wonderful thing.",
+            //"
          }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
       )},
       { "pickup_food", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
@@ -1098,30 +1104,69 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "inconsequential_dialog", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
-            FRANK,
+      { "friend_2_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            FRIEND_2,
             {
-               "Hmm. What a wonderful day for a bake!"
+               "Normally this time of year is a time for celebration!",
+               "But holy cow am I stressed!",
+               "I've got to bake a cake, and, I've just got to win this competition.",
+               "All the stress has got me locked right up! I can't seem to do anything",
+               "Maybe if I had a carrot!",
+               "Yes! That's the thing!",
+               "If I had a nice juicy carrot it would make my cake into perfection.",
             },
             {
                { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
             }
          )
       },
-      { "tell_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
-            DITTO,
+      { "friend_3_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            FRIEND_3,
+            {
+               "You know, last year's bake-a-thon was so much fun!",
+               "I impressed everybody with my super unique mini cake.",
+               "Everyone was so happy... but...",
+               "I don't think anyone will like my cake this year.",
+               "Everyone will think my cake is as uninteresting as a cake could possibly be!",
+               "Only because this year's bake-a-thon has been turned into a competition!",
+               "The stress of all this has me...",
+               "AnXiOuSs!!",
+               "*pfoo* *pfoo* *pfoo*",
+               "Just breathe...",
+               "Maybe if I had a red carrot it might be just the trick to fix my cake."
+            },
+            {
+               { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+            }
+         )
+      },
+      { "friend_1_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            FRIEND_1,
             {
                "Eeks! I'm so flummoxed!",
-               "The anual bake-a-thon is happening right now and my pie is going to be a disaster!",
-               "I'll need an apple to make my layered cake into a reality.",
+               "The anual bake-a-thon is happening soon and my cake is going to be a disaster!",
+               "It was supposed to be a glorious event, what with the flower blooming and all.",
+               "But all of us had the bright idea to turn this year's bake-a-thon into a competition.",
+               "So now I'm all stressed out!!!",
+               "There's got to be some way I can fix my cake. Maybe if I had an apple!",
             },
             {
                { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
             }
          )
       },
+      //{ "friend_1_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+            //DITTO,
+            //{
+               //"Amazing! This should fix my pie in no time! Thank you!"
+            //},
+            //{
+               //{ "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
+            //}
+         //)
+      //},
       { "celebrate_won_game", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
-            DITTO,
+            FRIEND_1,
             {
                "Thank you so much!!",
                "You've saved my new groundbreaking layered apple pie!",
