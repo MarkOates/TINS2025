@@ -56,7 +56,7 @@ Screen::Screen()
    , QUEST__friend_1_requirements_asked(false)
    , QUEST__friend_2_requirements_asked(false)
    , QUEST__friend_3_requirements_asked(false)
-   , current_chapter_number(2)
+   , current_chapter_number(1)
    , dip_to_black_overlay_opacity(0.0f)
    , dipping_to_black(false)
    , initialized(false)
@@ -939,6 +939,15 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
       else { } // Not found
    }
+   else if (game_event->is_type("show_the_plant"))
+   {
+      // TODO: Sound effect, "poof" or "tada"
+      auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
+            return e.type == TINS2025::Entity::ENTITY_TYPE_THE_PLANT;
+      });
+      if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      else { } // Not found
+   }
    else if (game_event->is_type("end_chapter_1"))
    {
       dipping_to_black = true;
@@ -1155,6 +1164,17 @@ void Screen::refresh_environment_and_world(bool set_player_position)
          e.sprite = bitmap_bin->auto_get("composite_cake-01.png");
          //e.model = model_bin->auto_get("cake_3.obj");
          e.model = model_bin->auto_get("composite_cake-01.obj");
+         e.aabb2d.set_w(1.0);
+         e.aabb2d.set_h(1.0);
+      }
+      else if (object->name == "the_plant")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_THE_PLANT;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         //e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.sprite = bitmap_bin->auto_get("the_plant-01.png");
+         //e.model = model_bin->auto_get("cake_3.obj");
+         e.model = model_bin->auto_get("the_plant-01.obj");
          e.aabb2d.set_w(1.0);
          e.aabb2d.set_h(1.0);
       }
@@ -1576,6 +1596,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "Hmm...",
             "This is indeed strange!",
             "Why would none of the cakes work for the flower.",
+            "What did my botany book have to say about this?",
             "Hmm...",
             "Wait! I know what it is!",
             "Quick, everybody!",
@@ -1593,13 +1614,33 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "This is all our cakes combined!",
             "We have to work together!",
             "Not against one another.",
+            "If we put all of our cakes together into a single, layered cake, it has to work!",
+            "And, I noticed all our cakes were the perfect dimensions to stack on top of each other.",
+            "This cake is so amazing!",
+            "The ratios are just... just... perfect!",
+            "I think this cake deserves a... a... gold medal!",
+            "Oh wait! I can see the plant reacting!",
+            //"And the flower is in full bloom!",
+            //"Something's not quite right.",
+            //"Normally, just around this time, the plant would start showing signs of budding.",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("show_plant_reveal"), 0 } }
+      )},
+      { "show_plant_reveal", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "show_the_plant",
+            "celebrate_plant"
+         )
+      },
+      { "celebrate_plant", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "We did it!",
+            "YAAAAY!",
             //"And the flower is in full bloom!",
             //"Something's not quite right.",
             //"Normally, just around this time, the plant would start showing signs of budding.",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          }, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 } }
-         //}, { { "exit for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("exit_dialog"), 0 } }
       )},
+
       { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Huh.",
             "Weird.",

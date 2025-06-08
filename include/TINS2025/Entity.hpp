@@ -41,6 +41,7 @@ namespace TINS2025
          ENTITY_TYPE_CAKE_2,
          ENTITY_TYPE_CAKE_3,
          ENTITY_TYPE_COMPOSITE_CAKE,
+         ENTITY_TYPE_THE_PLANT,
       };
       enum AnimationMode
       {
