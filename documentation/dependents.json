@@ -309,6 +309,9 @@
   "TINS2025/GameProgressAndStateInfo": [
     "TINS2025/Game/Configurations/Main"
   ],
+  "AllegroFlare/StoryboardPageFactory": [
+    "TINS2025/Game/Configurations/Main"
+  ],
   "TINS2025/JSONLoaders/TINS2025/GameProgressAndStateInfo": [
     "TINS2025/GameProgressAndStateInfo"
   ],

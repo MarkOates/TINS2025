@@ -176,6 +176,8 @@ methods:
 
       primary_gameplay_screen = result;
 
+      runner->get_event_emitter()->emit_play_music_track_event("theme");
+
       return result;
     body_dependency_symbols:
       - TINS2025::Gameplay::Screen
@@ -439,7 +441,13 @@ methods:
       //page_factory.set_model_bin(model_bin);
       //page_factory.create_clubcatt_logo_page(),
       //page_factory.create_image_page(bitmap_bin->operator[]("clubcatt-website-01.jpg")),
+      //return {
+         //page_factory.create_clubcatt_logo_page(),
+         //page_factory.create_image_page(bitmap_bin->operator[]("clubcatt-website-01.jpg")),
+      //};
       return {};
+    body_dependency_symbols:
+      - AllegroFlare::StoryboardPageFactory
 
 
   - name: create_intro_storyboard_pages
@@ -572,12 +580,16 @@ methods:
       // event_emitter->emit_play_music_track_event("menu_select");
 
       //// An example of how to load a music track:
-      //audio_controller.set_and_load_music_track_elements({
-         ////{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
-      //});
+      audio_controller->set_and_load_music_track_elements({
+         //{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
+         { "theme", { "hello_friend-theme-01.ogg", true, "ignore" } },
+         { "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
+         { "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
+      });
 
       // How to play a music track:
-      // event_emitter->emit_play_music_track_event("intro_music");
+       //event_emitter->emit_play_music_track_event("intro_music");
+      //event_emitter->emit_play_music_track_event("theme");
       return;
 
 
@@ -879,5 +891,7 @@ dependencies:
     headers: [ AllegroFlare/SavingAndLoading/SavingAndLoading.hpp ]
   - symbol: AllegroFlare::SavingAndLoading::SavingAndLoading::StartStyle
     headers: [ AllegroFlare/SavingAndLoading/SavingAndLoading.hpp ]
+  - symbol: AllegroFlare::StoryboardPageFactory
+    headers: [ AllegroFlare/StoryboardPageFactory.hpp ]
 
 

@@ -10,6 +10,7 @@
 #include <AllegroFlare/LoadASavedGame/SaveSlots/Empty.hpp>
 #include <AllegroFlare/Runners/Complete.hpp>
 #include <AllegroFlare/Screens/TitledMenuScreenFactory.hpp>
+#include <AllegroFlare/StoryboardPageFactory.hpp>
 #include <TINS2025/GameProgressAndStateInfo.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <TINS2025/Gameplay/Screen.hpp>
@@ -147,6 +148,8 @@ AllegroFlare::Screens::Gameplay* Main::create_primary_gameplay_screen(AllegroFla
    result->initialize();
 
    primary_gameplay_screen = result;
+
+   runner->get_event_emitter()->emit_play_music_track_event("theme");
 
    return result;
 }
@@ -400,6 +403,10 @@ std::vector<AllegroFlare::Elements::StoryboardPages::Base *> Main::create_intro_
    //page_factory.set_model_bin(model_bin);
    //page_factory.create_clubcatt_logo_page(),
    //page_factory.create_image_page(bitmap_bin->operator[]("clubcatt-website-01.jpg")),
+   //return {
+      //page_factory.create_clubcatt_logo_page(),
+      //page_factory.create_image_page(bitmap_bin->operator[]("clubcatt-website-01.jpg")),
+   //};
    return {};
 }
 
@@ -516,12 +523,16 @@ void Main::load_audio_controller(AllegroFlare::AudioController* audio_controller
    // event_emitter->emit_play_music_track_event("menu_select");
 
    //// An example of how to load a music track:
-   //audio_controller.set_and_load_music_track_elements({
-      ////{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
-   //});
+   audio_controller->set_and_load_music_track_elements({
+      //{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
+      { "theme", { "hello_friend-theme-01.ogg", true, "ignore" } },
+      { "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
+      { "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
+   });
 
    // How to play a music track:
-   // event_emitter->emit_play_music_track_event("intro_music");
+    //event_emitter->emit_play_music_track_event("intro_music");
+   //event_emitter->emit_play_music_track_event("theme");
    return;
 }
 
