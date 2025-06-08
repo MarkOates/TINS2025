@@ -1528,8 +1528,9 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       )},
       { "bakeoff_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Oh wow!",
-            "It sure didn't like my Bunbucks cake.",
-            "I can see why it didn't bloom. I can't wait to see your cakes!",
+            "It sure didn't like my Bunbucks cake, heh.",
+            "I can see why it didn't bloom, then.",
+            "I can't wait to see your cakes!",
             "Let the bake-off begin!"
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_03"), 0 } }
       )},
@@ -1550,6 +1551,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "...",
             "Huh?",
             "The flower didn't react at all.",
+            "My cake had the perfect proportions!",
             "Oh no! I'm super disappointed in myself.",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_06"), 0 } }
       )},
@@ -1577,10 +1579,11 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       },
       { "bakeoff_08", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
             "Heegh!!",
+            "...", // Change
             "How?!",
             "I put my best into this one.",
             "There's no way it couldn't have worked.",
-            "I measured the perfect proportions!",
+            "I measured mine to have the perfect proportions!",
             "How could this be?!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_9"), 0 } }
       )},
@@ -1588,10 +1591,10 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
 
       { "bakeoff_9", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
             "Yikes!",
-            "If you guys put your amazing cakes, and that' didn't work...",
-            "EEsshh.",
-            "But maybe that means I'll be the winner.",
-            "Ok, I'll present my cake now!",
+            "If you guys presented your amazing cakes, and that' didn't work...",
+            "EEsshh. Mine couldn't stand a chance!",
+            "But, maybe that means I'll be the winner.",
+            "Ok, here goes nothing..."
             //"It sure didn't like my Bunbucks cake.",
             //"I can see why it didn't bloom. I can't wait to see your cakes!",
             //"Let the bake-off begin!"
@@ -1604,10 +1607,11 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       },
       { "bakeoff_11", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
             "Yah!!", // Change
+            "...", // Change
             "Wahh?!", // Change
             "But... I put my best into this one.", // Change
             "There's no way!",
-            "And I measured the perfect proportions too!",
+            "And I measured the perfect proportions, too!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_12"), 0 } }
       )},
 
