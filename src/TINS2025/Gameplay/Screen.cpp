@@ -509,6 +509,9 @@ void Screen::load_up_world()
    set_player_input_controller(generic_player_input_controller);
 
 
+   event_emitter->emit_play_music_track_event("theme");
+
+
    return;
 }
 
@@ -651,6 +654,7 @@ void Screen::update()
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_3:
                if (QUEST__collected_apple && QUEST__collected_carrot && QUEST__collected_red_carrot)
                {
+                  event_emitter->emit_play_music_track_event("sad_theme");
                   event_emitter->emit_activate_dialog_node_by_name_event("character_suspicious_of_plant");
                }
                else
@@ -941,6 +945,10 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    }
    else if (game_event->is_type("bakeoff_begins"))
    {
+      event_emitter->emit_play_music_track_event("sad_theme");
+      //{ "theme", { "hello_friend-theme-01.ogg", true, "ignore" } },
+      //{ "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
+      //{ "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
       // Start reveal music here
 
       // TODO: Sound effect, "poof" or "tada"
@@ -952,6 +960,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    }
    else if (game_event->is_type("plant_begins"))
    {
+      event_emitter->emit_play_music_track_event("theme");
       // Start reveal music here
 
       // TODO: Sound effect, "poof" or "tada"
@@ -975,6 +984,11 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       dipping_to_black = true;
       suspend_gameplay();
    }
+   else if (game_event->is_type("character_realizes"))
+   {
+      event_emitter->emit_play_music_track_event("idea");
+      // TODO: Start camera move here;
+   }
    else if (game_event->is_type("end_chapter_2"))
    {
       //current_chapter_number = 3; // HACK
@@ -987,6 +1001,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       refresh_environment_and_world(true);
       dipping_to_black = false;
       resume_suspended_gameplay();
+      event_emitter->emit_play_music_track_event("chipper_tune");
    }
    else if (game_event->is_type("start_chapter_3"))
    {
@@ -994,6 +1009,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       refresh_environment_and_world(true);
       dipping_to_black = false;
       resume_suspended_gameplay();
+      event_emitter->emit_play_music_track_event("theme");
    }
    else if (game_event->is_type("win_game"))
    {
@@ -1517,9 +1533,15 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "->character_tries_bunbucks_cake"
          )
       },
+
+      { "start_chapter_2", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "start_chapter_2",
+            "character_starts_bakeoff"
+         )
+      },
       { "character_starts_bakeoff", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Amazing!",
-            "The bakeoff has begun!",
+            "Today's the big day for the bake-off!",
             "But wait, if this is a competition, how do we know who will be the winner?"
             //"Normally, just around this time, the plant would start showing signs of budding.",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
@@ -1640,6 +1662,8 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       )},
 
 
+
+
       { "bakeoff_12", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Hmm...",
             "This is indeed strange!",
@@ -1647,13 +1671,29 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             //"What did my botany book have to say about this?",
             "Hmm...",
             "It's peculiar that *all three* of you said something about how you had the pefect propotions!",
+         }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_13"), 0 } }
+      )},
+      { "bakeoff_13", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "character_realizes",
+            "bakeoff_14"
+         )
+      },
+
+
+      { "bakeoff_14", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            //"Hmm...",
+            //"This is indeed strange!",
+            //"Why would none of the cakes work for the flower.",
+            ////"What did my botany book have to say about this?",
+            //"Hmm...",
+            //"It's peculiar that *all three* of you said something about how you had the pefect propotions!",
             "Wait! THAT'S IT!",
-            "Wait! I know what it is!",
+            "I know what it is!",
             "I know what we need to do!",
             "In order to make the perfect cake... we all must...",
             "There's not time to explain!",
             "Quick, everybody!",
-            "GIVE ME ALL YOUR CAKES!"
+            "GIVE ME ALL YOUR CAKES!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("->trigger_end_chapter_2"), 0 } }
       )},
       { "->trigger_end_chapter_2", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
@@ -1663,7 +1703,12 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       },
 
 
-      { "start_chapter_3", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+      { "start_chapter_3", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+            "start_chapter_3",
+            "cake_reveal_00"
+         )
+      },
+      { "cake_reveal_00", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
             "Woooww!",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_01"), 0 } }

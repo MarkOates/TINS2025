@@ -70,6 +70,16 @@ TEST_F(TINS2025_Gameplay_ScreenTest, type__has_the_expected_value_matching_TYPE)
 TEST_F(TINS2025_Gameplay_ScreenTestWithAllegroFrameworksFullFixture,
    CAPTURE__TIMED_INTERACTIVE__will_run_as_expected)
 {
+
+   AllegroFlare::AudioController *audio_controller = get_framework_audio_controller();
+      audio_controller->set_and_load_music_track_elements({
+         //{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
+         { "theme", { "hello_friend-theme-01.ogg", true, "ignore" } },
+         { "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
+         { "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
+         { "idea", { "hello_friend-idea-01.ogg", false, "ignore" } },
+      });
+
    TINS2025::Gameplay::Screen screen;
    screen.set_data_folder_path(get_framework_data_folder_path());
    screen.set_event_emitter(get_framework_event_emitter());
@@ -78,6 +88,8 @@ TEST_F(TINS2025_Gameplay_ScreenTestWithAllegroFrameworksFullFixture,
    screen.set_model_bin(get_framework_model_bin());
    screen.set_dialog_system(get_framework_dialog_system());
    screen.initialize();
+
+   //AllegroFlare::AudioController
 
    framework_register_and_activate_screen("screen", &screen);
 
