@@ -56,6 +56,9 @@ Screen::Screen()
    , QUEST__friend_1_requirements_asked(false)
    , QUEST__friend_2_requirements_asked(false)
    , QUEST__friend_3_requirements_asked(false)
+   , current_chapter_number(1)
+   , dip_to_black_overlay_opacity(0.0f)
+   , dipping_to_black(false)
    , initialized(false)
 {
 }
@@ -187,6 +190,24 @@ bool Screen::get_QUEST__friend_3_requirements_asked() const
 }
 
 
+int Screen::get_current_chapter_number() const
+{
+   return current_chapter_number;
+}
+
+
+float Screen::get_dip_to_black_overlay_opacity() const
+{
+   return dip_to_black_overlay_opacity;
+}
+
+
+bool Screen::get_dipping_to_black() const
+{
+   return dipping_to_black;
+}
+
+
 bool Screen::get_initialized() const
 {
    return initialized;
@@ -279,6 +300,7 @@ void Screen::initialize()
 
 void Screen::gameplay_suspend_func()
 {
+
    // Function that is called immediately after the gameplay is suspended.
    //AllegroFlare::Logger::warn_from_once(
       //"AllegroFlare::Screens::Gameplay::gameplay_suspend_func",
@@ -346,6 +368,7 @@ void Screen::load_up_world()
    entities.push_back(e);
 
    player_entity = &entities.back();
+
 
 
    refresh_environment_and_world(true);
@@ -644,6 +667,14 @@ void Screen::update()
                }
             break;
 
+            case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_4:
+               //if (!QUEST__dialog_2_triggered)
+               //{
+               event_emitter->emit_activate_dialog_node_by_name_event("character_starts_bakeoff");
+               //QUEST__dialog_2_triggered = true;
+               //}
+            break;
+
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
                //if (QUEST__apple_collected)
                //{
@@ -702,6 +733,23 @@ void Screen::update()
    // Update the current camera to track the current player position
    view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.x = player_entity->aabb2d.get_x();
    view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.z = player_entity->aabb2d.get_y();
+
+   // Update dipping to black
+   if (dipping_to_black)
+   {
+      dip_to_black_overlay_opacity += 0.02;
+      if (dip_to_black_overlay_opacity > 1.0)
+      {
+         dip_to_black_overlay_opacity = 1.0f;
+         event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
+      }
+   }
+   else
+   {
+      dip_to_black_overlay_opacity -= 0.02;
+      if (dip_to_black_overlay_opacity < 0.0) dip_to_black_overlay_opacity = 0.0f;
+   }
+
 
    return;
 }
@@ -795,6 +843,15 @@ void Screen::render()
       placement.restore_transform();
    }
 
+
+   if (dip_to_black_overlay_opacity > 0.0001)
+   {
+      view_motion_studio.get_camera_studio_ref().setup_projection_on_hud_camera();
+      float o = dip_to_black_overlay_opacity;
+      al_draw_filled_rectangle(0, 0, 1920, 1080, ALLEGRO_COLOR{0, 0, 0, o});
+   }
+
+
    //view_motion_studio.setup_camera_projection_on_live_camera();
 
    // Render the view motion hud
@@ -822,26 +879,52 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    //{
       //start_cinematic_camera("central_core_cinematic");
    //}
-   if (game_event->is_type("spawn_bunbucks_cake"))
+   if (game_event->is_type("show_bunbucks_cake"))
    {
-      auto it = std::find_if(entities.begin(), entities.end(),
-         [](const TINS2025::Entity &e)
-         {
+      auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
             return e.type == TINS2025::Entity::ENTITY_TYPE_BUNBUCKS_CAKE;
-         });
-
-      if (it != entities.end())
-      {
-         // Found the entity, *it refers to it
-         (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN;
-      }
-      else
-      {
-         // Not found
-      }
+      });
+      if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      else { } // Not found
+   }
+   else if (game_event->is_type("show_cake_1"))
+   {
+      // TODO: Sound effect, "poof" or "tada"
+      auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
+            return e.type == TINS2025::Entity::ENTITY_TYPE_CAKE_1;
+      });
+      if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      else { } // Not found
+   }
+   else if (game_event->is_type("show_cake_2"))
+   {
+      // TODO: Sound effect, "poof" or "tada"
+      auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
+            return e.type == TINS2025::Entity::ENTITY_TYPE_CAKE_2;
+      });
+      if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      else { } // Not found
+   }
+   else if (game_event->is_type("show_cake_3"))
+   {
+      // TODO: Sound effect, "poof" or "tada"
+      auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
+            return e.type == TINS2025::Entity::ENTITY_TYPE_CAKE_3;
+      });
+      if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
+      else { } // Not found
    }
    else if (game_event->is_type("end_chapter_1"))
    {
+      dipping_to_black = true;
+      suspend_gameplay();
+   }
+   else if (game_event->is_type("start_chapter_2"))
+   {
+      current_chapter_number = 2;
+      refresh_environment_and_world(true);
+      dipping_to_black = false;
+      resume_suspended_gameplay();
    }
    else if (game_event->is_type("win_game"))
    {
@@ -859,6 +942,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
 
 void Screen::refresh_environment_and_world(bool set_player_position)
 {
+   // TODO: Take in to account (current_chapter_number = 2) case
 
    // Clear out all the entities (non-character)
    entities.erase(
@@ -895,6 +979,10 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       float object_y = object->y / (float)tile_height;
       float object_w = object->width / (float)tile_width;
       float object_h = object->height / (float)tile_height;
+
+      if (current_chapter_number == 2 && object->object_layer_name == "entities_chapter_1") return;
+      if (current_chapter_number == 1 && object->object_layer_name == "entities_chapter_2") return;
+
 
       if (object->name == "player_character")
       {
@@ -965,10 +1053,41 @@ void Screen::refresh_environment_and_world(bool set_player_position)
          e.aabb2d.set_w(object_w);
          e.aabb2d.set_h(object_h);
       }
+      else if (object->name == "dialog_trigger_4")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_4;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
       else if (object->name == "bunbucks_cake")
       {
          e.type = TINS2025::Entity::ENTITY_TYPE_BUNBUCKS_CAKE;
          e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.aabb2d.set_w(1.0);
+         e.aabb2d.set_h(1.0);
+      }
+      else if (object->name == "cake_1")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_1;
+         //e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.aabb2d.set_w(1.0);
+         e.aabb2d.set_h(1.0);
+      }
+      else if (object->name == "cake_2")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_1;
+         //e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
+         e.aabb2d.set_w(1.0);
+         e.aabb2d.set_h(1.0);
+      }
+      else if (object->name == "cake_3")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAKE_1;
+         //e.flags |= TINS2025::Entity::FLAG_HIDDEN;
          e.sprite = bitmap_bin->auto_get("bunbucks_cake.png");
          e.aabb2d.set_w(1.0);
          e.aabb2d.set_h(1.0);
@@ -1071,6 +1190,14 @@ void Screen::key_down_func(ALLEGRO_EVENT* ev)
    else if (ev->keyboard.keycode == ALLEGRO_KEY_H)
    {
       hide_view_motion_studio_hud = !hide_view_motion_studio_hud;
+   }
+   //else if (ev->keyboard.keycode == ALLEGRO_KEY_U)
+   //{
+      //event_emitter->emit_game_event(AllegroFlare::GameEvent("end_chapter_1"));
+   //}
+   else if (ev->keyboard.keycode == ALLEGRO_KEY_Y)
+   {
+      event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
    }
    else
    {
@@ -1277,17 +1404,20 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          }, { { "use bunbucks", new AllegroFlare::DialogTree::NodeOptions::GoToNode("use_bunbucks"), 0 } }
       )},
       { "use_bunbucks", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
-            "spawn_bunbucks_cake",
+            "show_bunbucks_cake",
             "->character_tries_bunbucks_cake"
          )
-            //"It was 50% off too!",
-            //"Heheh! It gets the job done!",
-            //"I mean, comments on the internet can't all be wrong right?",
-            //"...",
-            //"OK, here I go...",
-         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
-         //}, {  "use bunbucks", new AllegroFlare::DialogTree::NodeOptions::GoToNode("use_bunbucks"), 0 },
       },
+      { "character_starts_bakeoff", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "Amazing!",
+            "The bakeoff has begun!",
+            //"And the flower is in full bloom!",
+            //"Something's not quite right.",
+            //"Normally, just around this time, the plant would start showing signs of budding.",
+         //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         }, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 } }
+         //}, { { "exit for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("exit_dialog"), 0 } }
+      )},
       { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "Huh.",
             "Weird.",

@@ -68,6 +68,9 @@ namespace TINS2025
          bool QUEST__friend_1_requirements_asked;
          bool QUEST__friend_2_requirements_asked;
          bool QUEST__friend_3_requirements_asked;
+         int current_chapter_number;
+         float dip_to_black_overlay_opacity;
+         bool dipping_to_black;
          bool initialized;
 
       protected:
@@ -96,6 +99,9 @@ namespace TINS2025
          bool get_QUEST__friend_1_requirements_asked() const;
          bool get_QUEST__friend_2_requirements_asked() const;
          bool get_QUEST__friend_3_requirements_asked() const;
+         int get_current_chapter_number() const;
+         float get_dip_to_black_overlay_opacity() const;
+         bool get_dipping_to_black() const;
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();
