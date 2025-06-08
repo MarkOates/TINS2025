@@ -273,6 +273,55 @@ methods:
       auto generic_player_input_controller = new AllegroFlare::PlayerInputControllers::Generic();
       generic_player_input_controller->set_on_time_step_update(
          [this](AllegroFlare::Vec2D value, double time_now, double time_step) {
+            /*
+            float threshold = 0.1f;
+            float max_velocity = 0.2f;
+            float acceleration = 1.0f; // units per second squared
+            float deceleration = 2.0f; // units per second squared
+
+            // Get current velocity
+            AllegroFlare::Vec2D current_velocity = {
+               player_entity->aabb2d.get_velocity_x(),
+               player_entity->aabb2d.get_velocity_y()
+            };
+
+            AllegroFlare::Vec2D target_direction = value;
+            if (target_direction.get_magnitude() > 1.0f)
+            {
+               target_direction = target_direction.normalized();
+            }
+
+            AllegroFlare::Vec2D desired_velocity = target_direction * max_velocity;
+
+            AllegroFlare::Vec2D velocity_diff = desired_velocity - current_velocity;
+
+            // Calculate acceleration or deceleration based on input presence
+            float applied_accel = (std::abs(value.x) > threshold || std::abs(value.y) > threshold)
+               ? acceleration
+               : deceleration;
+
+            AllegroFlare::Vec2D velocity_change = velocity_diff.normalized() * applied_accel * time_step;
+
+            // Clamp the change if it's going to overshoot
+            if (velocity_change.get_magnitude() > velocity_diff.get_magnitude())
+            {
+               velocity_change = velocity_diff;
+            }
+
+            AllegroFlare::Vec2D new_velocity = current_velocity + velocity_change;
+
+            player_entity->aabb2d.set_velocity_x(new_velocity.x);
+            player_entity->aabb2d.set_velocity_y(new_velocity.y);
+
+            if (std::abs(value.x) > threshold || std::abs(value.y) > threshold)
+            {
+               player_entity->animation_mode = TINS2025::Entity::ANIMATION_MODE_WALKING_WOBBLY;
+            }
+            else
+            {
+               player_entity->animation_mode = TINS2025::Entity::ANIMATION_MODE_STANDING;
+            }
+            */
             //throw std::runtime_error("asdfasf");
 
             //player_entity->
@@ -284,6 +333,9 @@ methods:
             //player_box->position.z += value.y * 0.02;
             //player_entity->aabb2d.set_velocity_x(value.x * 0.02);
             //player_entity->aabb2d.set_velocity_y(value.y * 0.02);
+            //player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 3);
+            //player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 3);
+
             player_entity->aabb2d.set_velocity_x(value.x * 0.01625 * 3);
             player_entity->aabb2d.set_velocity_y(value.y * 0.01625 * 3);
             //player_entity->position.z += value.y * 0.02;
@@ -501,12 +553,24 @@ methods:
             animation_y_offset = std::sin(al_get_time()*34)*i + i;
          }
 
+      
+         float item_y_offset = 0;
+         if (entity.type == TINS2025::Entity::ENTITY_TYPE_CARROT)
+         {
+            //item_y_offset = -0.25;
+         }
+         else if (entity.type == TINS2025::Entity::ENTITY_TYPE_RED_CARROT)
+         {
+            //item_y_offset = -0.25;
+         }
+         
+
          //entity.draw();
          float entity_center_x = entity.aabb2d.get_x() + entity.aabb2d.get_w() * 0.5f;
          float entity_center_y = entity.aabb2d.get_y() + entity.aabb2d.get_h() * 0.5f;
          placement.position.x = entity_center_x; //entity.aabb2d.get_x() + ; // + entity.aabb2d.get_w() * 0.5f;
          placement.position.z = entity_center_y; //entity.aabb2d.get_y(); // + entity.aabb2d.get_h() * 0.5;
-         placement.position.y = animation_y_offset;
+         placement.position.y = animation_y_offset + item_y_offset;
          placement.scale.x = 1.0; // + entity.aabb2d.get_w() * 0.5f;
          placement.scale.y = 1.25; // + entity.aabb2d.get_w() * 0.5f;
          //placement.size.x = entity.aabb2d.get_w(); // + entity.aabb2d.get_w() * 0.5f;
