@@ -65,6 +65,9 @@ namespace TINS2025
          bool QUEST__dialog_1_triggered;
          bool QUEST__dialog_2_triggered;
          bool QUEST__dialog_3_triggered;
+         bool QUEST__friend_1_requirements_asked;
+         bool QUEST__friend_2_requirements_asked;
+         bool QUEST__friend_3_requirements_asked;
          bool initialized;
 
       protected:
@@ -90,6 +93,9 @@ namespace TINS2025
          bool get_QUEST__dialog_1_triggered() const;
          bool get_QUEST__dialog_2_triggered() const;
          bool get_QUEST__dialog_3_triggered() const;
+         bool get_QUEST__friend_1_requirements_asked() const;
+         bool get_QUEST__friend_2_requirements_asked() const;
+         bool get_QUEST__friend_3_requirements_asked() const;
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();

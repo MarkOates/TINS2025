@@ -53,6 +53,9 @@ Screen::Screen()
    , QUEST__dialog_1_triggered(false)
    , QUEST__dialog_2_triggered(false)
    , QUEST__dialog_3_triggered(false)
+   , QUEST__friend_1_requirements_asked(false)
+   , QUEST__friend_2_requirements_asked(false)
+   , QUEST__friend_3_requirements_asked(false)
    , initialized(false)
 {
 }
@@ -163,6 +166,24 @@ bool Screen::get_QUEST__dialog_2_triggered() const
 bool Screen::get_QUEST__dialog_3_triggered() const
 {
    return QUEST__dialog_3_triggered;
+}
+
+
+bool Screen::get_QUEST__friend_1_requirements_asked() const
+{
+   return QUEST__friend_1_requirements_asked;
+}
+
+
+bool Screen::get_QUEST__friend_2_requirements_asked() const
+{
+   return QUEST__friend_2_requirements_asked;
+}
+
+
+bool Screen::get_QUEST__friend_3_requirements_asked() const
+{
+   return QUEST__friend_3_requirements_asked;
 }
 
 
@@ -543,24 +564,45 @@ void Screen::update()
          switch (entity.type)
          {
             case TINS2025::Entity::ENTITY_TYPE_APPLE:
-               entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
-               entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
-               event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
-               QUEST__collected_apple = true;
+               if (QUEST__friend_1_requirements_asked)
+               {
+                  entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
+                  entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
+                  event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
+                  QUEST__collected_apple = true;
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("inspect_apple");
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_CARROT:
-               entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
-               entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
-               event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
-               QUEST__collected_carrot = true;
+               if (QUEST__friend_2_requirements_asked)
+               {
+                  entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
+                  entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
+                  event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
+                  QUEST__collected_carrot = true;
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("inspect_carrot");
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_RED_CARROT:
-               entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
-               entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
-               event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
-               QUEST__collected_red_carrot = true;
+               if (QUEST__friend_3_requirements_asked)
+               {
+                  entity.flags |= TINS2025::Entity::FLAG_HIDDEN;
+                  entity.flags |= TINS2025::Entity::FLAG_INACTIVE;
+                  event_emitter->emit_activate_dialog_node_by_name_event("pickup_food");
+                  QUEST__collected_red_carrot = true;
+               }
+               else
+               {
+                  event_emitter->emit_activate_dialog_node_by_name_event("inspect_red_carrot");
+               }
             break;
 
             case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_1:
@@ -612,6 +654,7 @@ void Screen::update()
                if (!QUEST__collected_apple)
                {
                   event_emitter->emit_activate_dialog_node_by_name_event("friend_1_requirements");
+                  QUEST__friend_1_requirements_asked = true;
                }
                else
                {
@@ -623,6 +666,7 @@ void Screen::update()
                if (!QUEST__collected_carrot)
                {
                   event_emitter->emit_activate_dialog_node_by_name_event("friend_2_requirements");
+                  QUEST__friend_2_requirements_asked = true;
                }
                else
                {
@@ -634,6 +678,7 @@ void Screen::update()
                if (!QUEST__collected_red_carrot)
                {
                   event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements");
+                  QUEST__friend_3_requirements_asked = true;
                }
                else
                {
@@ -1210,6 +1255,36 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             {
                { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
             }
+         )
+      },
+      { "inspect_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE,
+            {
+               "A reeeeally nice juicy apple!",
+               "There's so many delicious types of apples.",
+               "My favorite is the cosmic crisp.",
+            },
+            { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         )
+      },
+      { "inspect_carrot", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE,
+            {
+               "Ooh an orange carrot.",
+               "Unlike red carrots, the orange ones are the most common cultivar of Daucus carota sativus.",
+               "This carrot looks relly yummy right now.",
+               "I forgot to eat my snack on the way down here.",
+               "Mmm... sweet, delicious beta-carotene."
+            },
+            { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+         )
+      },
+      { "inspect_red_carrot", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE,
+            {
+               "Ooo this is a nice red carrot.",
+               "It's a variety of Daucus carota.",
+               "This is the same species as regular carrots, just bred for that deep red color.",
+               "I'll take a selfie with it to show my collegues."
+            },
+            { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          )
       },
       { "friend_2_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
