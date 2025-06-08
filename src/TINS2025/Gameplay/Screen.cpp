@@ -56,7 +56,7 @@ Screen::Screen()
    , QUEST__friend_1_requirements_asked(false)
    , QUEST__friend_2_requirements_asked(false)
    , QUEST__friend_3_requirements_asked(false)
-   , current_chapter_number(1)
+   , current_chapter_number(2)
    , dip_to_black_overlay_opacity(0.0f)
    , dipping_to_black(false)
    , initialized(false)
@@ -912,6 +912,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    }
    else if (game_event->is_type("show_cake_1"))
    {
+      event_emitter->emit_play_music_track_event("sad_theme");
       // TODO: Sound effect, "poof" or "tada"
       auto it = std::find_if(entities.begin(), entities.end(), [](const TINS2025::Entity &e) {
             return e.type == TINS2025::Entity::ENTITY_TYPE_CAKE_1;
@@ -948,7 +949,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
    }
    else if (game_event->is_type("bakeoff_begins"))
    {
-      event_emitter->emit_play_music_track_event("sad_theme");
+      //event_emitter->emit_play_music_track_event("sad_theme");
       //{ "theme", { "hello_friend-theme-01.ogg", true, "ignore" } },
       //{ "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
       //{ "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
@@ -1643,10 +1644,10 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
 
 
       { "bakeoff_9", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
-            "Yikes!",
-            "If you guys presented your amazing cakes, and that didn't work...",
-            "EEsshh. Mine couldn't stand a chance!",
-            "But, maybe that means I'll be the winner.",
+            "Oh man!",
+            "The two of you made amazing cakes, and neither of them worked?!",
+            "That means mine doesn't stand a chance!",
+            "On the other hand, that also means I'm the one left with a chance to be the winner!",
             "Ok, here goes nothing..."
             //"It sure didn't like my Bunbucks cake.",
             //"I can see why it didn't bloom. I can't wait to see your cakes!",
@@ -1663,7 +1664,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "...", // Change
             "Wahh?!", // Change
             "But... I put my best into this one.", // Change
-            "There's no way!",
+            //"There's no way!",
             "And I measured the perfect proportions, too!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_12"), 0 } }
       )},
@@ -1677,7 +1678,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "Why would none of the cakes work for the flower.",
             //"What did my botany book have to say about this?",
             "Hmm...",
-            "It's peculiar that *all three* of you said something about how you had the pefect propotions!",
+            "It's peculiar that ALL THREE of you said something about how you had the pefect propotions!",
          }, { { "next", new AllegroFlare::DialogTree::NodeOptions::GoToNode("bakeoff_13"), 0 } }
       )},
       { "bakeoff_13", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
@@ -1728,9 +1729,9 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
       { "cake_reveal_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
             "It's perfect!",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
-         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("player_presents_cakes"), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_03"), 0 } }
       )},
-      { "player_presents_cakes", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+      { "cake_reveal_03", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
             "This is it!",
             "Making a layered cake with all our cakes combined is the answer!",
             //"The last ingredient we all needed was...",
@@ -1756,17 +1757,35 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             //"This is the layered cake with all our cakes combined!",
             //"I know it!",
             //"And, I noticed all our cakes were the perfect dimensions to stack on top of each other.",
-            "This cake is so amazing!",
-            "The ratios are just... just... perfect!",
-            "I think all our cakes deserves a... a... gold medal!",
+            //"This cake is so amazing!",
+            //"The ratios are just... just... perfect!",
+            //"I think all our cakes deserves a... a... gold medal!",
             //"Oh wait! I can see the plant reacting!",
             //"And the flower is in full bloom!",
             //"Something's not quite right.",
             //"Normally, just around this time, the plant would start showing signs of budding.",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
-         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("show_plant_reveal_01"), 0 } }
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_04"), 0 } }
       )},
-      { "show_plant_reveal_01", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
+      { "cake_reveal_04", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+            "This cake is so amazing!",
+            //"The ratios are just... just... perfect!",
+            //"I think all our cakes deserves a... a... gold medal!",
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_05"), 0 } }
+      )},
+      { "cake_reveal_05", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
+            //"This cake is so amazing!",
+            "The ratios together... They are just... just... perfect for each other!",
+            //"I think all our cakes deserves a... a... gold medal!",
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_06"), 0 } }
+      )},
+      { "cake_reveal_06", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+            //"This cake is so amazing!",
+            //"The ratios are just... just... perfect!",
+            "I think all our cakes deserve a... a... gold medal!",
+         }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("start_plant_reveal"), 0 } }
+      )},
+      { "start_plant_reveal", new AllegroFlare::DialogTree::Nodes::EmitGameEvent(
             "plant_begins",
             "show_plant_reveal_02"
          )
