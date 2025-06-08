@@ -31,6 +31,9 @@ namespace TINS2025
          ENTITY_TYPE_APPLE,
          ENTITY_TYPE_CARROT,
          ENTITY_TYPE_RED_CARROT,
+         ENTITY_TYPE_DIALOG_TRIGGER_1,
+         ENTITY_TYPE_DIALOG_TRIGGER_2,
+         ENTITY_TYPE_DIALOG_TRIGGER_3,
       };
       enum AnimationMode
       {

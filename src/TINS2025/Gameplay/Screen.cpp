@@ -528,6 +528,18 @@ void Screen::update()
                QUEST__apple_collected = true;
             break;
 
+            case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_1:
+               event_emitter->emit_activate_dialog_node_by_name_event("character_intro_dialog");
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_2:
+               event_emitter->emit_activate_dialog_node_by_name_event("character_enters_town");
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_3:
+               event_emitter->emit_activate_dialog_node_by_name_event("character_sees_plant");
+            break;
+
             case TINS2025::Entity::ENTITY_TYPE_FRIEND_1:
                if (QUEST__apple_collected)
                {
@@ -733,6 +745,8 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       int tile_height = 16;
       float object_x = object->x / (float)tile_width;
       float object_y = object->y / (float)tile_height;
+      float object_w = object->width / (float)tile_width;
+      float object_h = object->height / (float)tile_height;
 
       if (object->name == "player_character")
       {
@@ -781,6 +795,27 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       {
          e.type = TINS2025::Entity::ENTITY_TYPE_RED_CARROT;
          e.sprite = bitmap_bin->auto_get("red_carrot.png");
+      }
+      else if (object->name == "dialog_trigger_1")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_1;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "dialog_trigger_2")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_2;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "dialog_trigger_3")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_3;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
       }
 
       entities.push_back(e);
@@ -1021,6 +1056,38 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
    std::string FRANK = "Frank";
 
    result.set_nodes({
+      //character_enters_town
+      //character_sees_plant
+      { "character_intro_dialog", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "I made it!",
+            "As a botanist, I can't wait to check out the mysterious flower.",
+            "I came all the way to this small town just to see it!",
+         }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+      )},
+      { "character_enters_town", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "What a cute little town!",
+            "I had no idea this place would be so small.",
+            "There can't be more than...",
+            "1...",
+            "2...",
+            "3 houses here!",
+            "I bet the residents here are pretty grateful to be in the presence one of the rarest plants ever!",
+            "Oooh! And there's the rare flower! Right over there!",
+            "And it hasn't bloomed yet. It looks like I got here just in time!",
+            "I can't wait to get a closer look."
+         }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+      )},
+      { "character_sees_plant", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+            "OOoooo!",
+            "And! Just as I suspected.",
+            "It hasn't yet bloomed. It's still a little bud.",
+            "Oh my... eee!! After all the years I've studied botany!",
+            "I couldn't be more excited!",
+            "It's even more miraculous than I could have dreamed!",
+            "And it still hasn't even bloomed yet!",
+            "EEEeeee!!"
+         }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
+      )},
       { "pickup_food", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
             LOTTIE,
             {
