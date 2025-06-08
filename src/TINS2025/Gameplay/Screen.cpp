@@ -1158,7 +1158,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "1...",
             "2...",
             "3 houses here!",
-            "I bet the residents here are pretty grateful to be in the presence one of the rarest plants...",
+            "I bet the residents here are pretty grateful to be in the presence of one of the rarest plants...",
             "like...",
             "...ever!",
             "I bet they're pretty cool and relaxed just knowing it's nearby!",
@@ -1193,7 +1193,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "No worry! I read some guy's comment on a video once. He said that this happens some time.",
             "The comment said something about how the flower needs a cake, and it will start to bloom.",
             "I came prepared!",
-            "I picked up a little cake at Bunbucks on the way here."
+            "I picked up a little cake at Bunbucks on the way here.",
             "It was 50% off too!",
             "Heheh! Whatever gets the job done!",
             "I mean, comments on the internet can't all be wrong right?",
@@ -1218,7 +1218,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
                "Normally this time of year is a time for celebration!",
                "But holy cow am I stressed!",
                "I've got to bake a cake, and, I've just got to win this competition.",
-               "All the stress has got me locked right up! I can't seem to do anything",
+               "All the stress has got me locked right up! I can't seem to do anything.",
                "Maybe if I had a carrot!",
                "Yes! That's the thing!",
                "If I had a nice juicy carrot it would make my cake into perfection.",
@@ -1252,7 +1252,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             FRIEND_1,
             {
                "Eeks! I'm so flummoxed!",
-               "The anual bake-a-thon is happening soon and my cake is going to be a disaster!",
+               "The annual bake-a-thon is happening soon and my cake is going to be a disaster!",
                "It was supposed to be a glorious event, what with the flower blooming and all.",
                "But all of us had the bright idea to turn this year's bake-a-thon into a competition.",
                "So now I'm all stressed out!!!",
@@ -1282,7 +1282,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
                "Woo-hoo!",
                "This carrot is perfect for my cake!",
                "Meeehg... except I'm still stressed about the compeition.",
-               "Thank to you I at least have something I can work with.",
+               "Thanks to you I at least have something I can work with.",
             },
             {
                { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 }
