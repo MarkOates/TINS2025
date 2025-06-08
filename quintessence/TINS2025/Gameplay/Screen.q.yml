@@ -139,7 +139,7 @@ properties:
 
   - name: current_chapter_number
     type: int
-    init_with: 2
+    init_with: 1
     getter: true
 
   - name: dip_to_black_overlay_opacity
