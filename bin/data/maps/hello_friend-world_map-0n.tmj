@@ -387,13 +387,13 @@
                  "y":240
                 }, 
                 {
-                 "height":48,
+                 "height":64,
                  "id":35,
                  "name":"dialog_trigger_4",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":48,
+                 "width":64,
                  "x":336,
                  "y":216
                 }, 

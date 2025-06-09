@@ -599,6 +599,7 @@ void Main::load_audio_controller(AllegroFlare::AudioController* audio_controller
       { "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
       { "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
       { "idea", { "hello_friend-idea-01.ogg", false, "ignore" } },
+      { "closer", { "hello_friend-closer-01.ogg", false, "ignore" } },
    });
 
    // How to play a music track:

@@ -1162,6 +1162,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       view_motion_studio.get_motion_studio_ref().set_playhead_position(0);
       //view_motion_studio.get_motion_studio_ref().start_animation();
       view_motion_studio.get_motion_studio_ref().set_playing(true);
+      event_emitter->emit_play_music_track_event("closer");
       //view_motion_studio.get_motion_studio_ref().set_playback_speed(true);
       //amera_is_tracking_player = false; // HERE
    }
@@ -1529,7 +1530,7 @@ void Screen::primary_update_func(double time_now, double delta_time)
 
    if (flag__showing_plant_now)
    {
-      if (view_motion_studio.get_motion_studio_ref().get_playhead() > 23.0)
+      if (view_motion_studio.get_motion_studio_ref().get_playhead() > 23.53)
       {
          flag__showing_plant_now = false;
          //event_emitter->emit_game_ // HERE

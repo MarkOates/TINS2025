@@ -78,6 +78,7 @@ TEST_F(TINS2025_Gameplay_ScreenTestWithAllegroFrameworksFullFixture,
          { "sad_theme", { "hello_friend-sad_theme-01.ogg", true, "ignore" } },
          { "chipper_tune", { "hello_friend-chipper_tune-01.ogg", true, "ignore" } },
          { "idea", { "hello_friend-idea-01.ogg", false, "ignore" } },
+         { "closer", { "hello_friend-closer-01.ogg", false, "ignore" } },
       });
 
    TINS2025::Gameplay::Screen screen;
