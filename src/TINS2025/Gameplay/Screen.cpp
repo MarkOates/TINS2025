@@ -59,6 +59,7 @@ Screen::Screen()
    , current_chapter_number(1)
    , dip_to_black_overlay_opacity(0.0f)
    , dipping_to_black(false)
+   , in_test_or_development_mode(true)
    , initialized(false)
 {
 }
@@ -115,6 +116,12 @@ void Screen::set_dialog_system(AllegroFlare::DialogSystem::DialogSystem* dialog_
 {
    if (get_initialized()) throw std::runtime_error("[Screen::set_dialog_system]: error: guard \"get_initialized()\" not met.");
    this->dialog_system = dialog_system;
+}
+
+
+void Screen::set_in_test_or_development_mode(bool in_test_or_development_mode)
+{
+   this->in_test_or_development_mode = in_test_or_development_mode;
 }
 
 
@@ -223,6 +230,12 @@ float Screen::get_dip_to_black_overlay_opacity() const
 bool Screen::get_dipping_to_black() const
 {
    return dipping_to_black;
+}
+
+
+bool Screen::get_in_test_or_development_mode() const
+{
+   return in_test_or_development_mode;
 }
 
 
@@ -1331,34 +1344,38 @@ void Screen::key_down_func(ALLEGRO_EVENT* ev)
    bool shift = ev->keyboard.modifiers & ALLEGRO_KEYMOD_SHIFT;
    bool ctrl = ev->keyboard.modifiers & ALLEGRO_KEYMOD_COMMAND;
 
-   if (ev->keyboard.keycode == ALLEGRO_KEY_BACKQUOTE)
-   {
-      // Toggle playmode
-      if (input_mode == INPUT_MODE_PLAYING) input_mode = INPUT_MODE_EDITING;
-      else if (input_mode == INPUT_MODE_EDITING) input_mode = INPUT_MODE_PLAYING;
-   }
-   else if (ev->keyboard.keycode == ALLEGRO_KEY_H)
-   {
-      hide_view_motion_studio_hud = !hide_view_motion_studio_hud;
-   }
-   //else if (ev->keyboard.keycode == ALLEGRO_KEY_U)
-   //{
-      //event_emitter->emit_game_event(AllegroFlare::GameEvent("end_chapter_1"));
-   //}
-   //else if (ev->keyboard.keycode == ALLEGRO_KEY_Y)
-   //{
-      //event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
-   //}
-   else
-   {
-      switch (input_mode)
-      {
-         case INPUT_MODE_PLAYING:
-         break;
 
-         case INPUT_MODE_EDITING:
-            view_motion_studio.on_key_down(ev);
-         break;
+   if (in_test_or_development_mode)
+   {
+      if (ev->keyboard.keycode == ALLEGRO_KEY_BACKQUOTE)
+      {
+         // Toggle playmode
+         if (input_mode == INPUT_MODE_PLAYING) input_mode = INPUT_MODE_EDITING;
+         else if (input_mode == INPUT_MODE_EDITING) input_mode = INPUT_MODE_PLAYING;
+      }
+      else if (ev->keyboard.keycode == ALLEGRO_KEY_H)
+      {
+         hide_view_motion_studio_hud = !hide_view_motion_studio_hud;
+      }
+      //else if (ev->keyboard.keycode == ALLEGRO_KEY_U)
+      //{
+         //event_emitter->emit_game_event(AllegroFlare::GameEvent("end_chapter_1"));
+      //}
+      //else if (ev->keyboard.keycode == ALLEGRO_KEY_Y)
+      //{
+         //event_emitter->emit_game_event(AllegroFlare::GameEvent("start_chapter_2"));
+      //}
+      else
+      {
+         switch (input_mode)
+         {
+            case INPUT_MODE_PLAYING:
+            break;
+
+            case INPUT_MODE_EDITING:
+               view_motion_studio.on_key_down(ev);
+            break;
+         }
       }
    }
 

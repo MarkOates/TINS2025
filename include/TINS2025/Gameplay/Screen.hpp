@@ -71,6 +71,7 @@ namespace TINS2025
          int current_chapter_number;
          float dip_to_black_overlay_opacity;
          bool dipping_to_black;
+         bool in_test_or_development_mode;
          bool initialized;
 
       protected:
@@ -87,6 +88,7 @@ namespace TINS2025
          void set_font_bin(AllegroFlare::FontBin* font_bin);
          void set_model_bin(AllegroFlare::ModelBin* model_bin);
          void set_dialog_system(AllegroFlare::DialogSystem::DialogSystem* dialog_system);
+         void set_in_test_or_development_mode(bool in_test_or_development_mode);
          std::string get_data_folder_path() const;
          AllegroFlare::EventEmitter* get_event_emitter() const;
          AllegroFlare::BitmapBin* get_bitmap_bin() const;
@@ -105,6 +107,7 @@ namespace TINS2025
          int get_current_chapter_number() const;
          float get_dip_to_black_overlay_opacity() const;
          bool get_dipping_to_black() const;
+         bool get_in_test_or_development_mode() const;
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();

@@ -125,6 +125,11 @@ AllegroFlare::Screens::Gameplay* Main::create_primary_gameplay_screen(AllegroFla
    result->set_dialog_system(&runner->get_framework()->get_dialog_system_ref());
    result->set_data_folder_path(runner->get_framework()->get_data_folder_path());
 
+   //in_test_or_development_mode
+   result->set_in_test_or_development_mode(
+      runner->get_framework()->is_deployment_environment_development()
+      || runner->get_framework()->is_deployment_environment_test()
+   );
 
 
    //result->set_data_folder_path(runner->get_framework()->get_data_folder_path());
