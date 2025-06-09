@@ -3,10 +3,22 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj": {
+            "scale": 4.8691,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 359.92277833685887,
+                "y": 239.88005997001494
+            }
+        },
+        "prototype-tileset-04.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
     },
     "last.imagePath": "/Users/markoates/Repos/TINS2025/project_files",
     "map.height": 100,
@@ -15,9 +27,13 @@
     "map.tileWidth": 16,
     "map.width": 100,
     "openFiles": [
+        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj",
+        "prototype-tileset-04.tsx"
     ],
     "project": "world-01.tiled-project",
     "recentFiles": [
+        "prototype-tileset-04.tsx",
+        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
