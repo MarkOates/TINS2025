@@ -312,6 +312,9 @@
   "AllegroFlare/StoryboardPageFactory": [
     "TINS2025/Game/Configurations/Main"
   ],
+  "al_get_color_html": [
+    "TINS2025/Game/Configurations/Main"
+  ],
   "TINS2025/JSONLoaders/TINS2025/GameProgressAndStateInfo": [
     "TINS2025/GameProgressAndStateInfo"
   ],

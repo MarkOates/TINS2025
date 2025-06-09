@@ -14,6 +14,7 @@
 #include <TINS2025/GameProgressAndStateInfo.hpp>
 #include <TINS2025/Gameplay/Level.hpp>
 #include <TINS2025/Gameplay/Screen.hpp>
+#include <allegro5/allegro_color.h>
 #include <functional>
 #include <iostream>
 #include <map>
@@ -155,6 +156,61 @@ AllegroFlare::Screens::Gameplay* Main::create_primary_gameplay_screen(AllegroFla
    primary_gameplay_screen = result;
 
    runner->get_event_emitter()->emit_play_music_track_event("theme");
+
+
+
+
+
+
+
+
+
+
+
+   // HACK: Messily build the title screen customizations here, too
+   // Set the title style
+   auto &title_screen = runner->get_title_screen_ref();
+   //title_screen.set_title_font_size(-48);
+   //title_screen.set_title_font_size(-92);
+   //title_screen.set_title_font_size(-122);
+   //title_screen.set_title_position_y(1080/2-60*2-20);
+   //title_screen.set_title_position_y(1080/2-60*2-20);
+   title_screen.set_title_position_y(1080/2-60*2+20-20);
+   title_screen.set_menu_position_y(1080/2-60*2+20+80+120+60);
+   //title_screen.set_title_font_name("Orbitron-Medium.ttf");
+   //title_screen.set_title_font_name("Exan-Regular.ttf");
+   //title_screen.set_title_font_name("Michroma-Regular.ttf");
+   //title_screen.set_title_text(CubeShooter::Typography::Transforms::kern_and_uppercase("Cube Shooter", 4));
+
+   // Set the menu style
+   //title_screen.set_menu_position_y(1080/12*7 + 32);
+   title_screen.set_menu_font_name("Quicksand-Medium.ttf");
+   //title_screen.set_menu_font_name("Exan-Regular.ttf");
+   //title_screen.set_menu_font_size(-24);
+   //title_screen.set_menu_text_color(ALLEGRO_COLOR{0.8, 0.8, 0.8, 0.8});4e4dc0
+   title_screen.set_menu_text_color(al_color_html("4e4dc0"));
+   title_screen.set_menu_selected_text_color(al_color_html("4e4dc0"));
+   //title_screen.set_menu_selected_text_color(al_color_html("4e4dc0"));
+   title_screen.set_menu_selector_fill_color(al_color_html("cde2eb"));
+
+   //title_screen.set_menu_selected_text_color(ALLEGRO_COLOR{1, 1, 1, 1});
+   //title_screen.set_menu_selector_fill_color(ALLEGRO_COLOR{0.0, 0.01, 0.02, 0.05});
+   //title_screen.set_menu_selector_outline_color(ALLEGRO_COLOR{0.8, 0.8, 0.8, 0.8});
+
+   // Set the copyright style
+   //ReleaseInfo release_info;
+   //std::string copyright_text = "Copyright 2023 - CLUBCATT Games - Version " + release_info.get_version();
+   //title_screen.set_copyright_font_name("Exan-Regular.ttf");
+   //title_screen.set_footer_text_font_name("Michroma-Regular.ttf");
+   //title_screen.set_copyright_text(copyright_text);
+   //title_screen.set_footer_text_font_size(-22);
+   title_screen.set_title_bitmap_name("title-02.png");
+   title_screen.set_title_position_y(1080/2); //1080/2-60*2+20-20);
+   //title_screen.set_menu_position_y(0); //1080/2-60*2+20+80+120+60);
+   //title_screen.set_title_bitmap_name("odeya_logo-02b.png");
+   //odeya_logo-02ex.png");
+
+
 
    return result;
 }
