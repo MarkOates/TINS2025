@@ -324,8 +324,98 @@ void Screen::initialize()
       throw std::runtime_error("[TINS2025::Gameplay::Screen::initialize]: error: guard \"(data_folder_path != DEFAULT_DATA_FOLDER_PATH)\" not met");
    }
    set_update_strategy(AllegroFlare::Screens::Base::UpdateStrategy::SEPARATE_UPDATE_AND_RENDER_FUNCS);
+
+   // Setup the dialog
+   dialog_system->set_dialog_node_bank(build_dialog_node_bank());
+   dialog_system->set_standard_dialog_box_font_name("Quicksand-SemiBold.ttf");
+   dialog_system->set_standard_dialog_box_font_size(-52);
+   //dialog_system->set_standard_dialog_box_font_line_height(-52); // TODO: Add this feature
+   dialog_system->set_standard_dialog_box_width(1920 * 0.5);
+   dialog_system->set_standard_dialog_box_height(248);
+   dialog_system->set_standard_dialog_box_y(1080/5*4);
+   dialog_system->set_standard_dialog_box_frame_color(al_color_html("c6987e"));
+   dialog_system->set_standard_dialog_box_background_color(al_color_html("fdf5e6"));
+   dialog_system->set_standard_dialog_box_text_color(al_color_html("9f6b32"));
+   dialog_system->set_standard_dialog_box_label_color(al_color_html("fdf5e6"));
+
+   dialog_system->set_on_before_activating_dialog_node_by_name_callback_func([this](
+      AllegroFlare::DialogSystem::DialogSystem* dialog_system,
+      std::string activating_dialog_node_name,
+      AllegroFlare::DialogTree::Nodes::Base* dialog_node,
+      void* user_data
+   ){
+      if (!dialog_node) return; // consider throwing error
+
+      if (dialog_node->is_type(AllegroFlare::DialogTree::Nodes::MultipageWithOptions::TYPE))
+      {
+         AllegroFlare::DialogTree::Nodes::MultipageWithOptions *as =
+            static_cast<AllegroFlare::DialogTree::Nodes::MultipageWithOptions*>(dialog_node);
+         //activate_MultipageWithOptions_dialog_node(as);
+         std::string speaker = as->get_speaker();
+
+         if (speaker == LOTTIE) customize_dialog_for_DOTTIE();
+         else if (speaker == FRIEND_1) customize_dialog_for_FRIEND_1();
+         else if (speaker == FRIEND_2) customize_dialog_for_FRIEND_2();
+         else if (speaker == FRIEND_3) customize_dialog_for_FRIEND_3();
+      }
+   });
+
+   //set_standard_dialog_box_label_color(al_color_html("fdf5e6"));
+
+
    load_up_world();
    initialized = true;
+   return;
+}
+
+void Screen::customize_dialog_for_DOTTIE()
+{
+   dialog_system->set_standard_dialog_box_frame_color(al_color_html("c6987e"));
+   dialog_system->set_standard_dialog_box_background_color(al_color_html("fdf5e6"));
+   dialog_system->set_standard_dialog_box_text_color(al_color_html("9f6b32"));
+   dialog_system->set_standard_dialog_box_label_color(al_color_html("fdf5e6"));
+   //dialog_system->set_standard_dialog_box_frame_color(al_color_html("c4b067"));
+   //dialog_system->set_standard_dialog_box_background_color(al_color_html("c4b067"));
+   //dialog_system->set_standard_dialog_box_text_color(al_color_html("60541f"));
+   //dialog_system->set_standard_dialog_box_label_color(al_color_html("60541f"));
+   return;
+}
+
+void Screen::customize_dialog_for_FRIEND_1()
+{
+   //dialog_system->set_standard_dialog_box_frame_color(al_color_html("de923c"));
+   //dialog_system->set_standard_dialog_box_background_color(al_color_html("de923c"));
+   //dialog_system->set_standard_dialog_box_text_color(al_color_html("60541f"));
+   //dialog_system->set_standard_dialog_box_label_color(al_color_html("60541f"));
+   std::string bg = "c2905b";
+   std::string fg = "e6e3dd";
+   dialog_system->set_standard_dialog_box_frame_color(al_color_html(bg.c_str()));
+   dialog_system->set_standard_dialog_box_background_color(al_color_html(bg.c_str()));
+   dialog_system->set_standard_dialog_box_text_color(al_color_html(fg.c_str()));
+   dialog_system->set_standard_dialog_box_label_color(al_color_html(fg.c_str()));
+   return;
+}
+
+void Screen::customize_dialog_for_FRIEND_2()
+{
+   dialog_system->set_standard_dialog_box_frame_color(al_color_html("d2698a"));
+   dialog_system->set_standard_dialog_box_background_color(al_color_html("d2698a"));
+   dialog_system->set_standard_dialog_box_text_color(al_color_html("e4d4bb"));
+   dialog_system->set_standard_dialog_box_label_color(al_color_html("e4d4bb"));
+
+   //dialog_system->set_standard_dialog_box_frame_color(al_color_html("6dbacc"));
+   //dialog_system->set_standard_dialog_box_background_color(al_color_html("6dbacc"));
+   //dialog_system->set_standard_dialog_box_text_color(al_color_html("000000"));
+   //dialog_system->set_standard_dialog_box_label_color(al_color_html("000000"));
+   return;
+}
+
+void Screen::customize_dialog_for_FRIEND_3()
+{
+   dialog_system->set_standard_dialog_box_frame_color(al_color_html("6dbacc"));
+   dialog_system->set_standard_dialog_box_background_color(al_color_html("6dbacc"));
+   dialog_system->set_standard_dialog_box_text_color(al_color_html("4270a2"));
+   dialog_system->set_standard_dialog_box_label_color(al_color_html("4270a2"));
    return;
 }
 
@@ -403,26 +493,6 @@ void Screen::load_up_world()
 
 
    refresh_environment_and_world(true);
-
-
-   // Setup the dialog
-   dialog_system->set_dialog_node_bank(build_dialog_node_bank());
-   dialog_system->set_standard_dialog_box_font_name("Quicksand-SemiBold.ttf");
-   dialog_system->set_standard_dialog_box_font_size(-52);
-   //dialog_system->set_standard_dialog_box_font_line_height(-52); // TODO: Add this feature
-   dialog_system->set_standard_dialog_box_width(1920 * 0.5);
-   dialog_system->set_standard_dialog_box_height(248);
-   dialog_system->set_standard_dialog_box_y(1080/5*4);
-
-   dialog_system->set_standard_dialog_box_frame_color(al_color_html("c6987e"));
-   dialog_system->set_standard_dialog_box_background_color(al_color_html("fdf5e6"));
-   dialog_system->set_standard_dialog_box_text_color(al_color_html("9f6b32"));
-   dialog_system->set_standard_dialog_box_label_color(al_color_html("fdf5e6"));
-
-   //dialog_system->set_standard_dialog_box_frame_color(al_color_html("6dbacc"));
-   //dialog_system->set_standard_dialog_box_background_color(al_color_html("6dbacc"));
-   //dialog_system->set_standard_dialog_box_text_color(al_color_html("000000"));
-   //dialog_system->set_standard_dialog_box_label_color(al_color_html("000000"));
 
 
    // Setup view_motion_studio
@@ -1501,10 +1571,10 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
 {
    AllegroFlare::DialogTree::NodeBank result;
 
-   std::string LOTTIE = "Lottie";
-   std::string FRIEND_1 = "Ditto";
-   std::string FRIEND_2 = "Frank";
-   std::string FRIEND_3 = "Derek";
+   //std::string LOTTIE = "Lottie";
+   //std::string FRIEND_1 = "Ditto";
+   //std::string FRIEND_2 = "Frank";
+   //std::string FRIEND_3 = "Derek";
 
    result.set_nodes({
       //character_enters_town
@@ -1667,7 +1737,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "bakeoff_08"
          )
       },
-      { "bakeoff_08", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+      { "bakeoff_08", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
             "Heegh!!",
             "...", // Change
             "How?!",

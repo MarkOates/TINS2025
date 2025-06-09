@@ -212,6 +212,20 @@ TEST_F(DialControl_CameraStudioTest_WithInteractionFixture, INTERACTIVE__will_wo
          }
          break;
 
+         case ALLEGRO_EVENT_KEY_CHAR:
+         {
+            camera_studio.on_key_char(&current_event);
+
+            switch(current_event.keyboard.keycode)
+            {
+               case ALLEGRO_KEY_L:
+               {
+                  camera_studio.load_json(cameras_json_string);
+               } break;
+            }
+         }
+ 
+         /*
          case ALLEGRO_EVENT_KEY_DOWN:
          {
             switch(current_event.keyboard.keycode)
@@ -228,10 +242,10 @@ TEST_F(DialControl_CameraStudioTest_WithInteractionFixture, INTERACTIVE__will_wo
                //{
                   //std::cout << camera_studio.build_json_dump() << std::endl;
                //} break;
-               case ALLEGRO_KEY_L:
-               {
-                  camera_studio.load_json(cameras_json_string); // BROKEN. TODO: Fix
-               } break;
+               //case ALLEGRO_KEY_L:
+               //{
+                  //camera_studio.load_json(cameras_json_string); // BROKEN. TODO: Fix
+               //} break;
                default:
                {
                   camera_studio.on_key_down(&current_event);
@@ -247,6 +261,7 @@ TEST_F(DialControl_CameraStudioTest_WithInteractionFixture, INTERACTIVE__will_wo
                //break;
             //}
          }
+         */
          break;
       }
    }

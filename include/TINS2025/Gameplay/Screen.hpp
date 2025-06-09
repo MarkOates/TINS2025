@@ -31,6 +31,10 @@ namespace TINS2025
       class Screen : public AllegroFlare::Screens::Gameplay
       {
       public:
+         static constexpr char* LOTTIE = (char*)"Lottie";
+         static constexpr char* FRIEND_1 = (char*)"Ditto";
+         static constexpr char* FRIEND_2 = (char*)"Frank";
+         static constexpr char* FRIEND_3 = (char*)"Derek";
          static constexpr char* DEFAULT_DATA_FOLDER_PATH = (char*)"[unset-data_folder_path]";
          static constexpr char* TYPE = (char*)"TINS2025/Gameplay/Screen";
 
@@ -111,6 +115,10 @@ namespace TINS2025
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();
+         void customize_dialog_for_DOTTIE();
+         void customize_dialog_for_FRIEND_1();
+         void customize_dialog_for_FRIEND_2();
+         void customize_dialog_for_FRIEND_3();
          virtual void gameplay_suspend_func() override;
          virtual void gameplay_resume_func() override;
          void load_up_world();

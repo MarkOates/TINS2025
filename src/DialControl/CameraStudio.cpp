@@ -25,6 +25,11 @@ CameraStudio::CameraStudio()
    , hud_camera({})
    , camera_info_overlay_visible(true)
    , live_camera_blend_factor(0.1)
+   , clip_plane_near_min(0.1)
+   , clip_plane_near_max(1000.0)
+   , clip_plane_far_min(1.0)
+   , clip_plane_far_max(10000.0)
+   , clip_plane_increment(1.0f)
    , initialized(false)
 {
 }
@@ -66,6 +71,36 @@ void CameraStudio::set_live_camera_blend_factor(float live_camera_blend_factor)
 }
 
 
+void CameraStudio::set_clip_plane_near_min(float clip_plane_near_min)
+{
+   this->clip_plane_near_min = clip_plane_near_min;
+}
+
+
+void CameraStudio::set_clip_plane_near_max(float clip_plane_near_max)
+{
+   this->clip_plane_near_max = clip_plane_near_max;
+}
+
+
+void CameraStudio::set_clip_plane_far_min(float clip_plane_far_min)
+{
+   this->clip_plane_far_min = clip_plane_far_min;
+}
+
+
+void CameraStudio::set_clip_plane_far_max(float clip_plane_far_max)
+{
+   this->clip_plane_far_max = clip_plane_far_max;
+}
+
+
+void CameraStudio::set_clip_plane_increment(float clip_plane_increment)
+{
+   this->clip_plane_increment = clip_plane_increment;
+}
+
+
 std::vector<AllegroFlare::Camera3D> CameraStudio::get_cameras() const
 {
    return cameras;
@@ -87,6 +122,36 @@ AllegroFlare::Camera3D* CameraStudio::get_current_camera() const
 float CameraStudio::get_live_camera_blend_factor() const
 {
    return live_camera_blend_factor;
+}
+
+
+float CameraStudio::get_clip_plane_near_min() const
+{
+   return clip_plane_near_min;
+}
+
+
+float CameraStudio::get_clip_plane_near_max() const
+{
+   return clip_plane_near_max;
+}
+
+
+float CameraStudio::get_clip_plane_far_min() const
+{
+   return clip_plane_far_min;
+}
+
+
+float CameraStudio::get_clip_plane_far_max() const
+{
+   return clip_plane_far_max;
+}
+
+
+float CameraStudio::get_clip_plane_increment() const
+{
+   return clip_plane_increment;
 }
 
 
@@ -182,7 +247,7 @@ void CameraStudio::draw_camera_info_overlay()
    if (!camera_info_overlay_visible) return;
 
    DialControl::CameraInfoOverlay camera_info_overlay(font_bin, current_camera);
-   camera_info_overlay.set_camera_name("Camera Unnamed");
+   camera_info_overlay.set_camera_name("Camera " + std::to_string(current_camera_idx));
    camera_info_overlay.render();
 
    return;
@@ -201,6 +266,40 @@ void CameraStudio::set_current_camera_to_previous_camera()
    int total_cameras = cameras.size();
    current_camera_idx = (current_camera_idx - 1 + total_cameras) % total_cameras;
    current_camera = &cameras[current_camera_idx];
+   return;
+}
+
+void CameraStudio::on_key_char(ALLEGRO_EVENT* event)
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::on_key_char]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::on_key_char]: error: guard \"initialized\" not met");
+   }
+   if (!(current_camera))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::on_key_char]: error: guard \"current_camera\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::on_key_char]: error: guard \"current_camera\" not met");
+   }
+   if (!(event))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::on_key_char]: error: guard \"event\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::on_key_char]: error: guard \"event\" not met");
+   }
+   if (!((event->type == ALLEGRO_EVENT_KEY_CHAR)))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::on_key_char]: error: guard \"(event->type == ALLEGRO_EVENT_KEY_CHAR)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::on_key_char]: error: guard \"(event->type == ALLEGRO_EVENT_KEY_CHAR)\" not met");
+   }
+   handle_key_down(event);
    return;
 }
 
@@ -234,6 +333,12 @@ void CameraStudio::on_key_down(ALLEGRO_EVENT* event)
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[DialControl::CameraStudio::on_key_down]: error: guard \"(event->type == ALLEGRO_EVENT_KEY_DOWN)\" not met");
    }
+   handle_key_down(event);
+   return;
+}
+
+void CameraStudio::handle_key_down(ALLEGRO_EVENT* event)
+{
    bool shift = event->keyboard.modifiers & ALLEGRO_KEYMOD_SHIFT;
    bool ctrl = event->keyboard.modifiers & ALLEGRO_KEYMOD_CTRL;
    bool alt = event->keyboard.modifiers & ALLEGRO_KEYMOD_ALT;
@@ -273,6 +378,12 @@ void CameraStudio::on_key_down(ALLEGRO_EVENT* event)
    mapper.set_mapping(ALLEGRO_KEY_6, COMMAND, { "dial_3_right" });
    mapper.set_mapping(ALLEGRO_KEY_7, COMMAND, { "dial_4_left" });
    mapper.set_mapping(ALLEGRO_KEY_8, COMMAND, { "dial_4_right" });
+
+
+   mapper.set_mapping(ALLEGRO_KEY_PAD_9, 0, { "move_far_plane_further" });
+   mapper.set_mapping(ALLEGRO_KEY_PAD_7, 0, { "move_far_plane_nearer" });
+   mapper.set_mapping(ALLEGRO_KEY_PAD_3, 0, { "move_near_plane_further" });
+   mapper.set_mapping(ALLEGRO_KEY_PAD_1, 0, { "move_near_plane_nearer" });
 
    // UI Controls
 
@@ -318,6 +429,11 @@ void CameraStudio::on_key_down(ALLEGRO_EVENT* event)
       else if (command == "dial_3_right") current_camera->zoom += 0.125;
       else if (command == "dial_4_left") current_camera->stepout.z -= 1.0;
       else if (command == "dial_4_right") current_camera->stepout.z += 1.0;
+
+      else if (command == "move_far_plane_further") move_far_plane_further();
+      else if (command == "move_far_plane_nearer") move_far_plane_nearer();
+      else if (command == "move_near_plane_further") move_near_plane_further();
+      else if (command == "move_near_plane_nearer") move_near_plane_nearer();
 
       else if (command == "toggle_camera_info_overlay_visibility") toggle_camera_info_overlay_visibility();
       else if (command == "set_current_camera_to_next_camera") set_current_camera_to_next_camera();
@@ -388,6 +504,38 @@ void CameraStudio::load_json(std::string json_string)
       throw std::runtime_error("Expected key \"cameras\" with an array value in JSON");
    }
 
+   return;
+}
+
+void CameraStudio::move_far_plane_further()
+{
+   float new_value = current_camera->far_plane + clip_plane_increment;
+   if (new_value <= clip_plane_far_max)
+      current_camera->far_plane = new_value;
+   return;
+}
+
+void CameraStudio::move_far_plane_nearer()
+{
+   float new_value = current_camera->far_plane - clip_plane_increment;
+   if (new_value >= clip_plane_far_min)
+      current_camera->far_plane = new_value;
+   return;
+}
+
+void CameraStudio::move_near_plane_further()
+{
+   float new_value = current_camera->near_plane + clip_plane_increment;
+   if (new_value <= clip_plane_near_max)
+      current_camera->near_plane = new_value;
+   return;
+}
+
+void CameraStudio::move_near_plane_nearer()
+{
+   float new_value = current_camera->near_plane - clip_plane_increment;
+   if (new_value >= clip_plane_near_min)
+      current_camera->near_plane = new_value;
    return;
 }
 

@@ -310,6 +310,26 @@ table td
   <td class="property">float</td>
 </tr>
 <tr>
+  <td class="property">clip_plane_near_min</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">clip_plane_near_max</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">clip_plane_far_min</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">clip_plane_far_max</td>
+  <td class="property">float</td>
+</tr>
+<tr>
+  <td class="property">clip_plane_increment</td>
+  <td class="property">float</td>
+</tr>
+<tr>
   <td class="property">initialized</td>
   <td class="property">bool</td>
 </tr>
@@ -358,7 +378,15 @@ table td
 </tr>
 <tr>
   <td class="method">void</td>
+  <td class="method"><b>on_key_char</b>(ALLEGRO_EVENT* event=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
   <td class="method"><b>on_key_down</b>(ALLEGRO_EVENT* event=nullptr)</td>
+</tr>
+<tr>
+  <td class="private_method">void</td>
+  <td class="private_method"><b>handle_key_down</b>(ALLEGRO_EVENT* event=nullptr)</td>
 </tr>
 <tr>
   <td class="method">std::string</td>
@@ -371,6 +399,22 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>load_json</b>(std::string json_string=&quot;[unset-json_string]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_far_plane_further</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_far_plane_nearer</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_near_plane_further</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>move_near_plane_nearer</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1624,6 +1668,22 @@ table td
   <td class="property">bool</td>
 </tr>
 <tr>
+  <td class="property">LOTTIE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">FRIEND_1</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">FRIEND_2</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">FRIEND_3</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
   <td class="property">DEFAULT_DATA_FOLDER_PATH</td>
   <td class="property">char*</td>
 </tr>
@@ -1637,6 +1697,22 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>initialize</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>customize_dialog_for_DOTTIE</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>customize_dialog_for_FRIEND_1</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>customize_dialog_for_FRIEND_2</b>()</td>
+</tr>
+<tr>
+  <td class="method">void</td>
+  <td class="method"><b>customize_dialog_for_FRIEND_3</b>()</td>
 </tr>
 <tr>
   <td class="method">void</td>
