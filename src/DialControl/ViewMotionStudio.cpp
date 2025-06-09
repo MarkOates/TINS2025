@@ -73,6 +73,19 @@ Timeline::MotionStudio &ViewMotionStudio::get_motion_studio_ref()
 }
 
 
+void ViewMotionStudio::set_current_camera_to_camera_at_index(int camera_index_to_set_to)
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::ViewMotionStudio::set_current_camera_to_camera_at_index]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::ViewMotionStudio::set_current_camera_to_camera_at_index]: error: guard \"initialized\" not met");
+   }
+   camera_studio.set_current_camera_to_camera_at_index(camera_index_to_set_to);
+   return;
+}
+
 void ViewMotionStudio::initialize()
 {
    if (!((!initialized)))
@@ -296,7 +309,8 @@ void ViewMotionStudio::on_key_down(ALLEGRO_EVENT* event)
       throw std::runtime_error("[DialControl::ViewMotionStudio::on_key_down]: error: guard \"initialized\" not met");
    }
    // TODO: Fix these paths
-   std::string filename_save = data_folder_path + "animations/camera_move_1-0n_output.txt";
+   std::string filename_save = data_folder_path + "animations/camera_move_1-0n.txt"; // Warning clobber possible
+   //std::string filename_save = data_folder_path + "animations/camera_move_1-0n_output.txt";
    std::string filename_load = data_folder_path + "animations/camera_move_1-0n.txt";
 
    if (event->keyboard.keycode == ALLEGRO_KEY_TAB)

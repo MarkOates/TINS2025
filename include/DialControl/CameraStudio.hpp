@@ -69,6 +69,7 @@ namespace DialControl
       void show_camera_info_overlay();
       void hide_camera_info_overlay();
       void draw_camera_info_overlay();
+      void set_current_camera_to_camera_at_index(int camera_index_to_set_to=0);
       void set_current_camera_to_next_camera();
       void set_current_camera_to_previous_camera();
       void on_key_char(ALLEGRO_EVENT* event=nullptr);

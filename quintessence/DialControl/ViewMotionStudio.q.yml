@@ -64,6 +64,17 @@ enums:
 methods:
 
 
+  - name: set_current_camera_to_camera_at_index
+    parameters:
+      - name: camera_index_to_set_to
+        type: int
+        default_argument: 0
+    guards: [ initialized ]
+    body: |
+      camera_studio.set_current_camera_to_camera_at_index(camera_index_to_set_to);
+      return;
+
+
   - name: initialize
     guards: [ (!initialized), font_bin, (data_folder_path != DEFAULT_DATA_FOLDER_PATH) ]
     body: |
@@ -262,7 +273,8 @@ methods:
     guards: [ initialized ]
     body: |
       // TODO: Fix these paths
-      std::string filename_save = data_folder_path + "animations/camera_move_1-0n_output.txt";
+      std::string filename_save = data_folder_path + "animations/camera_move_1-0n.txt"; // Warning clobber possible
+      //std::string filename_save = data_folder_path + "animations/camera_move_1-0n_output.txt";
       std::string filename_load = data_folder_path + "animations/camera_move_1-0n.txt";
 
       if (event->keyboard.keycode == ALLEGRO_KEY_TAB)

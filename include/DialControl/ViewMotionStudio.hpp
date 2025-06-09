@@ -52,6 +52,7 @@ namespace DialControl
       bool get_initialized() const;
       DialControl::CameraStudio &get_camera_studio_ref();
       Timeline::MotionStudio &get_motion_studio_ref();
+      void set_current_camera_to_camera_at_index(int camera_index_to_set_to=0);
       void initialize();
       void build_parameters_for_camera_1();
       void link_camera_1_to_parameters();

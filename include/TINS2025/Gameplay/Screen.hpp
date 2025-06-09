@@ -32,8 +32,8 @@ namespace TINS2025
       {
       public:
          static constexpr char* LOTTIE = (char*)"Lottie";
-         static constexpr char* FRIEND_1 = (char*)"Ditto";
-         static constexpr char* FRIEND_2 = (char*)"Frank";
+         static constexpr char* FRIEND_1 = (char*)"Frank";
+         static constexpr char* FRIEND_2 = (char*)"Ditto";
          static constexpr char* FRIEND_3 = (char*)"Derek";
          static constexpr char* DEFAULT_DATA_FOLDER_PATH = (char*)"[unset-data_folder_path]";
          static constexpr char* TYPE = (char*)"TINS2025/Gameplay/Screen";

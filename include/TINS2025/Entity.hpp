@@ -42,6 +42,16 @@ namespace TINS2025
          ENTITY_TYPE_CAKE_3,
          ENTITY_TYPE_COMPOSITE_CAKE,
          ENTITY_TYPE_THE_PLANT,
+         ENTITY_TYPE_CAMERA_0,
+         ENTITY_TYPE_CAMERA_1,
+         ENTITY_TYPE_CAMERA_2,
+         ENTITY_TYPE_CAMERA_3,
+         ENTITY_TYPE_CAMERA_4,
+         ENTITY_TYPE_CAMERA_5,
+         ENTITY_TYPE_CAMERA_6,
+         ENTITY_TYPE_CAMERA_7,
+         ENTITY_TYPE_CAMERA_8,
+         ENTITY_TYPE_CAMERA_9,
       };
       enum AnimationMode
       {

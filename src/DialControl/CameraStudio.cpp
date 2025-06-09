@@ -195,7 +195,7 @@ void CameraStudio::initialize()
    live_camera = baseline_camera;
 
    // Set the number of cameras to 6 (for now)
-   cameras.resize(6);
+   cameras.resize(10);
    //current_camera_idx = 0;
    for (int i=0; i<cameras.size(); i++)
    {
@@ -250,6 +250,34 @@ void CameraStudio::draw_camera_info_overlay()
    camera_info_overlay.set_camera_name("Camera " + std::to_string(current_camera_idx));
    camera_info_overlay.render();
 
+   return;
+}
+
+void CameraStudio::set_current_camera_to_camera_at_index(int camera_index_to_set_to)
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::set_current_camera_to_camera_at_index]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::set_current_camera_to_camera_at_index]: error: guard \"initialized\" not met");
+   }
+   if (!((camera_index_to_set_to >= 0)))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::set_current_camera_to_camera_at_index]: error: guard \"(camera_index_to_set_to >= 0)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::set_current_camera_to_camera_at_index]: error: guard \"(camera_index_to_set_to >= 0)\" not met");
+   }
+   if (!((camera_index_to_set_to < cameras.size())))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::CameraStudio::set_current_camera_to_camera_at_index]: error: guard \"(camera_index_to_set_to < cameras.size())\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::CameraStudio::set_current_camera_to_camera_at_index]: error: guard \"(camera_index_to_set_to < cameras.size())\" not met");
+   }
+   current_camera_idx = camera_index_to_set_to;
+   current_camera = &cameras[current_camera_idx];
    return;
 }
 

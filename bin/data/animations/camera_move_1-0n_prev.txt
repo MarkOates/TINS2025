@@ -27,61 +27,86 @@
     },
     {
       "far_plane": 100.0,
-      "near_plane": 2.0999999046325684,
-      "position": {
-        "x": -0.75,
-        "y": 0.0,
-        "z": -12.5
-      },
-      "roll": 0.0,
-      "roll_in_unit_values": false,
-      "shift": {
-        "x": 0.125,
-        "y": 0.375
-      },
-      "spin": 0.0,
-      "spin_in_unit_values": false,
-      "stepout": {
-        "x": 0.0,
-        "y": 0.75,
-        "z": 15.0
-      },
-      "tilt": 0.09375,
-      "tilt_in_unit_values": false,
-      "zoom": 4.25
-    },
-    {
-      "far_plane": 109.0,
-      "near_plane": 15.100000381469727,
+      "near_plane": 0.10000000149011612,
       "position": {
         "x": -1.5,
         "y": 0.0,
-        "z": 3.0
+        "z": -0.25
       },
       "roll": 0.0,
       "roll_in_unit_values": false,
       "shift": {
         "x": 0.0,
-        "y": -0.125
+        "y": 0.0
       },
       "spin": 0.0,
       "spin_in_unit_values": false,
       "stepout": {
-        "x": 1.75,
+        "x": 1.5,
         "y": 0.75,
-        "z": 21.0
+        "z": 14.0
       },
-      "tilt": 0.59375,
+      "tilt": 0.0,
       "tilt_in_unit_values": false,
-      "zoom": 5.0
+      "zoom": 3.25
     },
     {
-      "far_plane": 164.0,
-      "near_plane": 120.0,
+      "far_plane": 100.0,
+      "near_plane": 0.10000000149011612,
+      "position": {
+        "x": -1.5,
+        "y": 0.0,
+        "z": 0.5
+      },
+      "roll": 0.0,
+      "roll_in_unit_values": false,
+      "shift": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spin": 0.0,
+      "spin_in_unit_values": false,
+      "stepout": {
+        "x": 1.5,
+        "y": 0.75,
+        "z": 92.0
+      },
+      "tilt": 0.5,
+      "tilt_in_unit_values": false,
+      "zoom": 22.75
+    },
+    {
+      "far_plane": 100.0,
+      "near_plane": 0.125,
       "position": {
         "x": 0.0,
         "y": 0.0,
-        "z": -3.5
+        "z": 0.0
+      },
+      "roll": 0.0,
+      "roll_in_unit_values": false,
+      "shift": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spin": 0.5,
+      "spin_in_unit_values": false,
+      "stepout": {
+        "x": 1.25,
+        "y": 0.75,
+        "z": 3.0
+      },
+      "tilt": 0.25,
+      "tilt_in_unit_values": false,
+      "zoom": 1.875
+    },
+    {
+      "far_plane": 113.0,
+      "near_plane": 80.0,
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "roll": 0.0,
       "roll_in_unit_values": true,
@@ -94,161 +119,36 @@
       "stepout": {
         "x": 0.0,
         "y": 0.0,
-        "z": 150.0
+        "z": 100.0
       },
       "tilt": 0.09375,
       "tilt_in_unit_values": true,
-      "zoom": 21.625
-    },
-    {
-      "far_plane": 100.0,
-      "near_plane": 0.125,
-      "position": {
-        "x": 2.0,
-        "y": 0.0,
-        "z": 0.25
-      },
-      "roll": 0.0,
-      "roll_in_unit_values": false,
-      "shift": {
-        "x": 0.125,
-        "y": -0.1875
-      },
-      "spin": 0.0,
-      "spin_in_unit_values": false,
-      "stepout": {
-        "x": 0.0,
-        "y": 0.75,
-        "z": 9.0
-      },
-      "tilt": -0.03125,
-      "tilt_in_unit_values": false,
-      "zoom": 2.75
+      "zoom": 10.0
     },
     {
       "far_plane": 100.0,
       "near_plane": 1.0,
       "position": {
-        "x": 1.75,
+        "x": 0.0,
         "y": 0.0,
-        "z": -1.75
+        "z": -1.0
       },
       "roll": 0.0,
       "roll_in_unit_values": true,
       "shift": {
-        "x": 0.3125,
-        "y": 0.1875
+        "x": 0.0,
+        "y": 0.0
       },
       "spin": 0.0,
       "spin_in_unit_values": true,
       "stepout": {
         "x": 0.0,
         "y": 0.0,
-        "z": 28.0
+        "z": 20.0
       },
-      "tilt": 0.03125,
+      "tilt": 0.09375,
       "tilt_in_unit_values": true,
-      "zoom": 9.125
-    },
-    {
-      "far_plane": 109.0,
-      "near_plane": 15.100000381469727,
-      "position": {
-        "x": -1.75,
-        "y": 0.0,
-        "z": 2.75
-      },
-      "roll": 0.0,
-      "roll_in_unit_values": false,
-      "shift": {
-        "x": 0.0,
-        "y": -0.125
-      },
-      "spin": 0.0,
-      "spin_in_unit_values": false,
-      "stepout": {
-        "x": 2.75,
-        "y": 0.5,
-        "z": 21.0
-      },
-      "tilt": 0.59375,
-      "tilt_in_unit_values": false,
-      "zoom": 5.0
-    },
-    {
-      "far_plane": 116.0,
-      "near_plane": 14.100000381469727,
-      "position": {
-        "x": -1.0,
-        "y": 0.0,
-        "z": 2.75
-      },
-      "roll": 0.0,
-      "roll_in_unit_values": false,
-      "shift": {
-        "x": 0.0,
-        "y": -0.125
-      },
-      "spin": 0.3125,
-      "spin_in_unit_values": false,
-      "stepout": {
-        "x": 0.75,
-        "y": -0.25,
-        "z": 21.0
-      },
-      "tilt": 0.59375,
-      "tilt_in_unit_values": false,
-      "zoom": 9.0
-    },
-    {
-      "far_plane": 109.0,
-      "near_plane": 15.100000381469727,
-      "position": {
-        "x": -1.5,
-        "y": 0.0,
-        "z": 3.0
-      },
-      "roll": 0.0,
-      "roll_in_unit_values": false,
-      "shift": {
-        "x": 0.0,
-        "y": -0.125
-      },
-      "spin": 0.0,
-      "spin_in_unit_values": false,
-      "stepout": {
-        "x": 1.75,
-        "y": 0.75,
-        "z": 21.0
-      },
-      "tilt": 0.59375,
-      "tilt_in_unit_values": false,
-      "zoom": 5.0
-    },
-    {
-      "far_plane": 109.0,
-      "near_plane": 15.100000381469727,
-      "position": {
-        "x": -1.5,
-        "y": 0.0,
-        "z": 3.0
-      },
-      "roll": 0.0,
-      "roll_in_unit_values": false,
-      "shift": {
-        "x": 0.0,
-        "y": -0.125
-      },
-      "spin": 0.0,
-      "spin_in_unit_values": false,
-      "stepout": {
-        "x": 1.75,
-        "y": 0.75,
-        "z": 21.0
-      },
-      "tilt": 0.59375,
-      "tilt_in_unit_values": false,
-      "zoom": 5.0
+      "zoom": 4.0
     }
   ],
   "parameters": [

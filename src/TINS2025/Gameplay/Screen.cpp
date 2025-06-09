@@ -393,6 +393,7 @@ void Screen::customize_dialog_for_FRIEND_1()
    dialog_system->set_standard_dialog_box_background_color(al_color_html(bg.c_str()));
    dialog_system->set_standard_dialog_box_text_color(al_color_html(fg.c_str()));
    dialog_system->set_standard_dialog_box_label_color(al_color_html(fg.c_str()));
+   if (current_chapter_number == 1) view_motion_studio.set_current_camera_to_camera_at_index(2);
    return;
 }
 
@@ -402,6 +403,7 @@ void Screen::customize_dialog_for_FRIEND_2()
    dialog_system->set_standard_dialog_box_background_color(al_color_html("d2698a"));
    dialog_system->set_standard_dialog_box_text_color(al_color_html("e4d4bb"));
    dialog_system->set_standard_dialog_box_label_color(al_color_html("e4d4bb"));
+   if (current_chapter_number == 1) view_motion_studio.set_current_camera_to_camera_at_index(4);
 
    //dialog_system->set_standard_dialog_box_frame_color(al_color_html("6dbacc"));
    //dialog_system->set_standard_dialog_box_background_color(al_color_html("6dbacc"));
@@ -416,6 +418,9 @@ void Screen::customize_dialog_for_FRIEND_3()
    dialog_system->set_standard_dialog_box_background_color(al_color_html("6dbacc"));
    dialog_system->set_standard_dialog_box_text_color(al_color_html("4270a2"));
    dialog_system->set_standard_dialog_box_label_color(al_color_html("4270a2"));
+   if (current_chapter_number == 1) view_motion_studio.set_current_camera_to_camera_at_index(5);
+
+   // HERE
    return;
 }
 
@@ -433,6 +438,7 @@ void Screen::gameplay_suspend_func()
 
 void Screen::gameplay_resume_func()
 {
+   if (current_chapter_number == 1) view_motion_studio.set_current_camera_to_camera_at_index(3); // ???
    // Function that is called immediately after the gameplay is resumed.
    //AllegroFlare::Logger::warn_from_once(
       //"AllegroFlare::Screens::Gameplay::gameplay_suspend_func",
@@ -832,6 +838,55 @@ void Screen::update()
                   event_emitter->emit_activate_dialog_node_by_name_event("friend_3_requirements_met");
                }
             break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_0:
+               view_motion_studio.set_current_camera_to_camera_at_index(0);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_1:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(1);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_2:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(2);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_3:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(3);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_4:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(4);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_5:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(5);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_6:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(6);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_7:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(7);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_8:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(8);
+            break;
+
+            case TINS2025::Entity::ENTITY_TYPE_CAMERA_9:
+               view_motion_studio.
+               set_current_camera_to_camera_at_index(9);
+            break;
          }
       }
 
@@ -1119,6 +1174,7 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       dipping_to_black = false;
       resume_suspended_gameplay();
       event_emitter->emit_play_music_track_event("theme");
+      view_motion_studio.set_current_camera_to_camera_at_index(7);
    }
    else if (game_event->is_type("win_game"))
    {
@@ -1259,6 +1315,76 @@ void Screen::refresh_environment_and_world(bool set_player_position)
       else if (object->name == "dialog_trigger_5")
       {
          e.type = TINS2025::Entity::ENTITY_TYPE_DIALOG_TRIGGER_5;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_0")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_0;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_1")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_1;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_2")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_2;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_3")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_3;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_4")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_4;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_5")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_5;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_6")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_6;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_7")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_7;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_8")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_8;
+         e.flags |= TINS2025::Entity::FLAG_HIDDEN;
+         e.aabb2d.set_w(object_w);
+         e.aabb2d.set_h(object_h);
+      }
+      else if (object->name == "camera_9")
+      {
+         e.type = TINS2025::Entity::ENTITY_TYPE_CAMERA_9;
          e.flags |= TINS2025::Entity::FLAG_HIDDEN;
          e.aabb2d.set_w(object_w);
          e.aabb2d.set_h(object_h);
@@ -1604,7 +1730,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "like...",
             "...ever!",
             "I bet they're pretty cool and relaxed just knowing it's nearby!",
-            "Oooh! And there's it is! The rare flower!",
+            "Oooh! And there it is! The rare flower!",
             "And it hasn't bloomed yet. It looks like I got here just in time!",
             "I can't wait to get a closer look."
          }, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }

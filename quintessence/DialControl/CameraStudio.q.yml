@@ -105,7 +105,7 @@ methods:
       live_camera = baseline_camera;
 
       // Set the number of cameras to 6 (for now)
-      cameras.resize(6);
+      cameras.resize(10);
       //current_camera_idx = 0;
       for (int i=0; i<cameras.size(); i++)
       {
@@ -163,6 +163,21 @@ methods:
       return;
     body_dependency_symbols:
       - DialControl::CameraInfoOverlay
+
+
+  - name: set_current_camera_to_camera_at_index
+    parameters:
+      - name: camera_index_to_set_to
+        type: int
+        default_argument: 0
+    guards:
+      - initialized
+      - (camera_index_to_set_to >= 0)
+      - (camera_index_to_set_to < cameras.size())
+    body: |
+      current_camera_idx = camera_index_to_set_to;
+      current_camera = &cameras[current_camera_idx];
+      return;
 
 
   - name: set_current_camera_to_next_camera

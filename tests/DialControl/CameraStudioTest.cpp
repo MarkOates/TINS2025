@@ -140,6 +140,106 @@ const std::string cameras_json_string = R"({
     },
     {
       "far_plane": 100.0,
+      "near_plane": 0.10000000149011612,
+      "position": {
+        "x": -1.25,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "roll": 0.0,
+      "roll_in_unit_values": false,
+      "shift": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spin": -0.625,
+      "spin_in_unit_values": false,
+      "stepout": {
+        "x": 1.25,
+        "y": 0.25,
+        "z": 3.0
+      },
+      "tilt": 0.125,
+      "tilt_in_unit_values": false,
+      "zoom": 2.75
+    },
+    {
+      "far_plane": 100.0,
+      "near_plane": 0.10000000149011612,
+      "position": {
+        "x": -1.25,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "roll": 0.0,
+      "roll_in_unit_values": false,
+      "shift": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spin": -0.625,
+      "spin_in_unit_values": false,
+      "stepout": {
+        "x": 1.25,
+        "y": 0.25,
+        "z": 3.0
+      },
+      "tilt": 0.125,
+      "tilt_in_unit_values": false,
+      "zoom": 2.75
+    },
+    {
+      "far_plane": 100.0,
+      "near_plane": 0.10000000149011612,
+      "position": {
+        "x": -1.25,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "roll": 0.0,
+      "roll_in_unit_values": false,
+      "shift": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spin": -0.625,
+      "spin_in_unit_values": false,
+      "stepout": {
+        "x": 1.25,
+        "y": 0.25,
+        "z": 3.0
+      },
+      "tilt": 0.125,
+      "tilt_in_unit_values": false,
+      "zoom": 2.75
+    },
+    {
+      "far_plane": 100.0,
+      "near_plane": 0.10000000149011612,
+      "position": {
+        "x": -1.25,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "roll": 0.0,
+      "roll_in_unit_values": false,
+      "shift": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spin": -0.625,
+      "spin_in_unit_values": false,
+      "stepout": {
+        "x": 1.25,
+        "y": 0.25,
+        "z": 3.0
+      },
+      "tilt": 0.125,
+      "tilt_in_unit_values": false,
+      "zoom": 2.75
+    },
+    {
+      "far_plane": 100.0,
       "near_plane": 1.0,
       "position": {
         "x": 0.0,
