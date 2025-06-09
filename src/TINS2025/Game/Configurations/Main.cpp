@@ -204,7 +204,7 @@ AllegroFlare::Screens::Gameplay* Main::create_primary_gameplay_screen(AllegroFla
    //title_screen.set_footer_text_font_name("Michroma-Regular.ttf");
    //title_screen.set_copyright_text(copyright_text);
    //title_screen.set_footer_text_font_size(-22);
-   title_screen.set_title_bitmap_name("title-02.png");
+   title_screen.set_title_bitmap_name("title-03.png");
    title_screen.set_title_position_y(1080/2); //1080/2-60*2+20-20);
    //title_screen.set_menu_position_y(0); //1080/2-60*2+20+80+120+60);
    //title_screen.set_title_bitmap_name("odeya_logo-02b.png");
