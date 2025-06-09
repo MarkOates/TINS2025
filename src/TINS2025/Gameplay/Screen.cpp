@@ -1356,7 +1356,10 @@ void Screen::display_switch_in_func()
    }
    AllegroFlare::Screens::Gameplay::display_switch_in_func();
 
-   refresh_environment_and_world();
+   if (in_test_or_development_mode)
+   {
+      refresh_environment_and_world();
+   }
 
    return;
 }
