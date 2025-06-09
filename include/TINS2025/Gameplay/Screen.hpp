@@ -76,6 +76,8 @@ namespace TINS2025
          float dip_to_black_overlay_opacity;
          bool dipping_to_black;
          bool in_test_or_development_mode;
+         bool camera_is_tracking_player;
+         bool flag__showing_plant_now;
          bool initialized;
 
       protected:
@@ -112,6 +114,8 @@ namespace TINS2025
          float get_dip_to_black_overlay_opacity() const;
          bool get_dipping_to_black() const;
          bool get_in_test_or_development_mode() const;
+         bool get_camera_is_tracking_player() const;
+         bool get_flag__showing_plant_now() const;
          bool get_initialized() const;
          AllegroFlare::AssetStudio::Database* &get_asset_studio_database_ref();
          void initialize();

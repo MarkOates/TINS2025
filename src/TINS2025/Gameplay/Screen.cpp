@@ -60,6 +60,8 @@ Screen::Screen()
    , dip_to_black_overlay_opacity(0.0f)
    , dipping_to_black(false)
    , in_test_or_development_mode(true)
+   , camera_is_tracking_player(true)
+   , flag__showing_plant_now(false)
    , initialized(false)
 {
 }
@@ -236,6 +238,18 @@ bool Screen::get_dipping_to_black() const
 bool Screen::get_in_test_or_development_mode() const
 {
    return in_test_or_development_mode;
+}
+
+
+bool Screen::get_camera_is_tracking_player() const
+{
+   return camera_is_tracking_player;
+}
+
+
+bool Screen::get_flag__showing_plant_now() const
+{
+   return flag__showing_plant_now;
 }
 
 
@@ -902,8 +916,11 @@ void Screen::update()
    view_motion_studio.update();
 
    // Update the current camera to track the current player position
-   view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.x = player_entity->aabb2d.get_x();
-   view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.z = player_entity->aabb2d.get_y();
+   if (camera_is_tracking_player)
+   {
+      view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.x = player_entity->aabb2d.get_x();
+      view_motion_studio.get_camera_studio_ref().get_live_camera_ref().position.z = player_entity->aabb2d.get_y();
+   }
 
    // Update dipping to black
    if (dipping_to_black)
@@ -1138,6 +1155,15 @@ void Screen::game_event_func(AllegroFlare::GameEvent* game_event)
       });
       if (it != entities.end()) { (*it).flags &= ~TINS2025::Entity::FLAG_HIDDEN; }
       else { } // Not found
+
+      camera_is_tracking_player = false;
+      flag__showing_plant_now = true;
+      view_motion_studio.set_current_camera_to_camera_at_index(0);
+      view_motion_studio.get_motion_studio_ref().set_playhead_position(0);
+      //view_motion_studio.get_motion_studio_ref().start_animation();
+      view_motion_studio.get_motion_studio_ref().set_playing(true);
+      //view_motion_studio.get_motion_studio_ref().set_playback_speed(true);
+      //amera_is_tracking_player = false; // HERE
    }
    else if (game_event->is_type("end_chapter_1"))
    {
@@ -1500,6 +1526,17 @@ void Screen::primary_update_func(double time_now, double delta_time)
       throw std::runtime_error("[TINS2025::Gameplay::Screen::primary_update_func]: error: guard \"initialized\" not met");
    }
    AllegroFlare::Screens::Gameplay::primary_update_func(time_now, delta_time);
+
+   if (flag__showing_plant_now)
+   {
+      if (view_motion_studio.get_motion_studio_ref().get_playhead() > 23.0)
+      {
+         flag__showing_plant_now = false;
+         //event_emitter->emit_game_ // HERE
+         event_emitter->emit_game_event(AllegroFlare::GameEvent("win_game"));
+         // HERE win game
+      }
+   }
 
    update();
    return;
@@ -2045,7 +2082,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             //"Something's not quite right.",
             //"Normally, just around this time, the plant would start showing signs of budding.",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
-         }, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("emit_win_game"), 0 } }
+         }, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("exit_dialog"), 0 } }
       )},
 
       { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
