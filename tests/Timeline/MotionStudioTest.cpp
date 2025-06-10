@@ -10,7 +10,6 @@ class Timeline_MotionStudioTestWithInteractionFixture : public AllegroFlare::Tes
 
 
 
-
 std::vector<Timeline::Parameter> build_parameters_for_placement3D(AllegroFlare::Placement3D &p)
 {
    std::vector<Timeline::Parameter> result = {
@@ -118,6 +117,7 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
 {
    AllegroFlare::Placement3D placement;
    Timeline::MotionStudio motion_studio;
+   motion_studio.initialize();
    AllegroFlare::Placement2D &timeline_placement = motion_studio.get_timeline_placement_ref();
    timeline_placement.position.x = 300;
    timeline_placement.position.y = 700;
@@ -146,8 +146,7 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
 
       switch(current_event.type)
       {
-         case ALLEGRO_EVENT_TIMER:
-         {
+         case ALLEGRO_EVENT_TIMER: {
             // Update
             motion_studio.update_playback();
 
@@ -156,8 +155,7 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
             motion_studio.render();
             interactive_test_render_status();
             al_flip_display();
-         }
-         break;
+         } break;
 
          //// For example:
          //case ALLEGRO_FLARE_EVENT_PLAY_SOUND_EFFECT:
@@ -169,8 +167,11 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
          //break;
 
          //// For example:
-         case ALLEGRO_EVENT_KEY_DOWN:
-         {
+         case ALLEGRO_EVENT_MOUSE_AXES: {
+            motion_studio.on_mouse_axes(&current_event);
+         } break;
+
+         case ALLEGRO_EVENT_KEY_DOWN: {
             motion_studio.on_key_down(&current_event);
             //bool shift = current_event.keyboard.modifiers & ALLEGRO_KEYMOD_SHIFT;
             //switch(current_event.keyboard.keycode)
@@ -179,8 +180,7 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
                   //// Do something
                //break;
             //}
-         }
-         break;
+         } break;
       }
    }
 }
@@ -191,6 +191,7 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
 {
    AllegroFlare::Placement3D placement;
    Timeline::MotionStudio motion_studio;
+   motion_studio.initialize();
    AllegroFlare::Placement2D &timeline_placement = motion_studio.get_timeline_placement_ref();
    timeline_placement.position.x = 300;
    timeline_placement.position.y = 700;

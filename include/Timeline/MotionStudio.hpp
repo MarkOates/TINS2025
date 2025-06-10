@@ -30,6 +30,9 @@ namespace Timeline
       float timeline_start_position;
       float timeline_time_scale;
       bool timeline_overlay_visible;
+      int allegro5_mouse_wheel_reporting_precision;
+      double timeline_dial_wheel_precision;
+      bool initialized;
 
    protected:
 
@@ -51,6 +54,8 @@ namespace Timeline
       void set_playing(bool playing);
       void set_timeline_start_position(float timeline_start_position);
       void set_timeline_time_scale(float timeline_time_scale);
+      void set_allegro5_mouse_wheel_reporting_precision(int allegro5_mouse_wheel_reporting_precision);
+      void set_timeline_dial_wheel_precision(double timeline_dial_wheel_precision);
       std::vector<Timeline::Parameter> get_parameters() const;
       std::vector<Timeline::ParameterView> get_parameter_views() const;
       int get_parameter_view_idx() const;
@@ -64,6 +69,8 @@ namespace Timeline
       bool get_playing() const;
       float get_timeline_start_position() const;
       float get_timeline_time_scale() const;
+      int get_allegro5_mouse_wheel_reporting_precision() const;
+      double get_timeline_dial_wheel_precision() const;
       std::vector<Timeline::Parameter> &get_parameters_ref();
       std::vector<Timeline::ParameterView> &get_parameter_views_ref();
       int &get_parameter_view_idx_ref();
@@ -75,6 +82,9 @@ namespace Timeline
       float &get_playhead_movement_fine_ref();
       float &get_playhead_movement_macro_ref();
       bool &get_playing_ref();
+      void initialize();
+      void configure_allegro_for_high_precision_mousewheel_reporting();
+      bool validate_expected_mouse_wheel_precision();
       void render();
       void toggle_timeline_visibility();
       void move_timeline_start_position(float delta=0.0f);
@@ -91,6 +101,7 @@ namespace Timeline
       void remove_keyframe();
       void next_parameter_view();
       void previous_parameter_view();
+      void on_mouse_axes(ALLEGRO_EVENT* ev=nullptr);
       void on_key_down(ALLEGRO_EVENT* event=nullptr);
       std::vector<Timeline::ParameterView> build_parameter_views_for_parameters(AllegroFlare::FontBin* font_bin=nullptr, std::vector<Timeline::Parameter>* p=nullptr, float height=Timeline::ParameterView::DEFAULT_HEIGHT);
       std::string build_json_dump();

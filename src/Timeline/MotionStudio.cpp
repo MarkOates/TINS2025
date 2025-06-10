@@ -31,6 +31,9 @@ MotionStudio::MotionStudio()
    , timeline_start_position(0.0)
    , timeline_time_scale(1.0)
    , timeline_overlay_visible(true)
+   , allegro5_mouse_wheel_reporting_precision(120)
+   , timeline_dial_wheel_precision(0.031250)
+   , initialized(false)
 {
 }
 
@@ -118,6 +121,18 @@ void MotionStudio::set_timeline_time_scale(float timeline_time_scale)
 }
 
 
+void MotionStudio::set_allegro5_mouse_wheel_reporting_precision(int allegro5_mouse_wheel_reporting_precision)
+{
+   this->allegro5_mouse_wheel_reporting_precision = allegro5_mouse_wheel_reporting_precision;
+}
+
+
+void MotionStudio::set_timeline_dial_wheel_precision(double timeline_dial_wheel_precision)
+{
+   this->timeline_dial_wheel_precision = timeline_dial_wheel_precision;
+}
+
+
 std::vector<Timeline::Parameter> MotionStudio::get_parameters() const
 {
    return parameters;
@@ -196,6 +211,18 @@ float MotionStudio::get_timeline_time_scale() const
 }
 
 
+int MotionStudio::get_allegro5_mouse_wheel_reporting_precision() const
+{
+   return allegro5_mouse_wheel_reporting_precision;
+}
+
+
+double MotionStudio::get_timeline_dial_wheel_precision() const
+{
+   return timeline_dial_wheel_precision;
+}
+
+
 std::vector<Timeline::Parameter> &MotionStudio::get_parameters_ref()
 {
    return parameters;
@@ -262,8 +289,40 @@ bool &MotionStudio::get_playing_ref()
 }
 
 
+void MotionStudio::initialize()
+{
+   if (!((!initialized)))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::initialize]: error: guard \"(!initialized)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::initialize]: error: guard \"(!initialized)\" not met");
+   }
+   configure_allegro_for_high_precision_mousewheel_reporting();
+   initialized = true;
+   return;
+}
+
+void MotionStudio::configure_allegro_for_high_precision_mousewheel_reporting()
+{
+   al_set_mouse_wheel_precision(allegro5_mouse_wheel_reporting_precision);
+   return;
+}
+
+bool MotionStudio::validate_expected_mouse_wheel_precision()
+{
+   return al_get_mouse_wheel_precision() == allegro5_mouse_wheel_reporting_precision;
+}
+
 void MotionStudio::render()
 {
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::render]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::render]: error: guard \"initialized\" not met");
+   }
    if (timeline_overlay_visible)
    {
       timeline_placement.start_transform();
@@ -470,8 +529,80 @@ void MotionStudio::previous_parameter_view()
    return;
 }
 
+void MotionStudio::on_mouse_axes(ALLEGRO_EVENT* ev)
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_mouse_axes]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_mouse_axes]: error: guard \"initialized\" not met");
+   }
+   if (!(ev))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_mouse_axes]: error: guard \"ev\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_mouse_axes]: error: guard \"ev\" not met");
+   }
+   if (!((ev->type == ALLEGRO_EVENT_MOUSE_AXES)))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_mouse_axes]: error: guard \"(ev->type == ALLEGRO_EVENT_MOUSE_AXES)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_mouse_axes]: error: guard \"(ev->type == ALLEGRO_EVENT_MOUSE_AXES)\" not met");
+   }
+   if (!(validate_expected_mouse_wheel_precision()))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_mouse_axes]: error: guard \"validate_expected_mouse_wheel_precision()\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_mouse_axes]: error: guard \"validate_expected_mouse_wheel_precision()\" not met");
+   }
+   if (ev->mouse.dz != 0) // vertical mousewheel
+   {
+      //mapper.set_mapping(ALLEGRO_KEY_N, SHIFT, { "next_parameter_view" });
+      //mapper.set_mapping(ALLEGRO_KEY_P, SHIFT, { "previous_parameter_view" });
+      double mouse_distance = (double)ev->mouse.dz / al_get_mouse_wheel_precision();
+      //float dial_movement_granularity = 1.0;
+
+      if (mouse_distance < 0.0) next_parameter_view();
+      else if (mouse_distance > 0.0) previous_parameter_view();
+   }
+   if (ev->mouse.dw != 0) // horizontal mousewheel
+   {
+      float dial_movement_granularity = timeline_dial_wheel_precision;
+      double mouse_distance = (double)ev->mouse.dw / al_get_mouse_wheel_precision();
+      //float dial_movement_granularity = 0.0625;
+      move_playhead(dial_movement_granularity * mouse_distance);
+      //move_playhead(dial_movement_granularity * mouse_distance);
+   }
+   return;
+}
+
 void MotionStudio::on_key_down(ALLEGRO_EVENT* event)
 {
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_key_down]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_key_down]: error: guard \"initialized\" not met");
+   }
+   if (!(event))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_key_down]: error: guard \"event\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_key_down]: error: guard \"event\" not met");
+   }
+   if (!((event->type == ALLEGRO_EVENT_KEY_DOWN)))
+   {
+      std::stringstream error_message;
+      error_message << "[Timeline::MotionStudio::on_key_down]: error: guard \"(event->type == ALLEGRO_EVENT_KEY_DOWN)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Timeline::MotionStudio::on_key_down]: error: guard \"(event->type == ALLEGRO_EVENT_KEY_DOWN)\" not met");
+   }
    bool shift = event->keyboard.modifiers & ALLEGRO_KEYMOD_SHIFT;
    bool ctrl = event->keyboard.modifiers & ALLEGRO_KEYMOD_CTRL;
    bool alt = event->keyboard.modifiers & ALLEGRO_KEYMOD_ALT;

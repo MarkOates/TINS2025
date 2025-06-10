@@ -94,11 +94,48 @@ properties:
     type: bool
     init_with: true
 
+  - name: allegro5_mouse_wheel_reporting_precision
+    type: int
+    init_with: 120
+    getter: true
+    setter: true
+
+  - name: timeline_dial_wheel_precision
+    type: double
+    init_with: 0.031250
+    getter: true
+    setter: true
+
+  - name: initialized
+    type: bool
+    init_with: false
+
 
 methods:
 
 
+  - name: initialize
+    guards: [ (!initialized) ]
+    body: |
+      configure_allegro_for_high_precision_mousewheel_reporting();
+      initialized = true;
+      return;
+
+
+  - name: configure_allegro_for_high_precision_mousewheel_reporting
+    body: |
+      al_set_mouse_wheel_precision(allegro5_mouse_wheel_reporting_precision);
+      return;
+
+
+  - name: validate_expected_mouse_wheel_precision
+    type: bool
+    body: |
+      return al_get_mouse_wheel_precision() == allegro5_mouse_wheel_reporting_precision;
+
+
   - name: render
+    guards: [ initialized ]
     body: |
       if (timeline_overlay_visible)
       {
@@ -333,12 +370,40 @@ methods:
       return;
 
 
+  - name: on_mouse_axes
+    parameters:
+      - name: ev
+        type: ALLEGRO_EVENT*
+        default_argument: nullptr
+    guards: [ initialized, ev, (ev->type == ALLEGRO_EVENT_MOUSE_AXES), validate_expected_mouse_wheel_precision() ]
+    body: |
+      if (ev->mouse.dz != 0) // vertical mousewheel
+      {
+         //mapper.set_mapping(ALLEGRO_KEY_N, SHIFT, { "next_parameter_view" });
+         //mapper.set_mapping(ALLEGRO_KEY_P, SHIFT, { "previous_parameter_view" });
+         double mouse_distance = (double)ev->mouse.dz / al_get_mouse_wheel_precision();
+         //float dial_movement_granularity = 1.0;
+
+         if (mouse_distance < 0.0) next_parameter_view();
+         else if (mouse_distance > 0.0) previous_parameter_view();
+      }
+      if (ev->mouse.dw != 0) // horizontal mousewheel
+      {
+         float dial_movement_granularity = timeline_dial_wheel_precision;
+         double mouse_distance = (double)ev->mouse.dw / al_get_mouse_wheel_precision();
+         //float dial_movement_granularity = 0.0625;
+         move_playhead(dial_movement_granularity * mouse_distance);
+         //move_playhead(dial_movement_granularity * mouse_distance);
+      }
+      return;
+
+
   - name: on_key_down
     parameters:
       - name: event
         type: ALLEGRO_EVENT*
         default_argument: nullptr
-    xguards: [ current_camera, event, (event->type == ALLEGRO_EVENT_KEY_DOWN) ]
+    guards: [ initialized, event, (event->type == ALLEGRO_EVENT_KEY_DOWN) ]
     body: |
       bool shift = event->keyboard.modifiers & ALLEGRO_KEYMOD_SHIFT;
       bool ctrl = event->keyboard.modifiers & ALLEGRO_KEYMOD_CTRL;
