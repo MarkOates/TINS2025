@@ -2002,17 +2002,17 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_01"), 0 } }
       )},
-      { "cake_reveal_01", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
+      { "cake_reveal_01", new AllegroFlare::DialogTree::Nodes::Interparsable(FRIEND_2, {
             "Amazing!",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_02"), 0 } }
       )},
-      { "cake_reveal_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+      { "cake_reveal_02", new AllegroFlare::DialogTree::Nodes::Interparsable(FRIEND_3, {
             "It's perfect!",
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_03"), 0 } }
       )},
-      { "cake_reveal_03", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+      { "cake_reveal_03", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE, {
             "This is it!",
             "Making a layered cake with all our cakes combined is the answer!",
             //"The last ingredient we all needed was...",
@@ -2048,19 +2048,19 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          //}, { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_04"), 0 } }
       )},
-      { "cake_reveal_04", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_1, {
+      { "cake_reveal_04", new AllegroFlare::DialogTree::Nodes::Interparsable(FRIEND_1, {
             "This cake is so amazing!",
             //"The ratios are just... just... perfect!",
             //"I think all our cakes deserves a... a... gold medal!",
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_05"), 0 } }
       )},
-      { "cake_reveal_05", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_2, {
+      { "cake_reveal_05", new AllegroFlare::DialogTree::Nodes::Interparsable(FRIEND_2, {
             //"This cake is so amazing!",
             "The ratios together... They are just... just... perfect for each other!",
             //"I think all our cakes deserves a... a... gold medal!",
          }, { { "plant spawn", new AllegroFlare::DialogTree::NodeOptions::GoToNode("cake_reveal_06"), 0 } }
       )},
-      { "cake_reveal_06", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(FRIEND_3, {
+      { "cake_reveal_06", new AllegroFlare::DialogTree::Nodes::Interparsable(FRIEND_3, {
             //"This cake is so amazing!",
             //"The ratios are just... just... perfect!",
             "I think all our cakes deserve a... a... gold medal!",
@@ -2071,7 +2071,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "show_plant_reveal_02"
          )
       },
-      { "show_plant_reveal_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+      { "show_plant_reveal_02", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE, {
             "Oh wait! I can see the plant reacting!",
             //"And the flower is in full bloom!",
             //"Something's not quite right.",
@@ -2084,7 +2084,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "celebrate_plant_02"
          )
       },
-      { "celebrate_plant_02", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+      { "celebrate_plant_02", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE, {
             "We did it!",
             "YAAAAY!",
             //"And the flower is in full bloom!",
@@ -2094,7 +2094,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
          }, { { "win for now", new AllegroFlare::DialogTree::NodeOptions::GoToNode("exit_dialog"), 0 } }
       )},
 
-      { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE, {
+      { "->character_tries_bunbucks_cake", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE, {
             "Heuh!",
             "...",
             "Huh.",
@@ -2110,7 +2110,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             "exit_dialog"
          )
       },
-      { "pickup_food", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "pickup_food", new AllegroFlare::DialogTree::Nodes::Interparsable(
             LOTTIE,
             {
                "Sweet! I just found an essential ingredient for a perfect cake!"
@@ -2120,7 +2120,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "inspect_apple", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE,
+      { "inspect_apple", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE,
             {
                "A reeeeally nice juicy apple!",
                "There's so many delicious types of apples.",
@@ -2129,7 +2129,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          )
       },
-      { "inspect_carrot", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE,
+      { "inspect_carrot", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE,
             {
                "Ooh an orange carrot.",
                "Unlike red carrots, the orange ones are the most common cultivar of Daucus carota sativus.",
@@ -2140,7 +2140,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          )
       },
-      { "inspect_red_carrot", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(LOTTIE,
+      { "inspect_red_carrot", new AllegroFlare::DialogTree::Nodes::Interparsable(LOTTIE,
             {
                "Ooo this is a nice red carrot.",
                "It's a variety of Daucus carota.",
@@ -2150,7 +2150,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             { { "Exit", new AllegroFlare::DialogTree::NodeOptions::ExitDialog(), 0 } }
          )
       },
-      { "friend_2_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "friend_2_requirements", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_2,
             {
                "Normally this time of year is a time for celebration!",
@@ -2166,7 +2166,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "friend_3_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "friend_3_requirements", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_3,
             {
                "You know, last year's bake-a-thon was so much fun!",
@@ -2186,7 +2186,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "friend_1_requirements", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "friend_1_requirements", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_1,
             {
                "Eeks! I'm so flummoxed!",
@@ -2203,7 +2203,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "friend_1_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "friend_1_requirements_met", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_1,
             {
                "Amazing!",
@@ -2216,7 +2216,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "friend_2_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "friend_2_requirements_met", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_2,
             {
                "Woo-hoo!",
@@ -2229,7 +2229,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "friend_3_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "friend_3_requirements_met", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_3,
             {
                "Yes!!",
@@ -2244,7 +2244,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      //{ "friend_1_requirements_met", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      //{ "friend_1_requirements_met", new AllegroFlare::DialogTree::Nodes::Interparsable(
             //DITTO,
             //{
                //"Amazing! This should fix my pie in no time! Thank you!"
@@ -2254,7 +2254,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             //}
          //)
       //},
-      { "celebrate_won_game", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "celebrate_won_game", new AllegroFlare::DialogTree::Nodes::Interparsable(
             FRIEND_1,
             {
                "Thank you so much!!",
@@ -2265,7 +2265,7 @@ AllegroFlare::DialogTree::NodeBank Screen::build_dialog_node_bank()
             }
          )
       },
-      { "reply_to_won_game", new AllegroFlare::DialogTree::Nodes::MultipageWithOptions(
+      { "reply_to_won_game", new AllegroFlare::DialogTree::Nodes::Interparsable(
             LOTTIE,
             {
                "Yay!!",
