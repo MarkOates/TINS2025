@@ -333,6 +333,9 @@
   "AllegroFlare/DialogSystem/DialogSystem": [
     "TINS2025/Gameplay/Screen"
   ],
+  "AllegroFlare/DialogTree/Nodes/Interparsable": [
+    "TINS2025/Gameplay/Screen"
+  ],
   "DialControl/ViewMotionStudio": [
     "TINS2025/Gameplay/Screen"
   ],

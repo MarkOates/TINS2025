@@ -8,11 +8,22 @@
     ],
     "fileStates": {
         "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj": {
-            "scale": 4.8691,
+            "scale": 1.1937,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 359.92277833685887,
-                "y": 239.88005997001494
+                "x": 428.49962302085953,
+                "y": 241.2666499120382
+            }
+        },
+        "/Users/markoates/Repos/TileFPS/project_files/prototype-tileset-04.tsx": {
+            "scaleInDock": 1
+        },
+        "/Users/markoates/Repos/TileFPS/tests/fixtures/maps/dep-world_map-0n.tmj": {
+            "scale": 1.42,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 520.0704225352114,
+                "y": 232.39436619718313
             }
         },
         "prototype-tileset-04.tsx": {
@@ -27,13 +38,13 @@
     "map.tileWidth": 16,
     "map.width": 100,
     "openFiles": [
-        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj",
-        "prototype-tileset-04.tsx"
+        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj"
     ],
     "project": "world-01.tiled-project",
     "recentFiles": [
+        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj",
         "prototype-tileset-04.tsx",
-        "/Users/markoates/Repos/TINS2025/bin/data/maps/hello_friend-world_map-0n.tmj"
+        "/Users/markoates/Repos/TileFPS/tests/fixtures/maps/dep-world_map-0n.tmj"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
