@@ -123,6 +123,8 @@ void ViewMotionStudio::initialize()
 
    set_control_state(STATE_CAMERA_STUDIO_CONTROL);
 
+   motion_studio.initialize(); //??
+
 
    //AllegroFlare::Placement3D placement;
    //Timeline::MotionStudio motion_studio;
@@ -296,6 +298,39 @@ void ViewMotionStudio::render_hud()
       obtain_font(),
       obtain_bold_font()
    );
+   return;
+}
+
+void ViewMotionStudio::on_mouse_axes(ALLEGRO_EVENT* event)
+{
+   if (!(initialized))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::ViewMotionStudio::on_mouse_axes]: error: guard \"initialized\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::ViewMotionStudio::on_mouse_axes]: error: guard \"initialized\" not met");
+   }
+   if (!(event))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::ViewMotionStudio::on_mouse_axes]: error: guard \"event\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::ViewMotionStudio::on_mouse_axes]: error: guard \"event\" not met");
+   }
+   if (!((event->type == ALLEGRO_EVENT_MOUSE_AXES)))
+   {
+      std::stringstream error_message;
+      error_message << "[DialControl::ViewMotionStudio::on_mouse_axes]: error: guard \"(event->type == ALLEGRO_EVENT_MOUSE_AXES)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[DialControl::ViewMotionStudio::on_mouse_axes]: error: guard \"(event->type == ALLEGRO_EVENT_MOUSE_AXES)\" not met");
+   }
+   // TODO
+   switch (control_state)
+   {
+      //case STATE_CAMERA_STUDIO_CONTROL: camera_studio.on_mouse_axis(event); break; // TODO: Should this work?
+      case STATE_MOTION_STUDIO_CONTROL: motion_studio.on_mouse_axes(event); break;
+      default: break;
+   }
    return;
 }
 

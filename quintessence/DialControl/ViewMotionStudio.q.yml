@@ -92,6 +92,8 @@ methods:
 
       set_control_state(STATE_CAMERA_STUDIO_CONTROL);
 
+      motion_studio.initialize(); //??
+
 
       //AllegroFlare::Placement3D placement;
       //Timeline::MotionStudio motion_studio;
@@ -263,6 +265,23 @@ methods:
       return;
     body_dependency_symbols:
       - DialControl::CameraInfoOverlay
+
+
+  - name: on_mouse_axes
+    parameters:
+      - name: event
+        type: ALLEGRO_EVENT*
+        default_argument: nullptr
+    guards: [ initialized, event, (event->type == ALLEGRO_EVENT_MOUSE_AXES) ]
+    body: |
+      // TODO
+      switch (control_state)
+      {
+         //case STATE_CAMERA_STUDIO_CONTROL: camera_studio.on_mouse_axis(event); break; // TODO: Should this work?
+         case STATE_MOTION_STUDIO_CONTROL: motion_studio.on_mouse_axes(event); break;
+         default: break;
+      }
+      return;
 
 
   - name: on_key_down

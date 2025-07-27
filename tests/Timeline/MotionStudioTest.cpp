@@ -244,6 +244,10 @@ TEST_F(Timeline_MotionStudioTestWithInteractionFixture,
          //break;
 
          //// For example:
+         case ALLEGRO_EVENT_MOUSE_AXES: {
+            motion_studio.on_mouse_axes(&current_event);
+         } break;
+
          case ALLEGRO_EVENT_KEY_DOWN:
          {
             motion_studio.on_key_down(&current_event);

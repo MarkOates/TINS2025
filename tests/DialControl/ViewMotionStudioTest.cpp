@@ -666,6 +666,12 @@ TEST_F(DialControl_ViewMotionStudioTestWithInteractionFixture,
          //break;
 
          //// For example:
+         case ALLEGRO_EVENT_MOUSE_AXES:
+         {
+            view_motion_studio.on_mouse_axes(&current_event);
+         }
+         break;
+
          case ALLEGRO_EVENT_KEY_DOWN:
          {
             view_motion_studio.on_key_down(&current_event);

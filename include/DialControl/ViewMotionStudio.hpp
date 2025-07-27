@@ -61,6 +61,7 @@ namespace DialControl
       void setup_camera_projection_on_live_camera();
       void toggle_control_state();
       void render_hud();
+      void on_mouse_axes(ALLEGRO_EVENT* event=nullptr);
       void on_key_down(ALLEGRO_EVENT* event=nullptr);
       void load_json(std::string json_string="[unset-json_string]");
       std::string build_json_string();

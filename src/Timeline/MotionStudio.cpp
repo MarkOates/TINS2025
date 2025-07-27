@@ -559,6 +559,7 @@ void MotionStudio::on_mouse_axes(ALLEGRO_EVENT* ev)
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[Timeline::MotionStudio::on_mouse_axes]: error: guard \"validate_expected_mouse_wheel_precision()\" not met");
    }
+   //throw std::runtime_error("asdf");
    if (ev->mouse.dz != 0) // vertical mousewheel
    {
       //mapper.set_mapping(ALLEGRO_KEY_N, SHIFT, { "next_parameter_view" });

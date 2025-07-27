@@ -377,6 +377,7 @@ methods:
         default_argument: nullptr
     guards: [ initialized, ev, (ev->type == ALLEGRO_EVENT_MOUSE_AXES), validate_expected_mouse_wheel_precision() ]
     body: |
+      //throw std::runtime_error("asdf");
       if (ev->mouse.dz != 0) // vertical mousewheel
       {
          //mapper.set_mapping(ALLEGRO_KEY_N, SHIFT, { "next_parameter_view" });
